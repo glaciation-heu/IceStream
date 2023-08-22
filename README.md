@@ -37,7 +37,7 @@ To deploy Jena using the `jena-daemonset.yaml`, follow the steps below:
 
    3. Monitor the DaemonSet rollout:
       ```bash
-      kubectl rollout status ds/jena
+      kubectl rollout status daemonset/jena-daemonset
       ```
 
 ### Accessing Jena
