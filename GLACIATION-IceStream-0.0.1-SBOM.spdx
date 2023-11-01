@@ -1,0 +1,196 @@
+SPDXVersion: SPDX-2.2
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: GLACIATION Power Measurement Framework Software Bill of Materials
+DocumentNamespace: http://spdx.org/spdxdocs/glaciation-sbom-1.0
+Creator: Person: [Your Name] OR Organization: [Your Organization] OR Tool: [Tool Name]
+Created: [Creation Date, e.g., 2023-10-17T00:00:00Z]
+
+##### Package Information for Ubuntu OS
+PackageName: Ubuntu
+PackageVersion: 22.04.3 LTS
+SPDXID: SPDXRef-Package-Ubuntu-22.04.3
+PackageFileName: ubuntu-22.04.3-desktop-amd64.iso
+PackageSupplier: Organization: Canonical
+PackageOriginator: Organization: Canonical
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageVerificationCode: [Verification Code]
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: [License, e.g., GPL-2.0-only]
+PackageLicenseInfoFromFiles: [License Info]
+PackageLicenseComments: None
+PackageDescription: Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-86-generic x86_64) Operating System.
+PackageComment: None
+
+##### Package Information for GLACIATION
+PackageName: GLACIATION-PowerMeasurementFramework
+PackageVersion: [Version, e.g., 1.0.0]
+SPDXID: SPDXRef-Package-GLACIATION-PowerMeasurementFramework
+PackageFileName: [File Name, e.g., glaciation-v1.0.0.tar.gz]
+PackageSupplier: Person: [Your Name] OR Organization: [Your Organization]
+PackageOriginator: Person: [Your Name] OR Organization: [Your Organization]
+PackageDownloadLocation: [URL or NONE]
+FilesAnalyzed: false
+PackageVerificationCode: [Verification Code]
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: [License, e.g., MIT]
+PackageLicenseInfoFromFiles: [License Info]
+PackageLicenseComments: None
+PackageDescription: GLACIATION Software Analytics Platform.
+PackageComment: None
+
+##### Relationships
+Relationship: SPDXRef-Package-GLACIATION-PowerMeasurementFramework RUNS_ON SPDXRef-Package-Ubuntu-22.04.3
+
+##### Review Information
+Reviewer: Person: [Reviewer Name]
+ReviewDate: [Review Date, e.g., 2023-10-17]
+ReviewComment: None
+
+##### Annotations
+AnnotationDate: [Annotation Date, e.g., 2023-10-17]
+AnnotationType: [Type, e.g., OTHER]
+Annotator: Person: [Annotator Name]
+AnnotationComment: None
+
+##### Package Information for Kubernetes
+PackageName: Kubernetes
+PackageVersion: v1.28.2
+SPDXID: SPDXRef-Package-Kubernetes-1.28.2
+PackageFileName: [File Name, e.g., kubernetes-v1.28.2.tar.gz]
+PackageSupplier: Organization: Kubernetes Authors
+PackageOriginator: Organization: Kubernetes Authors
+PackageDownloadLocation: [URL or NONE, e.g., https://github.com/kubernetes/kubernetes/releases/tag/v1.28.2]
+FilesAnalyzed: false
+PackageVerificationCode: [Verification Code]
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: [License, e.g., Apache-2.0]
+PackageLicenseInfoFromFiles: [License Info, e.g., Apache-2.0]
+PackageLicenseComments: None
+PackageDescription: Kubernetes, an open-source container orchestration platform. Client Version: v1.28.2, Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3, Server Version: v1.28.2.
+PackageComment: None
+
+##### Relationships
+Relationship: SPDXRef-Package-GLACIATION-PowerMeasurementFramework RUNS_ON SPDXRef-Package-Kubernetes-1.28.2
+
+##### Package Information for Docker
+PackageName: Docker
+PackageVersion: 24.0.5
+SPDXID: SPDXRef-Package-Docker-24.0.5
+PackageFileName: [File Name, e.g., docker-24.0.5.tar.gz]
+PackageSupplier: Organization: Docker, Inc.
+PackageOriginator: Organization: Docker, Inc.
+PackageDownloadLocation: [URL or NONE, e.g., https://github.com/docker/docker-ce/releases/tag/v24.0.5]
+FilesAnalyzed: false
+PackageVerificationCode: [Verification Code]
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: [License, e.g., Apache-2.0]
+PackageLicenseInfoFromFiles: [License Info, e.g., Apache-2.0]
+PackageLicenseComments: None
+PackageDescription: Docker, an open-source platform used for containerization. Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1.
+PackageComment: None
+
+##### Relationships
+Relationship: SPDXRef-Package-GLACIATION-PowerMeasurementFramework RUNS_ON SPDXRef-Package-Docker-24.0.5
+
+##### Start SPDX snippet #####
+
+PackageName: Helm
+SPDXID: SPDXRef-Package-Helm
+PackageVersion: [insert Helm version here]
+PackageDownloadLocation: "https://github.com/helm/helm/releases/download/v[insert version here]/helm-[insert version here]-linux-amd64.tar.gz"
+PackageSummary: <text>Helm is a tool for managing Kubernetes charts.</text>
+PackageDescription: <text>Helm is a tool for managing Kubernetes applications. Helm Charts help you define, install, and upgrade even the most complex Kubernetes application.</text>
+PackageHomePage: "https://helm.sh/"
+PackageLicenseDeclared: Apache-2.0
+PackageLicenseConcluded: Apache-2.0
+LicenseInfoInFile: Apache-2.0
+PackageLicenseComments: <text>The package is distributed under the Apache License 2.0, which can be found in the file LICENSE in the source code.</text>
+FilesAnalyzed: false
+PackageChecksum: SHA256:[insert checksum here]
+ExternalRef: SECURITY cpe23Type "cpe:2.3:a:helm:helm:[insert version here]"
+ExternalRef: PACKAGE-MANAGER purl "pkg:github/helm/helm@v[insert version here]"
+ExternalRefComment: <text>Helm is available for download from the Helm GitHub repository.</text>
+IsIncludedInSPDXDoc: true
+HasBuildInfo: SPDXRef-BuildInfo-Helm
+
+##### Package Information for Grafana
+PackageName: Grafana
+PackageVersion: 9.1.5
+SPDXID: SPDXRef-Package-Grafana-9.1.5
+PackageFileName: grafana-9.1.5.linux-amd64.tar.gz
+PackageSupplier: Organization: Grafana Labs
+PackageOriginator: Organization: Grafana Labs
+PackageDownloadLocation: https://grafana.com/grafana/download/9.1.5?edition=oss
+FilesAnalyzed: false
+PackageVerificationCode: [Verification Code]
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: AGPL-3.0
+PackageLicenseInfoFromFiles: AGPL-3.0
+PackageLicenseComments: None
+PackageDescription: Grafana is an open-source platform for monitoring and observability. Grafana allows you to query, visualize, alert on, and understand your metrics no matter where they are stored.
+PackageComment: None
+
+##### Package Information for Prometheus
+PackageName: Prometheus
+PackageVersion: 2.40.0
+SPDXID: SPDXRef-Package-Prometheus-2.40.0
+PackageFileName: prometheus-2.40.0.linux-amd64.tar.gz
+PackageSupplier: Organization: Prometheus Authors
+PackageOriginator: Organization: Prometheus Authors
+PackageDownloadLocation: https://prometheus.io/download/#prometheus-2.40.0
+FilesAnalyzed: false
+PackageVerificationCode: [Verification Code]
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: Apache-2.0
+PackageLicenseInfoFromFiles: Apache-2.0
+PackageLicenseComments: None
+PackageDescription: Prometheus, an open-source systems monitoring and alerting toolkit. Version 2.40.0 includes several improvements and bug fixes.
+PackageComment: None
+
+##### Relationships
+Relationship: SPDXRef-Package-GLACIATION-PowerMeasurementFramework MONITORS SPDXRef-Package-Prometheus-2.40.0
+Relationship: SPDXRef-Package-GLACIATION-PowerMeasurementFramework VISUALIZES SPDXRef-Package-Grafana-9.1.5
+
+##### Package Information for Node Exporter
+PackageName: Node Exporter
+PackageVersion: 1.4.0
+SPDXID: SPDXRef-Package-NodeExporter-1.4.0
+PackageFileName: node_exporter-1.4.0.linux-amd64.tar.gz
+PackageSupplier: Organization: Prometheus Authors
+PackageOriginator: Organization: Prometheus Authors
+PackageDownloadLocation: https://prometheus.io/download/#node_exporter
+FilesAnalyzed: false
+PackageVerificationCode: [Verification Code]
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: Apache-2.0
+PackageLicenseInfoFromFiles: Apache-2.0
+PackageLicenseComments: None
+PackageDescription: Node Exporter, a Prometheus exporter for hardware and OS metrics exposed by *NIX kernels.
+PackageComment: None
+
+##### Package Information for Kepler
+PackageName: Kepler
+PackageVersion: 2.5.1
+SPDXID: SPDXRef-Package-Kepler-2.5.1
+PackageFileName: kepler-2.5.1.war
+PackageSupplier: Organization: Kepler Contributors
+PackageOriginator: Organization: Kepler Project
+PackageDownloadLocation: https://kepler-project.org/users/downloads
+FilesAnalyzed: false
+PackageVerificationCode: [Verification Code]
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: BSD-2-Clause
+PackageLicenseInfoFromFiles: BSD-2-Clause
+PackageLicenseComments: None
+PackageDescription: Kepler is a software application for the analysis, integration, and modeling of scientific and engineering workflows.
+PackageComment: None
+
+##### Relationships
+Relationship: SPDXRef-Package-GLACIATION-PowerMeasurementFramework UTILIZES SPDXRef-Package-Kepler-2.5.1
+Relationship: SPDXRef-Package-Prometheus-2.40.0 UTILIZES SPDXRef-Package-NodeExporter-1.4.0
+Relationship: SPDXRef-Package-Prometheus-2.40.0 UTILIZES SPDXRef-Package-cAdvisor-0.44.3
+
+##### End of Document #####
+
