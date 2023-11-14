@@ -1,23 +1,19 @@
-import ast
 import time
-import json
 import logging
-import data_utils
 import numpy as np
 import pmdarima as pm
-import matplotlib.pyplot as plt
 
-from pathlib import Path
-from datetime import datetime
+from util import data_utils
+from model.forecaster import Forecaster
 from sklearn.metrics import mean_squared_error, mean_absolute_percentage_error
 from pmdarima import model_selection
 from pmdarima.arima import auto_arima
 
 
-class Forecaster():
+class AutoARIMA(Forecaster):
 
     def __init__(self, 
-        history: str,
+        history: np.array,
         n_periods=1,
         evaluate=0.0,
         **kw_args
@@ -25,15 +21,13 @@ class Forecaster():
         """
         Initialize the Auto ARIMA forecaster
     
+        :param name: model name
         :param history: historical data to be used for training
         :param n_periods: how many upcoming periods to be predicted
         :param evaluate: percentage to be used for evaluation to produce MSE, MAE
         :param **kw_args: dictionary for args of auto_arima such as m (default=1 meaning no seasonality)
         """
-        self.history = history
-        self.n_periods = n_periods
-        self.evaluate = evaluate
-        self.get_dump_path()
+        super().__init__('AutoARIMA', history, n_periods, evaluate, **kw_args)
 
         try:
             logging.basicConfig(
@@ -117,12 +111,6 @@ class Forecaster():
     
     def run(self,):
         """ Run with input data and dump JSON results """
-        #logging.basicConfig(
-        #    filename=f"{dump_path}/run.log",
-        #    filemode="w",
-        #    format="%(name)s - %(levelname)s - %(message)s",
-        #    level=logging.DEBUG,
-        #)
         
         start_time = time.time()
         if self.evaluate > 0:
@@ -149,61 +137,6 @@ class Forecaster():
         logging.info(f'Dumping the results into {self.dump_path}')
 
 
-    def dump(self,):
-        """ Dump JSON results """
-        for p in list(filter(lambda a: not a.startswith('__'), self.__dict__.keys())):
-            if type(self.__dict__[p]) is np.ndarray:
-                self.__dict__[p] = self.__dict__[p].tolist()
-        results = self.__dict__
-        #results['model_details'] = str(self.model.to_dict())
-        results['model'] = str(results['model'])
-        results['dump_path'] = results['dump_path'].as_posix()
-
-        # Serializing json
-        logging.debug(f'results to dump: {results}')
-        json_object = json.dumps(ast.literal_eval(str(results)))
-
-        # Writing to sample.json
-        with open(Path(self.dump_path, 'output_autoarima.json'), 'w') as outfile:
-            outfile.write(json_object)
-
-        # Save test plot
-        if 'test_pred' in self.__dict__.keys():
-            f, ax = plt.subplots() 
-            x = np.arange(len(self.test))
-            # Plot train
-            #plt.plot(np.arange(len(self.history)-len(self.test)), self.history[:-len(self.test)])
-            plt.scatter(x, self.test, marker='x')
-            plt.plot(x, self.test_pred)
-            # Confidence interval
-            plt.fill_between(
-                x,
-                #x+len(self.history)-len(self.test), 
-                self.test_lower_bounds, 
-                self.test_upper_bounds,
-                alpha=.1,
-                color='b'
-            )
-            plt.title('Actual test samples vs. forecasts')
-            plt.text(
-                0.5, 
-                0.9, 
-                f'MAPE: {self.eval_results["mape"]}',
-                ha='center', 
-                va='top', 
-                transform=ax.transAxes
-            )
-            plt.tight_layout()
-            plt.savefig(Path(self.dump_path, 'test_autoarima.pdf'))
-
-        
-    def get_dump_path(self,):
-        """ Return a path to store results """
-        cur_time = datetime.now()
-        time_str = cur_time.strftime('%Y%m%d-%H%M%S%f')
-        self.dump_path = Path.cwd() / time_str
-        self.dump_path.mkdir()
-
 
 if __name__ == "__main__":
    
@@ -221,17 +154,17 @@ if __name__ == "__main__":
     }
     ORDER BY ASC(?date)
     """
-    ts_from_kg = data_utils.get_timeseries(query) 
+    #ts_from_kg = data_utils.get_timeseries(query) 
 
     datasets = [
-#        np.arange(1,30,2),
+        np.arange(1,30,2),
 #        np.random.randint(5, size=11),
 #        pm.datasets.load_wineind(),
-        ts_from_kg
+#        ts_from_kg
     ]
     for dataset in datasets:
         print(f'dataset: {dataset}')
-        forecaster = Forecaster(
+        forecaster = AutoARIMA(
             dataset, 
             evaluate=10,
          #   m=12

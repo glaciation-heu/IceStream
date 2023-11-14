@@ -1,3 +1,5 @@
+import tensorflow as tf
+import numpy as np
 import pandas as pd
 
 from pprint import pprint
@@ -53,8 +55,34 @@ def get_timeseries(sparql_query:str, loc='data/DAYTON.ttl'):
     return ts
 
 
+def window_dataset(series:np.array, window_size:int):
+    """ Return window dataset with (X,y) format
+        for DL-based time series models
+    
+    :param series: time series data
+    :param window_size: window size - len(X)
+    """
+    dataset = tf.data.Dataset.from_tensor_slices(series)
+    dataset = dataset.window(
+        window_size+1,
+        shift=1,
+        drop_remainder=True
+    )
+    dataset = dataset.flat_map(
+        lambda x: x.batch(window_size+1)
+    )
+    dataset = dataset.map(lambda x: (x[:-1], x[-1:]))
+    data, labels = [], []
+    for (x, y) in dataset.as_numpy_iterator():
+        data.append(x)
+        labels.append(y[0])
+    data = np.array(data).astype(float)
+    labels = np.array(labels).astype(float)
+    return (data, labels)
+    
+
 if __name__ == '__main__':
-    create_KG()
+    #create_KG()
 
     query = """
     prefix om: <http://www.ontology-of-units-of-measure.org/resource/om-2/>
@@ -69,4 +97,8 @@ if __name__ == '__main__':
     }
     ORDER BY ASC(?date)
     """
-    get_timeseries(query) 
+    #get_timeseries(query) 
+    print(window_dataset(
+        np.arange(1, 300, 2),
+        window_size=3
+    ))

@@ -1,4 +1,6 @@
 #!/bin/bash
 
-rm -r 2023*
-python forecast.py
+clear
+rm -r 202*
+rm -r hbnn
+python test.py
