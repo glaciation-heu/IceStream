@@ -2,9 +2,14 @@
 This microservice provides forecasting functionality based on historical timeseries data retrieved from DKG.
 The service is developed in ```Python 3.9.18```.
 
+
+
 ## Implemented methods
-- ARIMA
-- HBNN
+
+- [ARIMA](https://alkaline-ml.com/pmdarima/)
+- [HBNN](https://ieeexplore.ieee.org/document/9860848)
+
+
 
 ## Structure
 
