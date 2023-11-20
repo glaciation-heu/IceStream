@@ -34,7 +34,6 @@ class FusekiCommunicatior:
         :param query: The `query` parameter is a string that represents the SPARQL query that you want
         to execute. SPARQL is a query language for querying RDF data
         :type query: str
-        :return: The function `read_query` returns one of the following:
         """
         self.sparql.setQuery(query)
         self.sparql.setReturnFormat(JSON)
