@@ -5,6 +5,7 @@ import pandas as pd
 from pprint import pprint
 from rdflib import Graph, BNode, Literal, Namespace
 from rdflib.namespace import RDF, PROV, XSD
+from SPARQLWrapper import SPARQLWrapper, JSON
 
 
 def create_KG(city='DAYTON'):
@@ -98,7 +99,41 @@ if __name__ == '__main__':
     ORDER BY ASC(?date)
     """
     #get_timeseries(query) 
-    print(window_dataset(
-        np.arange(1, 300, 2),
-        window_size=3
-    ))
+    #print(window_dataset(
+    #    np.arange(1, 300, 2),
+    #    window_size=3
+    #))
+
+
+    # Fuseki test
+    sparql = SPARQLWrapper(
+        endpoint='http://localhost:3030/ds/update'
+    )
+    sparql.setReturnFormat(JSON)
+    sparql.setQuery("""
+        SELECT * WHERE {
+            ?s ?p ?o
+        }
+        """
+    )
+    sparql.setQuery("""
+        prefix log: <http://example.org/ont/transaction-log/> 
+        prefix srv: <http://example.org/data/server/> 
+        prefix txn: <http://example.org/data/transaction/> 
+        prefix xsd: <http://www.w3.org/2001/XMLSchema#> 
+        
+        INSERT DATA {
+            txn:136  a               log:Transaction;
+                log:processedAt  "2015-10-16T10:22:23"^^xsd:dateTime;
+                log:processedBy  srv:A;
+                log:statusCode   200 .
+        }
+        """
+    )
+    try:
+        ret = sparql.queryAndConvert()
+        print(ret)
+        #for r in ret['results']['bindings']:
+        #    print(r)
+    except Exception as e:
+        print(e)

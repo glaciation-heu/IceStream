@@ -36,3 +36,4 @@ talos==1.0.2
 tensorflow==2.8.0
 #tensorflow-gpu==2.8.0
 tensorflow-probability==0.14.0
+sparqlwrapper==2.0.0
