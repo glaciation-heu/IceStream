@@ -13,7 +13,19 @@ spec:
     spec:
       containers:
       - name: jena
-        image: stain/jena-fuseki:latest
+        image: secoresearch/fuseki:latest
         ports:
         - containerPort: 3030
+        volumeMounts:
+        - name: logs
+          mountPath: /fuseki/logs
+        - name: databases
+          mountPath: /fuseki/databases
+      volumes:
+      - name: logs
+        hostPath:
+          path: /fuseki/logs
+      - name: databases
+        hostPath:
+          path: /fuseki/logs
 
