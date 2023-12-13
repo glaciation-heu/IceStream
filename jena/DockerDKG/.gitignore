@@ -1,0 +1,21 @@
+# first ignore everything
+*
+
+# then unignore the files/directories we want to track
+!.gitignore
+
+!*.py
+!*.sh
+!*.ini
+!*.yml
+!Dockerfile
+!tdbloader
+!tdbloader2
+!requirements.txt
+!README.md
+
+!Data
+!Data/data.rdf
+
+!Data_btc-2019
+!Data_btc-2019/download.sh
