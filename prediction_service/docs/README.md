@@ -7,4 +7,4 @@
 - Internal Dependencies: Metadata microservice for read/write.
 
 # Service Architecture:
-![](v20240125.png) 
+![](v20240125.jpg) 
