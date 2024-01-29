@@ -1,7 +1,7 @@
 # Component Overview:
 - **Description**: Distributed Knowledge Graph refers to the Novel Metadata Fabric of the GLACIATION platform, contains 7 components as follows:
 - **Objectives**: Jena Fuseki instance will be used as DB for storing DKG. 6 other microservices will be developed and provide REST API following OpenAPI specifications.
-* [Jena component](jena/)
+* [Jena component](../jena/)
 * [Metadata Service](metadata_service/)
 * [Prediction service](prediction_service/)
 * [Replica Service](replica_service/)
