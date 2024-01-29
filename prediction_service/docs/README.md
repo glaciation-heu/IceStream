@@ -7,7 +7,7 @@
 - Internal Dependencies: Metadata microservice for read/write.
 
 # Service Architecture:
-![](v20240125.jpg) 
+![](v20240129.jpg) 
 
 # Contact:
 DELL Technologies (Guangyuan.Piao@dell.com)
