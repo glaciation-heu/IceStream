@@ -13,7 +13,8 @@
 For each component, there will be separate ```.md``` file under the ```docs``` folder of each service describing its dependencies.
 
 # Service Architecture:
-Jena Fuseki instance will be used as DB for storing DKG. For each component, there will be separate ```.md``` file under the ```docs``` folder of each service describing its architecture respectively.
+- Jena Fuseki instance will be used as DB for storing DKG. 
+- For each component, there will be separate ```.md``` file under the ```docs``` folder of each service describing its architecture respectively.
 
 
 
