@@ -13,7 +13,8 @@
 For each component, there will be separate ```.md``` file under the ```docs``` folder of each service describing its dependencies.
 
 # Service Architecture:
-- Jena Fuseki instance will be used as DB for storing DKG. 
+- Jena Fuseki instance will be used as DB for storing DKG. DeamonSet in K8S cluster​, 1 for each node, 5 in total​ in Dell setting.
+- Other microservices can be deployment or Replicaset​
 - For each component, there will be separate ```.md``` file under the ```docs``` folder of each service describing its architecture respectively.
 
 
