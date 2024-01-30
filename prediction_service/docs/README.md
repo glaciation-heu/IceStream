@@ -8,6 +8,7 @@
 
 # Service Architecture:
 ![](v20240129.jpg) 
+- [Kubernetes Batch Job](https://hevodata.com/learn/kubernetes-batch-job/#:~:text=What%20is%20Kubernetes%20Batch%20Job%3F,-Image%20Source&text=A%20job%20creates%20one%20or,pod%20completions%20as%20they%20happen.)
 
 # Contact:
 DELL Technologies (Guangyuan.Piao@dell.com)
