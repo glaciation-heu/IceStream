@@ -46,3 +46,18 @@ Here a complete list of the parameters available:
 | parallel | Boolean | Flag to enable complete parallelization of the sanitization process (including the early stages to identify the fragments) |
 | repartition | String | Function to use for repartitioning the dataset among the Spark workers |
 | measures | List of strings | Functions to roughly measure the quality of the anonymized dataset (i.e., discernability_penalty, global_certainty_penalty, normalized_certainty_penalty) |
+
+## Dependencies
+
+The sanitization service is an Apache Spark application. To seemlessly
+integrate it within Kubernetes, the target orchestration system of the
+GLACIATION platform, we need the following dependencies:
+
+- First/Third party object store: An object store for persisting the input and
+  the output datasets either within the Kubernetes cluster deployed with a
+  native Kubernetes operator (e.g., [MinIO](https://github.com/minio/operator),
+  [Rook](https://github.com/rook/rook)) or outside the cluster by referencing
+  an external object store
+- [spark-on-k8s-operator](https://github.com/GoogleCloudPlatform/spark-on-k8s-operator):
+  Kubernetes operator for managing the lifecycle of Apache Spark applications
+  on Kubernetes
