@@ -61,3 +61,36 @@ GLACIATION platform, we need the following dependencies:
 - [spark-on-k8s-operator](https://github.com/GoogleCloudPlatform/spark-on-k8s-operator):
   Kubernetes operator for managing the lifecycle of Apache Spark applications
   on Kubernetes
+
+## Architecture
+
+Details about the functioning of the Spark operator can be found in the
+[official design documentation](https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/blob/master/docs/design.md).
+
+### Submitting new data sanitization requests
+
+![Image displaying the architecture of the service](docs/architecture.png)
+
+### Monitoring the state of existing data sanitization requests
+
+![Image displaying the architecture of the service](docs/architecture-status.png)
+
+## Publications
+
+Additional information about the functioning of the service and its perfomance
+against different datasets can be found in the following publications:
+
+- [1] Sabrina De Capitani di Vimercati, Dario Facchinetti, Sara Foresti,
+  Gianluca Oldani, Stefano Paraboschi, Matthew Rossi, Pierangela Samarati,
+  **Scalable Distributed Anonymization Processing of Sensors Data**,
+  in *Proceedings of the 19th IEEE International Conference on Pervasive
+  Computing and Communications (PerCom)*, March 22-26, 2021
+- [2] Sabrina De Capitani di Vimercati, Dario Facchinetti, Sara Foresti,
+  Gianluca Oldani, Stefano Paraboschi, Matthew Rossi, Pierangela Samarati,
+  **Artifact: Scalable Distributed Anonymization Processing of Sensors Data**,
+  in *Proceedings of the 19th IEEE International Conference on Pervasive
+  Computing and Communications (PerCom)*, March 22-26, 2021
+- [3] Sabrina De Capitani di Vimercati, Dario Facchinetti, Sara Foresti,
+  Giovanni Livraga, Gianluca Oldani, Stefano Paraboschi, Matthew Rossi,
+  Pierangela Samarati, **Scalable Distributed Data Anonymization for Large
+  Datasets**, in *IEEE Transactions on Big Data (TBD)*, September 19, 2022
