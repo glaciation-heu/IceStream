@@ -25,3 +25,12 @@ dependencies:
   [Rook](https://github.com/rook/rook))
 - [HashiCorp Vault](https://github.com/hashicorp/vault): A tool for secrets
   management, encryption as a service, and privileged access management
+
+## Architecture
+
+![Image displaying the architecture of the service](docs/architecture.png)
+
+Further details about the functioning of object store operators and their
+integration with HashiCorp Vault can be found in the official documentation
+of [MinIO](https://min.io/docs/minio/kubernetes/upstream/administration/server-side-encryption.html)
+and [Rook](https://rook.io/docs/rook/latest-release/Storage-Configuration/Advanced/key-management-system/#vault).

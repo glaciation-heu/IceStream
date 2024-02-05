@@ -1,0 +1,64 @@
+<mxfile host="app.diagrams.net" modified="2024-02-05T15:26:37.424Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/121.0.0.0 Safari/537.36" etag="nruiYp260YcZ332J70jB" version="23.1.1" type="device">
+  <diagram id="z2fywuhmsZZxHbe4xA-M" name="Page-1">
+    <mxGraphModel dx="541" dy="795" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-11" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="238" y="440" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-10" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="230" y="440" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-3" value="Object store operator" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="257" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-4" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.25;entryDx=0;entryDy=0;rounded=0;" parent="1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="28" y="87" as="sourcePoint" />
+            <mxPoint x="199" y="87" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-5" value="&lt;h1 style=&quot;line-height: 50%;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;1. Create resource requesting&amp;nbsp; &amp;nbsp; &amp;nbsp; use of encrypted persistent&amp;nbsp; &amp;nbsp; &amp;nbsp; volume&lt;/span&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="26" y="25" width="172" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TMdRoOH4GbIq7_JRytAd-9" target="TMdRoOH4GbIq7_JRytAd-3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="259" y="147" as="sourcePoint" />
+            <mxPoint x="259" y="197" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-9" value="K8s API" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="77" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-15" value="&lt;h1 style=&quot;line-height: 50%;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;2. Forward request to the object&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; store operator (depending on the&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; requested storage class)&lt;/span&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="60" y="160" width="207" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-1" value="HashiCorp Vault" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="490" y="257" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-5" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="TMdRoOH4GbIq7_JRytAd-3" target="pp0-_kGOhsqNxKm0K_HM-1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="300" as="sourcePoint" />
+            <mxPoint x="430" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-6" value="&lt;h1 style=&quot;line-height: 50%;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;3. Generate, store and retrieve&amp;nbsp; &amp;nbsp; &amp;nbsp; encryption keys&lt;/span&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="318" y="237" width="176" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-7" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;fontSize=12;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" edge="1" parent="1" source="pp0-_kGOhsqNxKm0K_HM-10" target="TMdRoOH4GbIq7_JRytAd-3">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="420" as="sourcePoint" />
+            <mxPoint x="330" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-9" value="Object store pods" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="222" y="440" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-12" value="&lt;h1 style=&quot;line-height: 50%;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;4. Read / store encrypted&amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; &amp;nbsp; object&lt;/span&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="265" y="355" width="176" height="54" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
