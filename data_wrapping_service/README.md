@@ -12,3 +12,16 @@ gain physical access to storage disks or underlying nodes, but also helps meet
 industry standards and regulations. By limiting the blast radius of security
 incidents, it strengthens operational security and builds trust with
 stakeholders.
+
+## Dependencies
+
+To seemlessly integrate the wrapping service within Kubernetes, the target
+orchestration system of the GLACIATION platform, we need the following
+dependencies:
+
+- First-party object store: An object store supporting transparent encryption
+  of persistent volumes within the Kubernetes cluster deployed with a native
+  Kubernetes operator (e.g., [MinIO](https://github.com/minio/operator),
+  [Rook](https://github.com/rook/rook))
+- [HashiCorp Vault](https://github.com/hashicorp/vault): A tool for secrets
+  management, encryption as a service, and privileged access management
