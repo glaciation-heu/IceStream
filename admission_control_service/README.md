@@ -21,3 +21,10 @@ orchestration system of the GLACIATION platform. Indeed, by using
 cloud native policy controller that helps enforce policies executed by
 [Open Policy Agent](https://github.com/open-policy-agent/opa), we can focus our
 efforts in the configuration and definition of new policies.
+
+## Architecture
+
+![Image displaying the architecture of the service](docs/architecture.png)
+
+Further details about the functioning of Gatekeeper can be found in the
+[official documentation](https://open-policy-agent.github.io/gatekeeper/website/docs/operations).
