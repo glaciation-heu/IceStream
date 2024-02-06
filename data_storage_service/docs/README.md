@@ -1,5 +1,5 @@
 # Service Overview:
-- Description: Store access patterns about data sources.
+- Description: Store access patterns about data sources, and write daily summary statistics to DKG for the last n days.
 - Objectives: Keep track of how many times a data source has been queried in SPARQL requests.
 
 # Service Dependencies:
