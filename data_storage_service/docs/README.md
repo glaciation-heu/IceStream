@@ -7,7 +7,7 @@
 - Internal Dependencies: Metadata microservice to write back a summary statistics for n days.
 
 # Service Architecture:
-![](v20240125.jpg) 
+![](data-storage-service-v20240206.jpg) 
 
 # Contact
 DELL Technologies (Guangyuan.Piao@dell.com)
