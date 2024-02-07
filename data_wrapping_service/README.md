@@ -15,7 +15,7 @@ stakeholders.
 
 ## Dependencies
 
-To seemlessly integrate the wrapping service within Kubernetes, the target
+To seamlessly integrate the wrapping service within Kubernetes, the target
 orchestration system of the GLACIATION platform, we need the following
 dependencies:
 
