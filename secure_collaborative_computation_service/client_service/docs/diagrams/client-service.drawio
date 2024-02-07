@@ -1,0 +1,87 @@
+<mxfile host="65bd71144e">
+    <diagram id="6hGFLwfOUW9BJmUZLLm1" name="Page-1">
+        <mxGraphModel dx="935" dy="786" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="0.6" value="Best viewed with the &lt;a href=&quot;https://github.com/ariel-bentu/tam-drawio&quot;&gt;TAM plugin&lt;/a&gt;" style="text;html=1;shape=tamPluginMissing;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="360" y="240" width="200" height="25" as="geometry"/>
+                </mxCell>
+                <mxCell id="56" value="" style="rounded=0;whiteSpace=wrap;html=1;fillColor=none;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="138" y="70" width="370" height="140" as="geometry"/>
+                </mxCell>
+                <mxCell id="57" value="&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;Carbyne Stack&lt;br&gt;Client&lt;br&gt;(elmer)&lt;br&gt;&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="396" y="120" width="112" height="72" as="geometry"/>
+                </mxCell>
+                <mxCell id="58" value="&lt;b&gt;Client Service&lt;br&gt;(REST API)&lt;br&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="138" y="67" width="97" height="41" as="geometry"/>
+                </mxCell>
+                <mxCell id="59" value="&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;Web Server&lt;br style=&quot;border-color: var(--border-color);&quot;&gt;(poem)&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="138" y="122" width="114" height="73" as="geometry"/>
+                </mxCell>
+                <mxCell id="60" value="&lt;b&gt;&lt;br&gt;&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;" parent="1" vertex="1">
+                    <mxGeometry x="347" y="134" width="18" height="26" as="geometry"/>
+                </mxCell>
+                <mxCell id="61" value="&lt;b style=&quot;border-color: var(--border-color);&quot;&gt;Computation Service&lt;/b&gt;" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1" connectable="0">
+                    <mxGeometry x="645" y="118" width="137" height="68" as="geometry"/>
+                </mxCell>
+                <mxCell id="62" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="508" y="146" as="sourcePoint"/>
+                        <mxPoint x="646" y="146" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="583" y="146"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="63" value="invokes encrypted&lt;br&gt;storage/compute services" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="62" vertex="1" connectable="0">
+                    <mxGeometry x="-0.002" y="-3" relative="1" as="geometry">
+                        <mxPoint x="3" y="-22" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="64" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="254" y="147" as="sourcePoint"/>
+                        <mxPoint x="395" y="147.0000000000001" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="304" y="146.5"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="65" value="invokes" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="64" vertex="1" connectable="0">
+                    <mxGeometry x="-0.002" y="-3" relative="1" as="geometry">
+                        <mxPoint x="-5" y="-15" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="66" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="642" y="173" as="sourcePoint"/>
+                        <mxPoint x="509" y="172.5" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="584" y="172.5"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="67" value="status / encrypted value" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="66" vertex="1" connectable="0">
+                    <mxGeometry x="-0.002" y="-3" relative="1" as="geometry">
+                        <mxPoint y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="68" value="" style="edgeStyle=segmentEdgeStyle;endArrow=classic;html=1;curved=0;rounded=0;endSize=8;startSize=8;" parent="1" edge="1">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="394.5" y="176.5" as="sourcePoint"/>
+                        <mxPoint x="253" y="176" as="targetPoint"/>
+                        <Array as="points">
+                            <mxPoint x="303.5" y="176"/>
+                        </Array>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="69" value="status / (decrypted) value" style="edgeLabel;html=1;align=center;verticalAlign=middle;resizable=0;points=[];" parent="68" vertex="1" connectable="0">
+                    <mxGeometry x="-0.002" y="-3" relative="1" as="geometry">
+                        <mxPoint y="-10" as="offset"/>
+                    </mxGeometry>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
