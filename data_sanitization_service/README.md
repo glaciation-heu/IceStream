@@ -1,8 +1,7 @@
 # Data Sanitization Service
 
-This service implements an efficient and effective approach to protect users
-data by obfuscating information that can disclose their identities and
-sensitive information.
+This service implements an efficient and effective approach to protect user
+privacy by obfuscating their identities or sensitive information.
 
 ## Overview
 
@@ -20,11 +19,12 @@ determining the dataset cuts; the set of custom generalization methods for
 quasi-identifiers (if any); and the list of information loss metrics to
 compute.
 
-We also provide parameters to configure the process of distributing the dataset
-among the worker nodes. Specifically, we provide a way to declare the fraction
-of the dataset to be considered in this initial stage, the number of
-partitions, the fragmentation strategy, and its parallelization and
-repartitioning scheme.
+The anonymization and obfuscation process leverages the availability of a
+distributed architecture of workers. The service enables the configuration of
+data distribution and processing, through several parameters. In particular,
+parameters include the specification of the fraction of the original dataset to
+be considered in this initial stage, the number of partitions, the
+fragmentation strategy, and its parallelization and repartitioning scheme.
 
 Here a complete list of the parameters available:
 
