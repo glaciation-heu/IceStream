@@ -16,6 +16,10 @@
 
 !Data
 !Data/data.rdf
+!Data/slice1.rdf
+!Data/slice2.rdf
+!Data/slice3.rdf
+!Data/slice4.rdf
 
 !Data_btc-2019
 !Data_btc-2019/download.sh
