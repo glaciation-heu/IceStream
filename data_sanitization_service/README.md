@@ -14,8 +14,8 @@ use of both of them. Sanitization jobs are configured by the requesting
 application with numerous parameters with the goal of tailoring the
 sanitization process according to the specific requirements of the application.
 These parameters include the input and the output; the classification of
-attributes in identifiers, quasi-identifiers and sensitive attrubutes;
-k-anonimity and l-diversity privacy parameters; the function used for
+attributes in identifiers, quasi-identifiers and sensitive attributes;
+k-anonymity and l-diversity privacy parameters; the function used for
 determining the dataset cuts; the set of custom generalization methods for
 quasi-identifiers (if any); and the list of information loss metrics to
 compute.
@@ -49,7 +49,7 @@ Here a complete list of the parameters available:
 
 ## Dependencies
 
-The sanitization service is an Apache Spark application. To seemlessly
+The sanitization service is an Apache Spark application. To seamlessly
 integrate it within Kubernetes, the target orchestration system of the
 GLACIATION platform, we need the following dependencies:
 
@@ -77,7 +77,7 @@ Details about the functioning of the Spark operator can be found in the
 
 ## Publications
 
-Additional information about the functioning of the service and its perfomance
+Additional information about the functioning of the service and its performance
 against different datasets can be found in the following publications:
 
 - [1] Sabrina De Capitani di Vimercati, Dario Facchinetti, Sara Foresti,
@@ -93,4 +93,4 @@ against different datasets can be found in the following publications:
 - [3] Sabrina De Capitani di Vimercati, Dario Facchinetti, Sara Foresti,
   Giovanni Livraga, Gianluca Oldani, Stefano Paraboschi, Matthew Rossi,
   Pierangela Samarati, **Scalable Distributed Data Anonymization for Large
-  Datasets**, in *IEEE Transactions on Big Data (TBD)*, September 19, 2022
+  Datasets**, in *IEEE Transactions on Big Data (TBD)*, June 01, 2023
