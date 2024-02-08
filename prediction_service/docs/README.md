@@ -4,7 +4,7 @@
 
 # Service Dependencies:
 - External Dependencies: Performance measurement framework to get raw data based on metadata about this datasource from Metadata microservice. The metadata information of the performance metrics might be donw via Data Processing and Monitoring microservice.
-- Internal Dependencies: Metadata microservice for read/write. 
+- Internal Dependencies: Metadata microservice for read. Data Storage Service to store the prediction history. 
 
 # Service Architecture:
 ![](v20240205.JPG) 
