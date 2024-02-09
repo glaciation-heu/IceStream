@@ -49,3 +49,49 @@ and [Rook](https://rook.io/docs/rook/latest-release/Storage-Configuration/Advanc
 | ReadWriteOnce | Volume can be mounted as read-write by a single node |
 | ReadWriteOncePod | Volume can be mounted as read-write by a single Pod |
 | Storage Class | Describe the class of storage (e.g., encrypted) |
+
+## Kubernetes resources
+
+The following showcases basic usage of persistent volume claims by pods. For a
+complete view of the details regarding persistent volumes please refer to the
+official [documentation](https://kubernetes.io/docs/concepts/storage/persistent-volumes/).
+
+### PersistentVolumeClaim
+
+```yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: my-encrypted-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 4Gi
+  storageClassName: encrypted
+```
+
+### Pod with a PersistentVolumeClaim
+
+Pods access storage by using the claim as a volume. The cluster finds the claim
+in the Pod's namespace and uses it to get the PersistentVolume backing the
+claim. The volume is then mounted to the host and into the Pod.
+
+```yaml
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-database
+spec:
+  containers:
+    - name: postgres
+      image: postgres
+      volumeMounts:
+      - mountPath: /var/lib/postgresql/data
+        name: my-encrypted-volume
+  volumes:
+    - name: my-encrypted-volume
+      persistentVolumeClaim:
+        claimName: my-encrypted-volume-claim
+```
