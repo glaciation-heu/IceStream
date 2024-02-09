@@ -74,6 +74,8 @@ Details about the functioning of the Spark operator can be found in the
 | sensitive attribute | Attribute that should not be linkable to an individual subject |
 | shuffling | Exchange of data between nodes to be able to perform a task |
 
+## [OpenAPI specification](docs/openapi.yaml)
+
 ## Publications
 
 Additional information about the functioning of the service and its performance
