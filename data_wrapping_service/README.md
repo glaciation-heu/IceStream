@@ -34,3 +34,18 @@ Further details about the functioning of object store operators and their
 integration with HashiCorp Vault can be found in the official documentation
 of [MinIO](https://min.io/docs/minio/kubernetes/upstream/administration/server-side-encryption.html)
 and [Rook](https://rook.io/docs/rook/latest-release/Storage-Configuration/Advanced/key-management-system/#vault).
+
+## Terminology
+
+| Term | Description |
+|---|---|
+| Binding | One-to-one mapping between the PersistentVolumeClaim and its PersistentVolume |
+| PersistentVolume (PV) | Storage resource provisioned by an administrator or dynamically provisioned using Storage Classes |
+| PersistentVolumeClaim (PVC) | Request for storage by a Pod |
+| Provisioning | Process of assigning new storage resources to the cluster |
+| Reclaim policy | What to do with the volume after it has been released of its claim (e.g., retain, delete) |
+| ReadOnlyMany | Volume can be mounted as read-only by many nodes |
+| ReadWriteMany | Volume can be mounted as read-write by many nodes |
+| ReadWriteOnce | Volume can be mounted as read-write by a single node |
+| ReadWriteOncePod | Volume can be mounted as read-write by a single Pod |
+| Storage Class | Describe the class of storage (e.g., encrypted) |
