@@ -28,3 +28,15 @@ efforts in the configuration and definition of new policies.
 
 Further details about the functioning of Gatekeeper can be found in the
 [official documentation](https://open-policy-agent.github.io/gatekeeper/website/docs/operations).
+
+## Terminology
+
+| Term | Description |
+|---|---|
+| Admission controller | Component intercepting requests to the Kubernetes API server prior to persistence of the object |
+| API server | Frontend to the cluster's shared state through which all Kubernetes components interact |
+| Constraint | Enforce a ConstraintTemplate by specificying the kind of resources affected and the enforcement parameters |
+| ConstraintTemplate | Definition of the Rego policy enforcing the policy and the schema of parameters to configure it |
+| CustomResourceDefinition | Extension of the Kubernetes API not available in default Kubernetes installations |
+| Mutating admission controller | Admission controllers that may modify objects related to the request they admit |
+| Validating admission controller | Admission controllers that may not modify objects related to the request they admit |
