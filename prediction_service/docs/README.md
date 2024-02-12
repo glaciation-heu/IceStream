@@ -12,3 +12,10 @@
 
 # Contact:
 DELL Technologies (Guangyuan.Piao@dell.com)
+
+# Todo list
+- [x] Service description
+- [x] OpenAPI specification
+- [ ] Batch job for prediction
+- [ ] Connect to DSS service
+- [ ] Connect to metadata service
