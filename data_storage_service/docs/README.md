@@ -11,3 +11,9 @@
 
 # Contact
 DELL Technologies (Guangyuan.Piao@dell.com)
+
+# Todo list
+- [x] Service description
+- [] OpenAPI specification
+- [] REST API implementation
+- [] Batch job implemetation, connect to metadata service
