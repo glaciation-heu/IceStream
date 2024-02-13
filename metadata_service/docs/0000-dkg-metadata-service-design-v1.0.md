@@ -1,4 +1,4 @@
-# DKG Replica Service Design (v1.1)
+# Metadata Service Design (v1.0)
 
 Created by: Oleksandr Chepizhko, Péter Forgács
 Created time: February 07, 2024 4:00 PM
