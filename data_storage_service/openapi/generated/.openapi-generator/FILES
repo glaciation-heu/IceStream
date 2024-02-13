@@ -12,7 +12,9 @@ openapi_server/controllers/security_controller.py
 openapi_server/encoder.py
 openapi_server/models/__init__.py
 openapi_server/models/base_model.py
+openapi_server/models/data_access_record.py
 openapi_server/models/metric.py
+openapi_server/models/time_series.py
 openapi_server/openapi/openapi.yaml
 openapi_server/test/__init__.py
 openapi_server/typing_utils.py

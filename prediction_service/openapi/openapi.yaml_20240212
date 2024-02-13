@@ -23,44 +23,20 @@ components:
     Metric:
       type: object
       properties:
-        metricId:
-          type: string
-          examples: ['1234']
-        timeseries:
-          type: array
-          items: 
-            type: number
-            format: float
-        forecasting_values:
-          type: array
-          items:
-            type: number
-            format: float
-        forecasting_upper_bounds:
-          type: array
-          items:
-            type: number
-            format: float
-        forecasting_lower_bounds:
-          type: array
-          items:
-            type: number
-            format: float
-        forecasting_model:
-          type: string
-        forecasting_period:
+        id:
           type: integer
-          format: int32
+          format: int64
           examples: [1]
         time:
           type: array
-          items:
+          items: 
             type: string
             format: date
-        aggregation_interval:
-          type: integer
-          format: int64
-          examples: [86400]
+        value:
+          type: array
+          items:
+            type: number
+            format: float
 paths:
   /prediction/{metricId}:
     get:
@@ -73,7 +49,8 @@ paths:
           description: Id of the metric to return
           required: true
           schema:
-            type: string
+            type: integer
+            format: int64
       responses:
         '200':
           description: successful operation

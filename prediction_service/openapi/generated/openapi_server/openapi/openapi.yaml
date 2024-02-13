@@ -30,8 +30,7 @@ paths:
         name: metricId
         required: true
         schema:
-          format: int64
-          type: integer
+          type: string
         style: simple
       responses:
         "200":
@@ -50,9 +49,39 @@ components:
   schemas:
     Metric:
       properties:
-        id:
-          format: int64
-          title: id
+        metricId:
+          title: metricId
+          type: string
+        timeseries:
+          items:
+            format: float
+            type: number
+          title: timeseries
+          type: array
+        forecasting_values:
+          items:
+            format: float
+            type: number
+          title: forecasting_values
+          type: array
+        forecasting_upper_bounds:
+          items:
+            format: float
+            type: number
+          title: forecasting_upper_bounds
+          type: array
+        forecasting_lower_bounds:
+          items:
+            format: float
+            type: number
+          title: forecasting_lower_bounds
+          type: array
+        forecasting_model:
+          title: forecasting_model
+          type: string
+        forecasting_period:
+          format: int32
+          title: forecasting_period
           type: integer
         time:
           items:
@@ -60,11 +89,8 @@ components:
             type: string
           title: time
           type: array
-        value:
-          items:
-            format: float
-            type: number
-          title: value
-          type: array
+        aggregation_interval:
+          format: int64
+          title: aggregation_interval
+          type: integer
       title: Metric
-      type: object
