@@ -26,6 +26,19 @@ parameters include the specification of the fraction of the original dataset to
 be considered in this initial stage, the number of partitions, the
 fragmentation strategy, and its parallelization and repartitioning scheme.
 
+### Assumptions
+
+The input dataset target of the sanitization process MUST be in tabular
+format. However, thanks to the use of Apache Spark, the sanitization service
+can support multiple data formats (e.g., Avro, CSV, Delta, Iceberg, Parquet,
+and ORC). The selection of the specific parsing and serialization format
+depends on the extension of the dataset.
+
+The support of quasi-identifier and sensitive attributes with complex object
+types is not supported out of the box. For these use cases consider flattening
+the object in multiple distinct attributes when feasible, and introduce ad hoc
+changes to the sanitization service otherwise.
+
 ## Dependencies
 
 The sanitization service is an Apache Spark application. To seamlessly
