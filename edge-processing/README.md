@@ -18,3 +18,38 @@ expected the service will either carry out wasm compilation or accept
 wasm files for analytics.
 
 ![Image displaying the architecture of the service](docs/architecture.png)
+
+## Domain Model/Terminology
+
+* **EdgeDevice:** Represents a physical 5200 gateway or other edge computation device. Properties:
+    * `deviceId` (string)
+    * `location` (string)
+    * `hardwareSpecs` (object)
+
+* **AnalyticsCode:** Contains the logic to be executed on the edge device (in Wasm format). Properties:
+    * `code` (WASM binary) 
+    * `metadata` (object - version, author, etc.)
+
+* **AnalyticsTask:** Represents a deployment instance of AnalyticsCode on an EdgeDevice. Properties:
+    * `taskId` (string)
+    * `edgeDeviceId` (string)
+    * `analyticsCodeId` (string)
+    * `status` (string - e.g., "deployed", "running", "completed")
+
+## REST/OpenAPI Specification
+
+**Endpoints**
+
+* **`/deploy` (POST):** Deploys analytics code to an edge device.
+    * **Parameters:**
+        * `edgeDeviceId` (string)
+        * `analyticsCode` (Wasm file) 
+    * **Response:**
+        * `taskId` (string)
+
+* **`/tasks/{taskId}/status` (GET):** Retrieves the status of an analytics task.
+    * **Parameter:**
+        * `taskId` (string)
+    * **Response:** 
+        * `status` (string)
+        * `result` (optional - link to result data if applicable)
