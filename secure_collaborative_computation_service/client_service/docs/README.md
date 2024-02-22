@@ -43,3 +43,5 @@ sequenceDiagram
     Client Service->>User: result
 ```
 
+## 4-REST API
+The Rest-API is described by the provided [OpenAPI](openapi.yml) specification.

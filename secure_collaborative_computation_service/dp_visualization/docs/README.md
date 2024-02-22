@@ -47,3 +47,6 @@ sequenceDiagram
     DP Backend--)DP Frontend: DP results
     DP Frontend--)User: View of DP results
 ```
+
+## 4-REST API
+Only a browser-based graphical interface is provided.

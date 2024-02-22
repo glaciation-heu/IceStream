@@ -1,0 +1,147 @@
+openapi: 3.0.0
+info:
+  title: Client Service
+  description: 'Client Service to access the computation service.'
+  version: '1.0'
+tags: []
+paths:
+  "/secrets/{collaboration_id}":
+    post:
+      summary: 'Create secrets.'
+      parameters:
+      - name: collaboration_id
+        description: Identifier of the MPC-computation project
+        schema:
+          type: integer
+          format: uint32
+        in: path
+        required: true
+        deprecated: false
+      requestBody:
+        content:
+          text/csv:
+            schema:
+              description: CSV of secrets / MPC-Program parameters to upload.
+              type: string
+              format: csv
+        required: true
+      responses:
+        '200':
+          description: Secret created successfully.
+          content:
+            application/json::
+              schema:
+                type: array
+                description: The ids of the created secret
+                items:
+                  type: string
+        '404':
+          description: Did not find a project with this id.
+
+        '406':
+          description: Not Acceptable, the input-data does not have the correct format.
+
+    get:
+      summary: 'Get secrets by secret_ids'
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: uint32
+        in: path
+        required: true
+        deprecated: false
+      - name: secret_ids
+        schema:
+          type: array
+          items:
+            type: string
+        in: query
+        required: true
+        deprecated: false
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Requested secret
+        '406':
+          description: secret_id not specified.
+        '404':
+          description: Did not find a project with this id.
+    delete:
+      summary: 'Delete secrets with secret_id.'
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: uint32
+        in: path
+        required: true
+        deprecated: false
+      - name: secret_ids
+        schema:
+          type: array
+          items:
+            type: string
+        in: query
+        required: true
+        deprecated: false
+      responses:
+        '200':
+          description: Secret successfully removed.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '406':
+          description: Did not find secrets with specified id.
+        '404':
+          description: Did not find a project with this id.
+          content:
+            text/plain:
+              schema:
+                type: string
+  "/result/{collaboration_id}":
+    get:
+      summary: 'Get computation results (checks if computation is ready).'
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: uint32
+        in: path
+        required: true
+        deprecated: false
+      responses:
+        '200':
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+                description: Response value of computation.
+        '404':
+          description: Did not find a project with this ID.
+          content:
+            text/plain:
+              schema:
+                type: string
+        '409':
+          description: The project has not finished computing.
+  /notify/{collaboration_id}:
+    put:
+      summary: "Notify the client that results are available"
+      parameters:
+        - name: collaboration_id
+          schema:
+            type: string
+          in: path
+          required: true
+      responses:
+        '202':
+          description: "Notification accepted"
+        '406':
+          description: "Do not wait for results of the given collaboration_id"
