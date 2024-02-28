@@ -26,26 +26,18 @@ parameters include the specification of the fraction of the original dataset to
 be considered in this initial stage, the number of partitions, the
 fragmentation strategy, and its parallelization and repartitioning scheme.
 
-Here a complete list of the parameters available:
+### Assumptions
 
-| Parameter | Type | Description |
-|---|---|---|
-| input | URL | Input dataset |
-| output | URL | Output dataset |
-| id_columns | List of strings | Identifying attributes of the dataset |
-| redact | Boolean | Flag to enable redaction of the identifying columns (if not enabled the identifying columns are removed) |
-| quasiid_columns | List of strings | Quasi-identifying attributes of the dataset |
-| quasiid_generalizations | List of objects | Advanced generalization of a specific quasi-identifying attribute |
-| sensitive_columns | List of strings | Sensitive attributes of the dataset |
-| column_score | String | Function to use for the selection of the quasi-identifying column target of the Mondrian cut (i.e., span, entropy, neg_entropy, norm_span) |
-| K | Integer | Privacy parameter determining the minimum size of equivalence classes in the k-anonymity transformation |
-| L | Integer | Privacy parameter determining the minimum number of distinct sensible values belonging to the equivalence class in the l-diversity transformation |
-| fraction | Float | Fraction of the dataset to be considered in the early stages of the sanitization process during the distribution of the dataset to the Spark workers |
-| fragments | Int | Number of fragments to be distributed among the Spark workers |
-| fragmentation | String | Function to use for the identification of the fragments (i.e., mondrian, quantile) |
-| parallel | Boolean | Flag to enable complete parallelization of the sanitization process (including the early stages to identify the fragments) |
-| repartition | String | Function to use for repartitioning the dataset among the Spark workers |
-| measures | List of strings | Functions to roughly measure the quality of the anonymized dataset (i.e., discernability_penalty, global_certainty_penalty, normalized_certainty_penalty) |
+The input dataset target of the sanitization process MUST be in tabular
+format. However, thanks to the use of Apache Spark, the sanitization service
+can support multiple data formats (e.g., Avro, CSV, Delta, Iceberg, Parquet,
+and ORC). The selection of the specific parsing and serialization format
+depends on the extension of the dataset.
+
+The support of quasi-identifier and sensitive attributes with complex object
+types is not supported out of the box. For these use cases consider flattening
+the object in multiple distinct attributes when feasible, and introduce ad hoc
+changes to the sanitization service otherwise.
 
 ## Dependencies
 
@@ -74,6 +66,28 @@ Details about the functioning of the Spark operator can be found in the
 ### Monitoring the state of existing data sanitization requests
 
 ![Image displaying the architecture of the service](docs/architecture-status.png)
+
+## Terminology
+
+| Term | Description |
+|---|---|
+| column scoring | Assign a score to each quasi-identifying attribute to choose the current best target of the Mondrian cut |
+| data sanitization | Irreversible transformation of data to provide privacy guarantees |
+| generalization | Transformation of the attribute values to achieve k-anonymity and/or l-diversity |
+| identifying attribute | Attribute that identifies the individual data subject |
+| information loss | Estimation of the utility loss of the sanitized data for statistical analyses by end users (lower is better) |
+| k-anonymity | Dataset property where every set of rows with identical quasi-identifiers has at least *k* rows |
+| l-diversity | Dataset property where, for every set of rows with identical quasi-identifiers, there are at least *l* distinct values for each sensitive attribute |
+| mondrian | Efficient and effective greedy algorithm for achieving k-anonymity and/or l-diversity |
+| partition | A split of the data to distribute the work across the cluster |
+| quantiles | Values splitting sorted data distributions into equal parts |
+| quasi-identifying attribute | Attribute that together with other attributes can identify the individual data subject |
+| repartitioning | Redistribution of the data across a specified number of partitions |
+| sampling | Selection of a portion of the dataset to limit CPU and memory consumption while progressing with the sanitization job |
+| sensitive attribute | Attribute that should not be linkable to an individual subject |
+| shuffling | Exchange of data between nodes to be able to perform a task |
+
+## [OpenAPI specification](docs/openapi.yaml)
 
 ## Publications
 

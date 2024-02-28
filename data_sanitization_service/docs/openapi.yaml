@@ -1,0 +1,281 @@
+openapi: 3.0.3
+info:
+  title: Data Sanitization Service
+  description: |-
+    This service implements an efficient and effective approach to protect users
+    data by obfuscating information that can disclose their identities and
+    sensitive information.
+  contact:
+    email: seclab@unibg.it
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.0
+paths:
+  /job:
+    post:
+      tags:
+        - job
+      summary: Create a data sanitization job
+      operationId: submitJob
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Job'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Job'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+                format: uuid
+        '400':
+          description: Invalid job syntax
+        '422':
+          description: Invalid job declaration
+  /job/{jobId}/status:
+    get:
+      tags:
+        - job
+      summary: Get status of data sanitization job by ID
+      operationId: getJobStatusById
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobStatus'
+        '400':
+          description: Invalid job ID
+        '404':
+          description: Job not found
+  /job/{jobId}:
+    delete:
+      tags:
+        - job
+      summary: Delete data sanitization job by ID
+      operationId: deleteJob
+      parameters:
+        - name: jobId
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '400':
+          description: Invalid job ID
+components:
+  schemas:
+    Job:
+      description: Configuration of data sanitization job
+      anyOf:
+        - $ref: '#/components/schemas/kAnonymityJob'
+        - $ref: '#/components/schemas/lDiversityJob'
+    kAnonymityJob:
+      description: Configuration of the k-anonymity data sanitization job
+      allOf:
+        - $ref: '#/components/schemas/CommonJob'
+        - type: object
+          required:
+            - k
+          properties:
+            k:
+              description: |-
+                Privacy parameter determining the minimum size of equivalence
+                classes in the sanitized dataset
+              type: integer
+              minimum: 1
+              example: 100
+    lDiversityJob:
+      description: Configuration of the l-diversity data sanitization job
+      allOf:
+        - $ref: '#/components/schemas/CommonJob'
+        - type: object
+          required:
+            - l
+            - sensitiveAttributes
+          properties:
+            l:
+              description: |-
+                Privacy parameter determining the minimum number of distinct
+                sensible values belonging to the equivalence class in the
+                sanitized dataset
+              type: integer
+              minimum: 1
+              example: 5
+            sensitiveAttributes:
+              description: Sensitive attributes of the dataset
+              type: array
+              items:
+                type: string
+              example:
+                - exampleOfSensitiveAttribute
+    CommonJob:
+      description: Common data sanitization job configurations
+      type: object
+      required:
+        - driver
+        - executor
+        - input
+        - output
+        - quasiIdAttributes
+      properties:
+        columnScoringFunction:
+          description:  |-
+            Function used for the selection of the quasi-identifying column
+            target of the Mondrian cut
+          type: string
+          enum:
+            - entropy
+            - negativeEntropy
+            - normalizedSpan
+            - span
+          default: span
+        driver:
+          description: Spark driver customizations
+          $ref: '#/components/schemas/SparkPodSpec'
+        executor:
+          description: Spark executor customizations
+          allOf:
+            - $ref: '#/components/schemas/SparkPodSpec'
+            - type: object
+              required:
+                - instances
+              properties:
+                instances:
+                  description: Number of executor instances
+                  type: integer
+                  format: int32
+                  minimum: 1
+                  example: 4
+        isFullyDistributed:
+          description: |-
+            Enable distribution of the sanitization process from the early
+            partitioning stages
+          type: boolean
+          default: true
+        input:
+          description: Input dataset
+          type: string
+          format: uri
+          example: hdfs://namenode:8020/dataset/adults.csv
+        idAttributes:
+          description: Identifying attributes of the dataset
+          type: array
+          items:
+            type: string
+          default: []
+          example:
+            - exampleIdAttribute
+        informationLossMeasures:
+          description: |-
+            Functions to estimate the utility loss of the sanitized dataset
+          type: array
+          items:
+            type: string
+            enum:
+              - discernabilityPenalty
+              - globalCertaintyPenalty
+              - normalizedCertaintyPenalty
+          default: []
+          example:
+            - discernabilityPenalty
+            - globalCertaintyPenalty
+            - normalizedCertaintyPenalty
+        output:
+          description: Output dataset
+          type: string
+          format: uri
+          example: hdfs://namenode:8020/anonymized/adults.csv
+        partitions:
+          description: |- 
+            Number of partitions distributed among the worker nodes
+          type: integer
+          minimum: 1
+          example: 4
+        partitionFunction:
+          description: |-
+            Function used for the initial partitioning of the dataset
+          type: string
+          enum:
+           - mondrian
+           - quantile
+          default: mondrian
+        quasiIdAttributes:
+          description: Quasi-identifying attributes of the dataset
+          type: array
+          items:
+            type: string
+          example:
+           - exampleQuasiIdAttribute0
+           - exampleQuasiIdAttribute1
+        redact:
+          description: Keep identifying attributes by redacting them
+          type: boolean
+          default: false
+        samplingFraction:
+          description:  |-
+            Fraction of the dataset considered in the initial partitioning of
+            the dataset
+          type: number
+          minimum: 0
+          exclusiveMinimum: true
+          maximum: 1
+          default: 1
+        repartitionFunction:
+          description: |-
+            Function used for repartitioning the dataset among worker nodes
+          type: string
+          enum:
+           - byPartition
+           - byRange
+           - none
+          default: byRange
+    SparkPodSpec:
+      description: Common customizations for a Spark driver or executor pod
+      type: object
+      required:
+        - memory
+      properties:
+        memory:
+          description: Amount of memory to request for the pod
+          type: string
+          example: 512m
+    JobStatus:
+      description: Information about the status of the data sanitization job
+      type: object
+      properties:
+        errorMessage:
+          description: Error message in case of failures
+          type: string
+          example: ''
+        state:
+          description: Current state of the data sanitization job
+          type: string
+          enum:
+            - COMPLETED
+            - FAILED
+            - SUBMISSION_FAILED
+            - FAILING
+            - INVALIDATING
+            -
+            - PENDING_RERUN
+            - RUNNING
+            - SUBMITTED
+            - SUCCEEDING
+            - UNKNOWN
