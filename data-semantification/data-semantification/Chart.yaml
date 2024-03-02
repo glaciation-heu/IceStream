@@ -1,0 +1,21 @@
+apiVersion: v2
+name: data-semantification
+description: A Helm chart for deploying the data-semantification service on Kubernetes.
+# A chart can be either an 'application' or a 'library' chart.
+type: application
+
+# This is the chart version. This version number should be incremented each time you make changes
+# to the chart and its templates, including the app version.
+version: 0.1.0
+
+# This is the version number of the application being deployed. This version number should be
+# incremented each time you release a new version of your application. It is not related to
+# the chart version.
+appVersion: "1.0.0"
+
+# Specify dependencies from Chart repositories (optional but recommended for complex applications)
+dependencies:
+  # Example of a dependency on an Apache NiFi chart if your service relies on NiFi
+  - name: nifi
+    version: "0.6.0"
+    repository: "https://charts.bitnami.com/bitnami"

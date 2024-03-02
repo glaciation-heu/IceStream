@@ -1,0 +1,60 @@
+openapi: 3.0.0
+info:
+  title: Data Semantification Service API
+  description: This API handles the ingestion and processing of data from robots and sensors, starting with NumPy `.npy` files.
+  version: "1.0.0"
+servers:
+  - url: http://localhost:8080/
+    description: Local development server
+paths:
+  /data/npy:
+    post:
+      summary: Upload a NumPy file
+      description: Receives a `.npy` file for processing and semantification.
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+                  description: The `.npy` file to upload.
+      responses:
+        '200':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  fileId:
+                    type: string
+                    description: Unique identifier for the uploaded file.
+                  timestamp:
+                    type: string
+                    format: date-time
+                    description: The time at which the file was received.
+        '400':
+          description: Bad request, such as file format not supported or file is missing.
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                  details:
+                    type: string
+components:
+  securitySchemes:
+    ApiKeyAuth: # This is just an example and might not be relevant to your application
+      type: apiKey
+      in: header
+      name: X-API-KEY
+security:
+  - ApiKeyAuth: []
+
