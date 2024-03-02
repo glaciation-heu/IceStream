@@ -1,0 +1,3 @@
+[submodule "data_sanitization_service/code"]
+	path = data_sanitization_service/code
+	url = https://github.com/mosaicrown/mondrian.git

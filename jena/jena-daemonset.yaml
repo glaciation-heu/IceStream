@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: jena-daemonset
+spec:
+  selector:
+    matchLabels:
+      name: jena
+  template:
+    metadata:
+      labels:
+        name: jena
+    spec:
+      containers:
+      - name: jena
+        image: secoresearch/fuseki:latest
+        ports:
+        - containerPort: 3030
+        volumeMounts:
+        - name: logs
+          mountPath: /fuseki/logs
+        - name: databases
+          mountPath: /fuseki/databases
+      volumes:
+      - name: logs
+        hostPath:
+          path: /fuseki/logs
+      - name: databases
+        hostPath:
+          path: /fuseki/logs
+

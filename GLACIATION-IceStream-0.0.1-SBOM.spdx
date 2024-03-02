@@ -1,0 +1,145 @@
+SPDXVersion: SPDX-2.2
+DataLicense: CC0-1.0
+SPDXID: SPDXRef-DOCUMENT
+DocumentName: IceStream Software Bill of Materials
+DocumentNamespace: http://spdx.org/spdxdocs/icestream-sbom-1.0
+Creator: Person: Aidan O Mahony, Guangyuan Piao OR Organization: Dell Technologies
+Created: 2023-11-27T00:00:00Z
+
+##### Package Information for Ubuntu OS
+PackageName: Ubuntu
+PackageVersion: 22.04.3 LTS
+SPDXID: SPDXRef-Package-Ubuntu-22.04.3
+PackageFileName: ubuntu-22.04.3-desktop-amd64.iso
+PackageSupplier: Organization: Canonical
+PackageOriginator: Organization: Canonical
+PackageDownloadLocation: NOASSERTION
+FilesAnalyzed: false
+PackageVerificationCode: d41d8cd98f00b204e9800998ecf8427e
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: GPL-2.0-only
+PackageLicenseInfoFromFiles: GPL-2.0-only
+PackageLicenseComments: None
+PackageDescription: Ubuntu 22.04.3 LTS (GNU/Linux 5.15.0-86-generic x86_64) Operating System.
+PackageComment: None
+
+##### Package Information for Kubernetes
+PackageName: Kubernetes
+PackageVersion: v1.28.2
+SPDXID: SPDXRef-Package-Kubernetes-1.28.2
+PackageFileName: kubernetes-v1.28.2.tar.gz
+PackageSupplier: Organization: Kubernetes Authors
+PackageOriginator: Organization: Kubernetes Authors
+PackageDownloadLocation: https://github.com/kubernetes/kubernetes/releases/tag/v1.28.2
+FilesAnalyzed: false
+PackageVerificationCode: d41d8cd98f00b204e9800998ecf8427e
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: Apache-2.0
+PackageLicenseInfoFromFiles: Apache-2.0
+PackageLicenseComments: None
+PackageDescription: Kubernetes, an open-source container orchestration platform. Client Version: v1.28.2, Kustomize Version: v5.0.4-0.20230601165947-6ce0bf390ce3, Server Version: v1.28.2.
+PackageComment: None
+
+##### Package Information for Docker
+PackageName: Docker
+PackageVersion: 24.0.5
+SPDXID: SPDXRef-Package-Docker-24.0.5
+PackageFileName: docker-24.0.5.tar.gz
+PackageSupplier: Organization: Docker, Inc.
+PackageOriginator: Organization: Docker, Inc.
+PackageDownloadLocation: https://github.com/docker/docker-ce/releases/tag/v24.0.5
+FilesAnalyzed: false
+PackageVerificationCode: d41d8cd98f00b204e9800998ecf8427e
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: Apache-2.0
+PackageLicenseInfoFromFiles: Apache-2.0
+PackageLicenseComments: None
+PackageDescription: Docker, an open-source platform used for containerization. Docker version 24.0.5, build 24.0.5-0ubuntu1~22.04.1.
+PackageComment: None
+
+##### Package Information for Apache Jena Fuseki
+PackageName: Apache Jena Fuseki
+PackageVersion: 4.5.0
+SPDXID: SPDXRef-Package-ApacheJenaFuseki-4.5.0
+PackageFileName: apache-jena-fuseki-4.5.0.tar.gz
+PackageSupplier: Organization: Apache Software Foundation
+PackageOriginator: Organization: Apache Software Foundation
+PackageDownloadLocation: https://jena.apache.org/download/index.cgi
+FilesAnalyzed: false
+PackageVerificationCode: d41d8cd98f00b204e9800998ecf8427e
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: Apache-2.0
+PackageLicenseInfoFromFiles: Apache-2.0
+PackageLicenseComments: None
+PackageDescription: Apache Jena Fuseki, a SPARQL server. It provides REST-style SPARQL HTTP Update, SPARQL Query, and SPARQL Update using the ARQ query engine.
+PackageComment: None
+
+##### Package Information for Apache Jena SHACL
+PackageName: Apache Jena SHACL
+PackageVersion: 4.5.0
+SPDXID: SPDXRef-Package-ApacheJenaSHACL-4.5.0
+PackageFileName: apache-jena-shacl-4.5.0.jar
+PackageSupplier: Organization: Apache Software Foundation
+PackageOriginator: Organization: Apache Software Foundation
+PackageDownloadLocation: https://jena.apache.org/download/index.cgi
+FilesAnalyzed: false
+PackageVerificationCode: d41d8cd98f00b204e9800998ecf8427e
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: Apache-2.0
+PackageLicenseInfoFromFiles: Apache-2.0
+PackageLicenseComments: None
+PackageDescription: Apache Jena SHACL, a Java library for working with SHACL, the W3C Shapes Constraint Language.
+PackageComment: None
+
+##### Package Information for Python
+PackageName: Python
+PackageVersion: 3.10.5
+SPDXID: SPDXRef-Package-Python-3.10.5
+PackageFileName: Python-3.10.5.tgz
+PackageSupplier: Organization: Python Software Foundation
+PackageOriginator: Organization: Python Software Foundation
+PackageDownloadLocation: https://www.python.org/downloads/release/python-3105/
+FilesAnalyzed: false
+PackageVerificationCode: d41d8cd98f00b204e9800998ecf8427e
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: PSF-2.0
+PackageLicenseInfoFromFiles: PSF-2.0
+PackageLicenseComments: None
+PackageDescription: Python 3.10.5, an interpreted, high-level, general-purpose programming language.
+PackageComment: None
+
+##### Package Information for NumPy
+PackageName: NumPy
+PackageVersion: 1.23.1
+SPDXID: SPDXRef-Package-NumPy-1.23.1
+PackageFileName: numpy-1.23.1.zip
+PackageSupplier: Organization: NumPy Developers
+PackageOriginator: Organization: NumPy Developers
+PackageDownloadLocation: https://pypi.org/project/numpy/1.23.1/
+FilesAnalyzed: false
+PackageVerificationCode: d41d8cd98f00b204e9800998ecf8427e
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: BSD-3-Clause
+PackageLicenseInfoFromFiles: BSD-3-Clause
+PackageLicenseComments: None
+PackageDescription: NumPy 1.23.1, a fundamental package for scientific computing with Python.
+PackageComment: None
+
+##### Package Information for Flask
+PackageName: Flask
+PackageVersion: 2.2.2
+SPDXID: SPDXRef-Package-Flask-2.2.2
+PackageFileName: Flask-2.2.2.tar.gz
+PackageSupplier: Organization: Pallets Projects
+PackageOriginator: Organization: Pallets Projects
+PackageDownloadLocation: https://pypi.org/project/Flask/2.2.2/
+FilesAnalyzed: false
+PackageVerificationCode: d41d8cd98f00b204e9800998ecf8427e
+PackageLicenseConcluded: NOASSERTION
+PackageLicenseDeclared: BSD-3-Clause
+PackageLicenseInfoFromFiles: BSD-3-Clause
+PackageLicenseComments: None
+PackageDescription: Flask 2.2.2, a lightweight WSGI web application framework.
+PackageComment: None
+
+##### End of Document #####

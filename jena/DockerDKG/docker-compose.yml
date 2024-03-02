@@ -1,0 +1,46 @@
+version: '3'
+
+services:
+  fuseki-instance1:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        LOCATION: 'Data/slice1'
+        EXTENSION: '.rdf'
+        ADD_DATASET: 'true'
+    ports:
+      - 3030:3030
+
+  fuseki-instance2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        LOCATION: 'Data/slice2'
+        EXTENSION: '.rdf'
+        ADD_DATASET: 'true'
+    ports:
+      - 3031:3030
+
+  fuseki-instance3:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        LOCATION: 'Data/slice3'
+        EXTENSION: '.rdf'
+        ADD_DATASET: 'true'
+    ports:
+      - 3032:3030
+
+  fuseki-instance4:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        LOCATION: 'Data/slice4'
+        EXTENSION: '.rdf'
+        ADD_DATASET: 'true'
+    ports:
+      - 3033:3030
