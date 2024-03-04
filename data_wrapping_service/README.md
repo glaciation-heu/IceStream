@@ -1,17 +1,17 @@
 # Data Wrapping Service
 
-This service offers server-side object encryption of Kubernetes volumes,
-allowing clients to take advantage of server processing power to secure objects
-at the storage layer (i.e., encryption at rest).
+This service offers server-side encryption of object stores and Kubernetes
+volumes, allowing clients to take advantage of server processing power to
+secure resources at the storage layer (i.e., encryption at rest).
 
 ## Overview
 
-Encrypting Kubernetes volumes offers a robust shield for sensitive data at
-rest. This not only safeguards information from unauthorized individuals who
-gain physical access to storage disks or underlying nodes, but also helps meet
-industry standards and regulations. By limiting the blast radius of security
-incidents, it strengthens operational security and builds trust with
-stakeholders.
+Encrypting object stores and Kubernetes volumes offers a robust shield for
+sensitive data at rest. This not only safeguards information from unauthorized
+individuals who gain physical access to storage disks or underlying nodes, but
+also helps meet industry standards and regulations. By limiting the blast
+radius of security incidents, it strengthens operational security and builds
+trust with stakeholders.
 
 ## Dependencies
 
@@ -19,10 +19,11 @@ To seamlessly integrate the wrapping service within Kubernetes, the target
 orchestration system of the GLACIATION platform, we need the following
 dependencies:
 
-- First-party object store: An object store supporting transparent encryption
-  of persistent volumes within the Kubernetes cluster deployed with a native
-  Kubernetes operator (e.g., [MinIO](https://github.com/minio/operator),
-  [Rook](https://github.com/rook/rook))
+- First-party storage solution: A distributed storage solution supporting
+  transparent encryption of object stores and persistent volumes within the
+  Kubernetes cluster (e.g., [Longhorn](https://longhorn.io/),
+  [MinIO](https://github.com/minio/operator),
+  and [Rook](https://github.com/rook/rook))
 - [HashiCorp Vault](https://github.com/hashicorp/vault): A tool for secrets
   management, encryption as a service, and privileged access management
 
@@ -30,9 +31,10 @@ dependencies:
 
 ![Image displaying the architecture of the service](docs/architecture.png)
 
-Further details about the functioning of object store operators and their
-integration with HashiCorp Vault can be found in the official documentation
-of [MinIO](https://min.io/docs/minio/kubernetes/upstream/administration/server-side-encryption.html)
+Further details about the functioning of storage operators and, where
+available, their integration with HashiCorp Vault can be found in the official
+documentation of [Longhorn](https://longhorn.io/docs/1.7.0/advanced-resources/security/volume-encryption/),
+[MinIO](https://min.io/docs/minio/kubernetes/upstream/administration/server-side-encryption.html),
 and [Rook](https://rook.io/docs/rook/latest-release/Storage-Configuration/Advanced/key-management-system/#vault).
 
 ## Terminology
@@ -40,6 +42,11 @@ and [Rook](https://rook.io/docs/rook/latest-release/Storage-Configuration/Advanc
 | Term | Description |
 |---|---|
 | Binding | One-to-one mapping between the PersistentVolumeClaim and its PersistentVolume |
+| Block storage | Storage solution backed by a block device |
+| Container Storage Interface (CSI) | Standard for exposing arbitrary block and file storage storage systems to containerized workloads |
+| Container Object Storage Interface (COSI) | Set of abstractions for provisioning and management of object storage |
+| File storage | Storage solution backed by a filesystem |
+| Object storage | Storage solution promoting disaggregation of compute and storage by making data available over the network |
 | PersistentVolume (PV) | Storage resource provisioned by an administrator or dynamically provisioned using Storage Classes |
 | PersistentVolumeClaim (PVC) | Request for storage by a Pod |
 | Provisioning | Process of assigning new storage resources to the cluster |
@@ -48,9 +55,24 @@ and [Rook](https://rook.io/docs/rook/latest-release/Storage-Configuration/Advanc
 | ReadWriteMany | Volume can be mounted as read-write by many nodes |
 | ReadWriteOnce | Volume can be mounted as read-write by a single node |
 | ReadWriteOncePod | Volume can be mounted as read-write by a single Pod |
+| Simple Storage Service (S3) API | Standard interface for the interaction with object storage services |
 | Storage Class | Describe the class of storage (e.g., encrypted) |
 
-## Kubernetes resources
+## Object store interfaces
+
+Despite the definition of the Container Object Storage Interface (COSI), not
+all object storage providers support it. This means that depending on the
+specific technology chosen for the implementation of the object store different
+interfaces may be available.
+
+Rook and MinIO provide WebUIs and S3-compatible REST APIs allowing for the
+creation of object store resources. Moreover, by implementing the COSI
+specification, Rook enables the creation of new object store buckets and the
+management of their credentials within Kubernetes through Custom Resource
+Definitions (CRDs). Additional information is available in the
+[Rook documentation](https://rook.io/docs/rook/latest-release/Storage-Configuration/Object-Storage-RGW/object-storage/).
+
+## Kubernetes persistent volume interface
 
 The following showcases basic usage of persistent volume claims by pods. For a
 complete view of the details regarding persistent volumes please refer to the
