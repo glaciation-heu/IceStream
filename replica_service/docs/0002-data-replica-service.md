@@ -17,7 +17,7 @@ The replication can be done on the level of the cluster or site.
 
 The replication on the level of the cluster is implemented with erasure coding. Minimal number of server nodes for distributed deployment is 4 and MinIO can tolerate the loss of up to half the drives or nodes in the deployment while maintaining read access (“read quorum”) to objects. More details about erasure coding implementation can be found here20. 
 
-![MinIO multisite replication ](0002_data-replica-service/fig1.png)
+![MinIO multisite replication ](0002-data-replica-service/fig1.png)
 
 The multisite replication is a form of replication between 3 or more MinIO deployments. This can be configured on the level of the bucket using rules. More details about server-side bucket replication is available [here](https://min.io/docs/minio/linux/operations/concepts/erasure-coding.html#minio-erasure-coding).  
 
