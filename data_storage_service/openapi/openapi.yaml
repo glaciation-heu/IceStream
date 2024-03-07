@@ -252,7 +252,7 @@ paths:
           content:
             applicatin/json:
               schema:
-                $ref: '#/components/schemas/Metric'
+                $ref: '#/components/schemas/TimeSeries'
         '400':
           description: Invalid Id or forecasting time supplied
         '404':
