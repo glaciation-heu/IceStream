@@ -1,0 +1,7 @@
+service:
+  type: ClusterIP
+  port: 80
+
+deployment:
+  image: client-service:0.1.0
+  replicas: 1

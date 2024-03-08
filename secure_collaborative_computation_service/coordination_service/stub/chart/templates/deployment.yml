@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "service.fullname" . }}
+  labels:
+    app: {{ include "service.fullname" . }}
+spec:
+  replicas: {{ .Values.coordination_service.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "service.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "service.fullname" . }}
+    spec:
+      containers:
+        - name: coordination-service
+          image: {{ .Values.coordination_service.image }}
+          env:
+            - name: SERVICE_PORT
+              value: "80"
+          ports:
+            - containerPort: 80

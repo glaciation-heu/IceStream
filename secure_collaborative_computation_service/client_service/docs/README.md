@@ -45,3 +45,6 @@ sequenceDiagram
 
 ## 4-REST API
 The Rest-API is described by the provided [OpenAPI](openapi.yml) specification.
+
+## 5-Stub
+A service stub is defined in [stub](../stub/README.md).
