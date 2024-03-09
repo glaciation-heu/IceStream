@@ -133,8 +133,8 @@ status, violations, enforcement action, matches definitions, etc.
 A Helm chart exists in `code/web-ui/chart`.
 
 First, to configure the installation, we suggest creating your own values file,
-with your custom values for the release. See the [chart's readme](code/web-ui/chart/README.md)
-and the [default values.yaml](code/web-ui/chart/values.yaml)
+with your custom values for the release. See the [chart's readme](https://github.com/sighupio/gatekeeper-policy-manager/blob/5700a8174f3b31fb58dba595f3e997d4a323b44e/chart/README.md)
+and the [default values.yaml](https://github.com/sighupio/gatekeeper-policy-manager/blob/5700a8174f3b31fb58dba595f3e997d4a323b44e/chart/values.yaml)
 for more information.
 
 > By default the value of the config.secretKey is set to null, this is
