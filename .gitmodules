@@ -1,3 +1,9 @@
 [submodule "data_sanitization_service/code"]
 	path = data_sanitization_service/code
 	url = https://github.com/mosaicrown/mondrian.git
+[submodule "admission_control_service/code"]
+	path = admission_control_service/code
+	url = https://github.com/open-policy-agent/gatekeeper.git
+[submodule "admission_control_service/policy-library"]
+	path = admission_control_service/policy-library
+	url = https://github.com/open-policy-agent/gatekeeper-library.git
