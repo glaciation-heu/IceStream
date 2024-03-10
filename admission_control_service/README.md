@@ -5,6 +5,14 @@ resources within the Kubernetes cluster with the goal of meeting governance
 and legal requirements, but also ensuring adherence to best practices and
 institutional conventions.
 
+## Demo
+
+<p align="center">
+  <a href="https://asciinema.org/a/G1TUaJzR6q3kvk0cCZ8jBHxPx">
+    <img alt=asciicast src="https://asciinema.org/a/G1TUaJzR6q3kvk0cCZ8jBHxPx.svg" width="80%">
+  </a>
+</p>
+
 ## Installation
 
 A Helm chart exists in `code/service/charts/gatekeeper`. If you have Helm
