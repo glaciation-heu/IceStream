@@ -5,17 +5,25 @@ resources within the Kubernetes cluster with the goal of meeting governance
 and legal requirements, but also ensuring adherence to best practices and
 institutional conventions.
 
+## Demo
+
+<p align="center">
+  <a href="https://asciinema.org/a/G1TUaJzR6q3kvk0cCZ8jBHxPx">
+    <img alt=asciicast src="https://asciinema.org/a/G1TUaJzR6q3kvk0cCZ8jBHxPx.svg" width="80%">
+  </a>
+</p>
+
 ## Installation
 
-A Helm chart exists in `code/charts/gatekeeper`. If you have Helm installed,
-you can deploy via the following instructions for Helm v3:
+A Helm chart exists in `code/service/charts/gatekeeper`. If you have Helm
+installed, you can deploy via the following instructions for Helm v3:
 
 ```shell
 helm repo add gatekeeper https://open-policy-agent.github.io/gatekeeper/charts
 helm install gatekeeper/gatekeeper --name-template=gatekeeper --namespace gatekeeper-system --create-namespace
 ```
 
-You can alter the variables in `code/charts/gatekeeper/values.yaml` to
+You can alter the variables in `code/service/charts/gatekeeper/values.yaml` to
 customize your deployment. To regenerate the base template, run make manifests.
 
 ## Uninstallation
@@ -118,3 +126,40 @@ spec:
 
 Gatekeeper has a community-owned library of policies. So, you can find
 other examples of validating and mutating policies in the `policy-library`.
+
+## Web UI (optional)
+
+Gatekeeper Policy Manager is a simple read-only web UI for viewing OPA
+Gatekeeper policies' status in a Kubernetes Cluster.
+
+GPM can display all the defined Constraint Templates with their rego code, all
+the Gatekeeper Configuration CRDs, and all the Constraints with their current
+status, violations, enforcement action, matches definitions, etc.
+
+### Installation
+
+A Helm chart exists in `code/web-ui/chart`.
+
+First, to configure the installation, we suggest creating your own values file,
+with your custom values for the release. See the [chart's readme](https://github.com/sighupio/gatekeeper-policy-manager/blob/5700a8174f3b31fb58dba595f3e997d4a323b44e/chart/README.md)
+and the [default values.yaml](https://github.com/sighupio/gatekeeper-policy-manager/blob/5700a8174f3b31fb58dba595f3e997d4a323b44e/chart/values.yaml)
+for more information.
+
+> By default the value of the config.secretKey is set to null, this is
+> an invalid value and should be overwritten with a secure string of your
+> chosing.
+
+Then, execute:
+
+```shell
+helm repo add gpm https://sighupio.github.io/gatekeeper-policy-manager
+helm upgrade --install --namespace gatekeeper-system --set image.tag=v1.0.10 --values values.yaml gatekeeper-policy-manager gpm/gatekeeper-policy-manager
+```
+
+### Uninstallation
+
+Run the following to uninstall Gatekeeper Policy Manager:
+
+```shell
+helm delete gatekeeper-policy-manager --namespace gatekeeper-system
+```
