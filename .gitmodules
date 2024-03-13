@@ -10,6 +10,6 @@
 [submodule "admission_control_service/code/web-ui"]
 	path = admission_control_service/code/web-ui
 	url = https://github.com/sighupio/gatekeeper-policy-manager.git
-[submodule "data_processing_monitoring_service/monitoring_stack"]
-	path = data_processing_monitoring_service/monitoring_stack
+[submodule "data_processing_monitoring_service/monitoring-stack"]
+	path = data_processing_monitoring_service/monitoring-stack
 	url = https://github.com/HIRO-MicroDataCenters-BV/monitoring-stack.git
