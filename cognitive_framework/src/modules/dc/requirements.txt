@@ -1,0 +1,7 @@
+numpy
+pandas
+matplotlib
+PyYAML
+scikit-learn
+Flask
+Werkzeug
