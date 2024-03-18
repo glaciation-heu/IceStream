@@ -62,8 +62,8 @@ DETACH DELETE n
 
 - Structure of the graph that this code generating :  
 
-![](./figures/graph_architecture.png)
+![](../../../assets/graph_architecture.png)
 
 - The expected output in Neo4J Browser:  
 
-![](./figures/output.png)
+![](../../../assets/output.png)
