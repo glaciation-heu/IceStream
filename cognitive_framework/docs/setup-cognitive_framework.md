@@ -122,5 +122,5 @@ By following these steps, you will be able to efficiently send an API request us
 Upon submitting the request, analyze the output showcased at the bottom of the Postman interface. This segment illustrates the server's response to the request. Here, you can observe the process of inputting the workload in Postman and view the resulting output:
 
 <div style="text-align: center;">
-    <img src="../assets/figures/Postman.png" style="width: 50%; height: auto;" />
+    <img src="../assets/Postman.png" style="width: 50%; height: auto;" />
 </div>
