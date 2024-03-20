@@ -5,6 +5,7 @@ from typing import Union
 
 from openapi_server.models.metric import Metric  # noqa: E501
 from openapi_server import util
+from openapi_server.prediction_service import utils
 
 
 def get_metric_by_id(metric_id):  # noqa: E501
@@ -17,4 +18,4 @@ def get_metric_by_id(metric_id):  # noqa: E501
 
     :rtype: Union[Metric, Tuple[Metric, int], Tuple[Metric, int, Dict[str, str]]
     """
-    return 'do some magic!'
+    return utils.query(metric_id)
