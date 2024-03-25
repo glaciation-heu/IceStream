@@ -6,6 +6,6 @@ In the context of UC3, MPC protects collaborative computations on distributed da
 
 * [Computation Service](compute_service/docs/README.md) runs the distributed MPC computation on encrypted data. (Separate "platform" independent from Glaciation.)
 
-* [Client Service](client_service/docs/README.md) provides encrypted input for the Computation Service. (Interface for Glaciation to Computation Service.)
+* [Client Service](client_service/docs/README.md) provides encrypted input for the Computation Service. (Interface for Glaciation to Computation Service, takes data from Glaciation or a trusted domain, e.g., edge, on-prem, encrypts it and uploads encrypted data to Computation Service for computation on encrypted data.)
 
 * [DP Visualization Service](dp_visualization/docs/README.md) visualized utility-accuracy trade-offs for differential privacy parameterization. (To foster anonymized data sharing.)
