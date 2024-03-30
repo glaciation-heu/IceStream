@@ -1,0 +1,90 @@
+openapi: 3.1.0
+info:
+  title: Prediction Microservice
+  description: |-
+    This is prediction microservice as part of the Novel Metadata Fabric based on the OpenAPI 3.1 specification. It provides a forecasting functionality for pre-defined metrics such as daily energy consumption metrics on the GLACIATION platform. You can retrieve the most recent history and prediction of energy consumption of the platform.
+    
+    You can find out more about
+    the prediction microservice at [https://github.com/glaciation-heu/IceStream/tree/development/prediction_service](https://github.com/glaciation-heu/IceStream/tree/development/prediction_service). 
+
+  contact:
+    email: Guangyuan.Piao@dell.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.1
+externalDocs:
+  description: Find out more about prediction microservice
+  url: https://github.com/glaciation-heu/IceStream/tree/development/prediction_service
+servers:
+  - url: http://0.0.0.0:8080
+components:
+  schemas:
+    Metric:
+      type: object
+      properties:
+        metricId:
+          type: string
+          examples: ['1234']
+        timeseries:
+          type: array
+          items: 
+            type: number
+            format: float
+        forecasting_values:
+          type: array
+          items:
+            type: number
+            format: float
+        forecasting_upper_bounds:
+          type: array
+          items:
+            type: number
+            format: float
+        forecasting_lower_bounds:
+          type: array
+          items:
+            type: number
+            format: float
+        forecasting_model:
+          type: string
+        forecasting_period:
+          type: integer
+          format: int32
+          examples: [1]
+        time:
+          type: array
+          items:
+            type: string
+            format: date
+        aggregation_interval:
+          type: integer
+          format: int64
+          examples: [86400]
+paths:
+  /prediction/{metricId}:
+    get:
+      summary: Retrieve historical and predicted time series by ID
+      description: Returns a time series metric
+      operationId: getMetricById
+      parameters:
+        - name: metricId
+          in: path
+          description: Id of the metric to return
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: successful operation
+          content:
+            applicatin/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+        '400':
+          description: Invalid Id supplied
+        '404':
+          description: Metric not found
+          
+
+

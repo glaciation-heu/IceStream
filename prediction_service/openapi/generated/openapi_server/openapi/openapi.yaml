@@ -1,0 +1,96 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: Guangyuan.Piao@dell.com
+  description: "This is prediction microservice as part of the Novel Metadata Fabric\
+    \ based on the OpenAPI 3.1 specification. It provides a forecasting functionality\
+    \ for pre-defined metrics such as daily energy consumption metrics on the GLACIATION\
+    \ platform. You can retrieve the most recent history and prediction of energy\
+    \ consumption of the platform.\n\nYou can find out more about\nthe prediction\
+    \ microservice at [https://github.com/glaciation-heu/IceStream/tree/development/prediction_service](https://github.com/glaciation-heu/IceStream/tree/development/prediction_service). "
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Prediction Microservice
+  version: 0.1.1
+externalDocs:
+  description: Find out more about prediction microservice
+  url: https://github.com/glaciation-heu/IceStream/tree/development/prediction_service
+servers:
+- url: http://0.0.0.0:8080
+paths:
+  /prediction/{metricId}:
+    get:
+      description: Returns a time series metric
+      operationId: get_metric_by_id
+      parameters:
+      - description: Id of the metric to return
+        explode: false
+        in: path
+        name: metricId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            applicatin/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+          description: successful operation
+        "400":
+          description: Invalid Id supplied
+        "404":
+          description: Metric not found
+      summary: Retrieve historical and predicted time series by ID
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+components:
+  schemas:
+    Metric:
+      properties:
+        metricId:
+          title: metricId
+          type: string
+        timeseries:
+          items:
+            format: float
+            type: number
+          title: timeseries
+          type: array
+        forecasting_values:
+          items:
+            format: float
+            type: number
+          title: forecasting_values
+          type: array
+        forecasting_upper_bounds:
+          items:
+            format: float
+            type: number
+          title: forecasting_upper_bounds
+          type: array
+        forecasting_lower_bounds:
+          items:
+            format: float
+            type: number
+          title: forecasting_lower_bounds
+          type: array
+        forecasting_model:
+          title: forecasting_model
+          type: string
+        forecasting_period:
+          format: int32
+          title: forecasting_period
+          type: integer
+        time:
+          items:
+            format: date
+            type: string
+          title: time
+          type: array
+        aggregation_interval:
+          format: int64
+          title: aggregation_interval
+          type: integer
+      title: Metric

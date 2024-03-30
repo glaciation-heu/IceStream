@@ -1,0 +1,94 @@
+<mxfile host="app.diagrams.net" modified="2024-02-28T15:41:46.864Z" agent="Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36" etag="ZbqwVmZdqD3hK1gKgZgv" version="23.1.4" type="device">
+  <diagram id="z2fywuhmsZZxHbe4xA-M" name="Page-1">
+    <mxGraphModel dx="691" dy="397" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="z3ctLBVVYveg33ifDNu9-2" value="&lt;h1 style=&quot;line-height: 50%;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;Create, read, update and delete objects with the use of the S3 API&lt;/span&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" vertex="1" parent="1">
+          <mxGeometry x="44" y="228" width="158" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-6" value="&lt;h1 style=&quot;line-height: 50%;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;Generate, store and&amp;nbsp; retrieve encryption keys&lt;/span&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="346" y="237" width="159" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="z3ctLBVVYveg33ifDNu9-7" value="&lt;font color=&quot;#ffffff&quot;&gt;B&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="333" y="262" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="z3ctLBVVYveg33ifDNu9-6" value="3" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="333" y="245" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="z3ctLBVVYveg33ifDNu9-5" value="&lt;font color=&quot;#ffffff&quot;&gt;A&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="30" y="253" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="z3ctLBVVYveg33ifDNu9-4" value="2" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="79" y="185" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-15" value="&lt;h1 style=&quot;line-height: 50%;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;Forward request to the object store operator (depending on the requested storage class)&lt;/span&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="93" y="160" width="180" height="62" as="geometry" />
+        </mxCell>
+        <mxCell id="z3ctLBVVYveg33ifDNu9-3" value="1" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="26" y="73" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-5" value="&lt;h1 style=&quot;line-height: 50%;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;Create resource requesting use of encrypted persistent volume&lt;/span&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="40" y="47" width="158" height="58" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-11" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="238" y="440" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-10" value="" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="230" y="440" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="z3ctLBVVYveg33ifDNu9-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="TMdRoOH4GbIq7_JRytAd-3">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="30" y="287" as="targetPoint" />
+            <mxPoint x="30" y="287" as="sourcePoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-3" value="Storage operator" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="257" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-4" value="" style="endArrow=classic;html=1;entryX=0;entryY=0.5;entryDx=0;entryDy=0;rounded=0;" parent="1" edge="1" target="TMdRoOH4GbIq7_JRytAd-9">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="28" y="107" as="sourcePoint" />
+            <mxPoint x="199" y="87" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.5;entryY=0;entryDx=0;entryDy=0;" parent="1" source="TMdRoOH4GbIq7_JRytAd-9" target="TMdRoOH4GbIq7_JRytAd-3" edge="1">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="259" y="147" as="sourcePoint" />
+            <mxPoint x="259" y="197" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="TMdRoOH4GbIq7_JRytAd-9" value="K8s API" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="200" y="77" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-1" value="HashiCorp Vault" style="rounded=0;whiteSpace=wrap;html=1;" parent="1" vertex="1">
+          <mxGeometry x="490" y="257" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-5" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" parent="1" source="TMdRoOH4GbIq7_JRytAd-3" target="pp0-_kGOhsqNxKm0K_HM-1" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="330" y="300" as="sourcePoint" />
+            <mxPoint x="430" y="440" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-7" value="" style="endArrow=classic;startArrow=classic;html=1;rounded=0;fontSize=12;entryX=0.5;entryY=1;entryDx=0;entryDy=0;exitX=0.5;exitY=0;exitDx=0;exitDy=0;" parent="1" source="pp0-_kGOhsqNxKm0K_HM-10" target="TMdRoOH4GbIq7_JRytAd-3" edge="1">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="320" y="420" as="sourcePoint" />
+            <mxPoint x="330" y="460" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-9" value="Object store pods" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" parent="1" vertex="1">
+          <mxGeometry x="222" y="440" width="60" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="pp0-_kGOhsqNxKm0K_HM-12" value="&lt;h1 style=&quot;line-height: 50%;&quot;&gt;&lt;span style=&quot;font-size: 12px; font-weight: 400;&quot;&gt;Read / store encrypted object&lt;/span&gt;&lt;/h1&gt;" style="text;html=1;strokeColor=none;fillColor=none;spacing=5;spacingTop=-20;whiteSpace=wrap;overflow=hidden;rounded=0;" parent="1" vertex="1">
+          <mxGeometry x="281" y="355" width="135" height="54" as="geometry" />
+        </mxCell>
+        <mxCell id="z3ctLBVVYveg33ifDNu9-8" value="&lt;font color=&quot;#ffffff&quot;&gt;C&lt;/font&gt;" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;fillColor=#000000;" vertex="1" parent="1">
+          <mxGeometry x="266" y="380.5" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="z3ctLBVVYveg33ifDNu9-9" value="4" style="ellipse;whiteSpace=wrap;html=1;aspect=fixed;" vertex="1" parent="1">
+          <mxGeometry x="266" y="363.5" width="14" height="14" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

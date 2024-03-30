@@ -1,0 +1,302 @@
+openapi: 3.0.0
+info:
+  contact:
+    email: Guangyuan.Piao@dell.com
+  description: "This is Data Storage Service (DSS) as part of the Novel Metadata Fabric\
+    \ based on the OpenAPI 3.1 specification. \n\nIt stores time series metrics and\
+    \ forecasting results such as daily energy consumption metrics and forecasting\
+    \ results from the prediction microservice and on the GLACIATION platform. It\
+    \ writes the most recent history and prediction of energy consumption of the platform\
+    \ to the Distributed Knowledge Graph (DKG). It allows to retrieve time series\
+    \ together with forecasting results.\n\nIt also stores data access patterns to\
+    \ keep track of data popularity in the platform, and write to DKG with daily statistics.\
+    \ It allows to retrieve daily summary statistics.\n\nYou can find out more about\n\
+    the DSS microservice at [https://github.com/glaciation-heu/IceStream/tree/development/data_storage_service](https://github.com/glaciation-heu/IceStream/tree/development/data_storage_service). "
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  title: Data Storage Microservice
+  version: 0.1.1
+externalDocs:
+  description: Find out more about DSS microservice
+  url: https://github.com/glaciation-heu/IceStream/tree/development/data_storage_service
+servers:
+- url: http://0.0.0.0:8080
+paths:
+  /dataAccess:
+    post:
+      description: Store data access record to database
+      operationId: add_data_access_record
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataAccessRecord'
+        description: Store data access record to database
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataAccessRecord'
+          description: Successful operation
+        "400":
+          description: Invalid input
+        "422":
+          description: Validation exception
+      summary: Store data access record
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+  /dataAccess/{dataId}:
+    get:
+      description: Get data access record for the given data dataId
+      operationId: get_data_access_record
+      parameters:
+      - description: Filtering start time of data access records
+        explode: true
+        in: query
+        name: start_time
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Filtering end time of data access records
+        explode: true
+        in: query
+        name: end_time
+        required: false
+        schema:
+          format: date-time
+          type: string
+        style: form
+      - description: Data source Id
+        explode: false
+        in: path
+        name: dataId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            applicatin/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/DataAccessRecord'
+                type: array
+          description: successful operation
+        "400":
+          description: Invalid Id or time supplied
+        "404":
+          description: Data access records or time not found
+      summary: Get data access record for the given data dataId
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+    parameters:
+    - description: Data source Id
+      explode: false
+      in: path
+      name: dataId
+      required: true
+      schema:
+        type: string
+      style: simple
+  /prediction:
+    post:
+      description: Store prediction results to database
+      operationId: add_prediction
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metric'
+        description: Store prediction results to database
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+          description: Successful operation
+        "400":
+          description: Invalid input
+        "422":
+          description: Validation exception
+      summary: Store prediction results
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+  /prediction/{metricId}:
+    get:
+      description: Returns Metric
+      operationId: get_metric
+      parameters:
+      - description: Time of the forecasting
+        explode: true
+        in: query
+        name: forecasting_time
+        required: true
+        schema:
+          format: date
+          type: string
+        style: form
+      - description: Id of the metric to return
+        explode: false
+        in: path
+        name: metricId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            applicatin/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+          description: successful operation
+        "400":
+          description: Invalid Id or forecasting time supplied
+        "404":
+          description: Metric or forecasting time not found
+      summary: Get prediction history for the given metricId and forecasting time
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+    parameters:
+    - description: Id of the metric to return
+      explode: false
+      in: path
+      name: metricId
+      required: true
+      schema:
+        type: string
+      style: simple
+  /timeseries/{metricId}:
+    get:
+      description: Returns TimeSeries
+      operationId: get_timeseries
+      parameters:
+      - description: Filtering start time of timeseries
+        explode: true
+        in: query
+        name: start_time
+        required: false
+        schema:
+          format: date
+          type: string
+        style: form
+      - description: Filtering end time of timeseries
+        explode: true
+        in: query
+        name: end_time
+        required: false
+        schema:
+          format: date
+          type: string
+        style: form
+      - description: Id of the metric to return
+        explode: false
+        in: path
+        name: metricId
+        required: true
+        schema:
+          type: string
+        style: simple
+      responses:
+        "200":
+          content:
+            applicatin/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+          description: successful operation
+        "400":
+          description: Invalid Id or forecasting time supplied
+        "404":
+          description: Metric or forecasting time not found
+      summary: Get timeseries for the given metricId and forecasting time
+      x-openapi-router-controller: openapi_server.controllers.default_controller
+    parameters:
+    - description: Id of the metric to return
+      explode: false
+      in: path
+      name: metricId
+      required: true
+      schema:
+        type: string
+      style: simple
+components:
+  schemas:
+    DataAccessRecord:
+      properties:
+        requestId:
+          title: requestId
+          type: string
+        dataId:
+          title: dataId
+          type: string
+        time:
+          format: date-time
+          title: time
+          type: string
+      title: DataAccessRecord
+    Metric:
+      properties:
+        metricId:
+          title: metricId
+          type: string
+        timeseries:
+          items:
+            format: float
+            type: number
+          title: timeseries
+          type: array
+        forecasting_values:
+          items:
+            format: float
+            type: number
+          title: forecasting_values
+          type: array
+        forecasting_upper_bounds:
+          items:
+            format: float
+            type: number
+          title: forecasting_upper_bounds
+          type: array
+        forecasting_lower_bounds:
+          items:
+            format: float
+            type: number
+          title: forecasting_lower_bounds
+          type: array
+        forecasting_model:
+          title: forecasting_model
+          type: string
+        forecasting_period:
+          format: int32
+          title: forecasting_period
+          type: integer
+        time:
+          items:
+            format: date
+            type: string
+          title: time
+          type: array
+        aggregation_interval:
+          format: int64
+          title: aggregation_interval
+          type: integer
+      title: Metric
+    TimeSeries:
+      properties:
+        metricId:
+          type: string
+        timeseries:
+          items:
+            format: float
+            type: number
+          type: array
+        time:
+          items:
+            format: date
+            type: string
+          type: array
+        aggregation_interval:
+          format: int64
+          type: integer
