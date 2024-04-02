@@ -13,3 +13,12 @@
 [submodule "data_processing_monitoring_service/monitoring-stack"]
 	path = data_processing_monitoring_service/monitoring-stack
 	url = https://github.com/HIRO-MicroDataCenters-BV/monitoring-stack.git
+[submodule "data_wrapping_service/code/minio"]
+	path = data_wrapping_service/code/minio-operator
+	url = https://github.com/minio/operator.git
+[submodule "data_wrapping_service/code/vault/vault-helm"]
+	path = data_wrapping_service/code/vault/vault-helm
+	url = https://github.com/hashicorp/vault-helm.git
+[submodule "data_wrapping_service/code/vault/vault"]
+	path = data_wrapping_service/code/vault/vault
+	url = https://github.com/hashicorp/vault.git
