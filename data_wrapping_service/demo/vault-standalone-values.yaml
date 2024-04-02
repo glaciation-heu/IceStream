@@ -1,0 +1,53 @@
+global:
+  enabled: true
+  tlsDisable: false
+injector:
+  enabled: false
+server:
+  enabled: true
+  resources:
+    requests:
+      memory: 256Mi
+      cpu: 250m
+    limits:
+      memory: 256Mi
+      cpu: 250m
+  extraEnvironmentVars:
+    VAULT_CACERT: /vault/userconfig/vault-tls/vault.ca
+  volumes:
+    - name: userconfig-vault-tls
+      secret:
+        defaultMode: 420
+        secretName: vault-tls # Matches the ${SECRET_NAME} from above
+  volumeMounts:
+    - mountPath: /vault/userconfig/vault-tls
+      name: userconfig-vault-tls
+      readOnly: true
+  service:
+    enabled: true
+    type: NodePort
+  dataStorage:
+    enabled: true
+    size: 10Gi
+  auditStorage:
+    enabled: true
+    size: 10Gi
+  ui:
+    enabled: true
+    serviceType: NodePort
+  standalone:
+    enabled: true
+    config: |
+      ui = true
+
+      listener "tcp" {
+        address = "[::]:8200"
+        cluster_address = "[::]:8201"
+        tls_cert_file = "/vault/userconfig/vault-tls/vault.crt"
+        tls_key_file  = "/vault/userconfig/vault-tls/vault.key"
+        tls_client_ca_file = "/vault/userconfig/vault-tls/vault.ca"
+      }
+
+      storage "file" {
+        path = "/vault/data"
+      }
