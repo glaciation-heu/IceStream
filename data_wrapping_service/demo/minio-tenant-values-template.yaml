@@ -1,0 +1,54 @@
+tenant:
+  # Set the name of the Tenant
+  name: myminio
+  # Directs the Operator to deploy the MinIO S3 API and Console services as LoadBalancer objects.
+  exposeServices:
+    minio: true
+    console: true
+  # Define configuration for KES (stateless and distributed key-management system)
+  # Refer https://github.com/minio/kes
+  kes:
+    image:
+      repository: quay.io/minio/kes
+      tag: 2024-03-13T17-52-13Z
+    replicas: 2
+    # Key name to be created on the KMS, default is "my-minio-key"
+    keyName: "myminio-key"
+    securityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+      fsGroup: 1000
+    containerSecurityContext:
+      runAsUser: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+      allowPrivilegeEscalation: false
+    configuration: |-
+      address: :7373
+      tls:
+        key: /tmp/kes/server.key # Path to the TLS private key
+        cert: /tmp/kes/server.crt # Path to the TLS certificate
+      admin:
+        identity: ${MINIO_KES_IDENTITY}
+      cache:
+        expiry:
+          any: 5m0s
+          unused: 20s
+      log:
+        error: on
+        audit: off
+      keystore:
+        vault:
+          endpoint: "https://<VAULT SERVICE NAME>.<VAULT K8S NAMESPACE>.svc.<K8S CLUSTER NAME>:8200" # The Vault endpoint
+          version: v2
+          namespace: "" # An optional Vault namespace. See: https://www.vaultproject.io/docs/enterprise/namespaces/index.html
+          prefix: "myminio" # An optional K/V prefix. The server will store keys under this prefix.
+          approle: # AppRole credentials. See: https://www.vaultproject.io/docs/auth/approle.html
+            id: "<APPROLE ROLE ID>" # Your AppRole Role ID
+            secret: "<APPROLE SECRET ID>" # Your AppRole Secret ID
+            retry: 15s  # Duration until the server tries to re-authenticate after connection loss.
+          tls: # The Vault client TLS configuration for certificate verification
+            ca: "/tmp/vault/vault.ca" # Path to one or multiple PEM root CA certificates
+          status: # Vault status configuration. The server will periodically reach out to Vault to check its status.
+            ping: 10s # Duration until the server checks Vault's status again.
