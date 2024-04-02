@@ -11,6 +11,14 @@ also helps meet industry standards and regulations. By limiting the blast
 radius of security incidents, it strengthens operational security and builds
 trust with stakeholders.
 
+## Demo
+
+<p align="center">
+  <a href="https://asciinema.org/a/f8reoNaOUtwuJSCJE5j2px5vl">
+    <img alt=asciicast src="https://asciinema.org/a/f8reoNaOUtwuJSCJE5j2px5vl.svg" width="80%">
+  </a>
+</p>
+
 ## Installation
 
 > NOTE: The installation procedure relies on the use of Helm charts, `kubectl`
