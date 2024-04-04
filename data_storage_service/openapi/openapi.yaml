@@ -1,0 +1,262 @@
+openapi: 3.1.0
+info:
+  title: Data Storage Microservice
+  description: |-
+    This is Data Storage Service (DSS) as part of the Novel Metadata Fabric based on the OpenAPI 3.1 specification. 
+    
+    It stores time series metrics and forecasting results such as daily energy consumption metrics and forecasting results from the prediction microservice and on the GLACIATION platform. It writes the most recent history and prediction of energy consumption of the platform to the Distributed Knowledge Graph (DKG). It allows to retrieve time series together with forecasting results.
+
+    It also stores data access patterns to keep track of data popularity in the platform, and write to DKG with daily statistics. It allows to retrieve daily summary statistics.
+    
+    You can find out more about
+    the DSS microservice at [https://github.com/glaciation-heu/IceStream/tree/development/data_storage_service](https://github.com/glaciation-heu/IceStream/tree/development/data_storage_service). 
+
+  contact:
+    email: Guangyuan.Piao@dell.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 0.1.1
+externalDocs:
+  description: Find out more about DSS microservice
+  url: https://github.com/glaciation-heu/IceStream/tree/development/data_storage_service
+servers:
+  - url: http://0.0.0.0:8080
+components:
+  schemas:
+    DataAccessRecord:
+      type: object
+      properties:
+        requestId:
+          type: string
+          examples: ['1234']
+        dataId:
+          type: string
+          examples: ['1234']
+        time:
+          type: string
+          format: date-time
+          examples: ['2018-03-20T09:12:28Z']
+    Metric:
+      type: object
+      properties:
+        metricId:
+          type: string
+          examples: ['1234']
+        timeseries:
+          type: array
+          items: 
+            type: number
+            format: float
+        forecasting_values:
+          type: array
+          items:
+            type: number
+            format: float
+        forecasting_upper_bounds:
+          type: array
+          items:
+            type: number
+            format: float
+        forecasting_lower_bounds:
+          type: array
+          items:
+            type: number
+            format: float
+        forecasting_model:
+          type: string
+        forecasting_period:
+          type: integer
+          format: int32
+          examples: [1]
+        time:
+          type: array
+          items:
+            type: string
+            format: date
+        aggregation_interval:
+          type: integer
+          format: int64
+          examples: [86400]
+    TimeSeries:
+      type: object
+      properties:
+        metricId:
+          type: string
+          examples: ['1234']
+        timeseries:
+          type: array
+          items: 
+            type: number
+            format: float
+        time:
+          type: array
+          items:
+            type: string
+            format: date
+        aggregation_interval:
+          type: integer
+          format: int64
+          examples: [86400]
+paths:
+  /dataAccess:
+    post:
+      summary: Store data access record 
+      description: Store data access record to database
+      operationId: addDataAccessRecord
+      requestBody:
+        description: Store data access record to database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DataAccessRecord'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DataAccessRecord'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /dataAccess/{dataId}:
+    parameters:
+      - name: dataId
+        in: path
+        description: Data source Id
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get data access record for the given data dataId
+      description: Get data access record for the given data dataId
+      operationId: getDataAccessRecord
+      parameters:
+        - in: query
+          name: start_time
+          description: Filtering start time of data access records
+          schema:
+            type: string
+            format: date-time
+            examples: ['2018-03-20T09:12:28Z']
+          required: false
+        - in: query
+          name: end_time
+          description: Filtering end time of data access records
+          schema:
+            type: string
+            format: date-time
+            examples: ['2018-03-20T09:12:28Z']
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            applicatin/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DataAccessRecord'
+        '400':
+          description: Invalid Id or time supplied
+        '404':
+          description: Data access records or time not found
+  /timeseries/{metricId}:
+    parameters:
+      - name: metricId
+        in: path
+        description: Id of the metric to return
+        required: true
+        schema:
+          type: string   
+    get:   
+      summary: Get timeseries for the given metricId and forecasting time
+      description: Returns TimeSeries
+      operationId: getTimeseries
+      parameters:
+        - in: query
+          name: start_time
+          description: Filtering start time of timeseries
+          schema:
+            type: string
+            format: date 
+            examples: ['2024-02-28']
+          required: false
+        - in: query
+          name: end_time
+          description: Filtering end time of timeseries
+          schema:
+            type: string
+            format: date 
+            examples: ['2024-08-28']
+          required: false
+      responses:
+        '200':
+          description: successful operation
+          content:
+            applicatin/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+        '400':
+          description: Invalid Id or forecasting time supplied
+        '404':
+          description: Metric or forecasting time not found
+  /prediction:
+    post:
+      summary: Store prediction results 
+      description: Store prediction results to database
+      operationId: addPrediction
+      requestBody:
+        description: Store prediction results to database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Metric'
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Metric'
+        '400':
+          description: Invalid input
+        '422':
+          description: Validation exception
+  /prediction/{metricId}:
+    parameters:
+      - name: metricId
+        in: path
+        description: Id of the metric to return
+        required: true
+        schema:
+          type: string
+    get:
+      summary: Get prediction history for the given metricId and forecasting time
+      description: Returns Metric
+      operationId: getMetric
+      parameters:
+        - in: query
+          name: forecasting_time
+          description: Time of the forecasting
+          schema:
+            type: string
+            format: date 
+            examples: ['2024-02-28']
+          required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            applicatin/json:
+              schema:
+                $ref: '#/components/schemas/TimeSeries'
+        '400':
+          description: Invalid Id or forecasting time supplied
+        '404':
+          description: Metric or forecasting time not found
+          
+
+

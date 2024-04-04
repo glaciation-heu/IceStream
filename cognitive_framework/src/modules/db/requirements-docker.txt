@@ -1,0 +1,9 @@
+Flask
+requests
+numpy
+pandas
+py2neo
+torch
+torch_geometric
+neo4j 
+python-dotenv
