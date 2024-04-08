@@ -1,1 +1,21 @@
-# optional for now
+# mychart/templates/service.yaml
+
+# Service for the first container
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Values.container1.image }}
+spec:
+  selector:
+    app: {{ .Values.container1.image }}
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+
+# Service for the second container
+# ...
+# Service for the third container
+# ...
+# Service for the fourth container
+# ...

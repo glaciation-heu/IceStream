@@ -1,14 +1,23 @@
-# values.yaml
-image:
-  first:  "your-first-container-image"
-  second: "your-second-container-image"
-  third:  "your-third-container-image"
-  fourth: "your-fourth-container-image"
+# mychart/values.yaml
 
-# Username and password for second container (replace with your secrets)
-auth:
-  username: ""
-  password: ""
+# Values for the first container
+container1:
+  image: <image1>
+  tag: <tag1>
 
-# Replica count for deployments (default to 1)
-replicaCount: 1
+# Values for the second container
+container2:
+  image: <image2>
+  tag: <tag2>
+  username: <username>
+  password: <password>
+
+# Values for the third container
+container3:
+  image: <image3>
+  tag: <tag3>
+
+# Values for the fourth container
+container4:
+  image: <image4>
+  tag: <tag4>
