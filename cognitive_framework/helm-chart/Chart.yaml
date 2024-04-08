@@ -1,0 +1,11 @@
+apiVersion: v2
+name: multi-container-app
+description: A Helm chart for deploying four interconnected docker containers
+version: 1.0.0
+appVersion: "latest"  # Update with your container image version
+
+# Define dependencies on other charts if needed
+# dependencies:
+#   - name: some-dependency
+#     version: ~0.1.0
+#     repository: https://your-repo.com/charts
