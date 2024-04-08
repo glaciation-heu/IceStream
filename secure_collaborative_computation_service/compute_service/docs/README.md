@@ -101,3 +101,5 @@ sequenceDiagram
     #Coordinator->>Computation Service: stop service
 ```
 
+## 4-REST API
+The Client Service provides the required interface for the Computation Service (whose internal details we mention here for documentation purposes only as all interactions happened via the Client Service).
