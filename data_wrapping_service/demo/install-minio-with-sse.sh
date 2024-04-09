@@ -16,7 +16,7 @@ case $MODE in
     ;;
 esac
 
-echo -e '\n[*] Install MinIO operator'
+echo '[*] Install MinIO operator'
 helm repo add minio-operator https://operator.min.io
 helm install \
   --namespace minio-operator \
@@ -78,6 +78,9 @@ helm install \
   --values minio-tenant-values.yaml \
   --create-namespace \
   tenant minio-operator/tenant
+
+echo -e '\n[-] Patch Tenant to enforce the right volume permissions'
+kubectl apply -f tenant-with-custom-initcontainers.yaml
 
 echo -e '\nWaiting for the initialization of the MinIO tenant...'
 kubectl wait -n minio-tenant --for=jsonpath='{.status.currentState}'=Initialized --timeout=120s tenant/myminio

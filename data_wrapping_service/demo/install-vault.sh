@@ -5,7 +5,7 @@ set -e
 function unseal {
     for i in $(seq 0 $(($THRESHOLD-1)));
     do
-        kubectl exec -n $VAULT_K8S_NAMESPACE $1 -- vault operator unseal ${VAULT_UNSEAL_KEYS[$i]} > /dev/null
+        kubectl exec -n $VAULT_K8S_NAMESPACE $1 -c vault -- vault operator unseal ${VAULT_UNSEAL_KEYS[$i]} > /dev/null
     done
 }
 
@@ -99,7 +99,7 @@ kubectl -n vault wait --for=jsonpath='{.status.phase}'=Running --timeout=60s ${P
 
 # Initialization
 THRESHOLD=3
-kubectl exec -n $VAULT_K8S_NAMESPACE vault-0 -- vault operator init \
+kubectl exec -n $VAULT_K8S_NAMESPACE vault-0 -c vault -- vault operator init \
     -key-shares=5 \
     -key-threshold=$THRESHOLD \
     -format=json > ${WORKDIR}/cluster-keys.json
@@ -107,9 +107,9 @@ readarray -t VAULT_UNSEAL_KEYS <<<"$(jq -r '.unseal_keys_b64[]' /tmp/vault/clust
 unseal vault-0
 
 if [ $MODE = "ha" ]; then
-    kubectl exec -n $VAULT_K8S_NAMESPACE vault-1 -- /bin/sh -c 'vault operator raft join -address=https://vault-1.vault-internal:8200 -leader-ca-cert="$(cat /vault/userconfig/vault-tls/vault.ca)" -leader-client-cert="$(cat /vault/userconfig/vault-tls/vault.crt)" -leader-client-key="$(cat /vault/userconfig/vault-tls/vault.key)" https://vault-0.vault-internal:8200 > /dev/null'
+    kubectl exec -n $VAULT_K8S_NAMESPACE vault-1 -c vault -- /bin/sh -c 'vault operator raft join -address=https://vault-1.vault-internal:8200 -leader-ca-cert="$(cat /vault/userconfig/vault-tls/vault.ca)" -leader-client-cert="$(cat /vault/userconfig/vault-tls/vault.crt)" -leader-client-key="$(cat /vault/userconfig/vault-tls/vault.key)" https://vault-0.vault-internal:8200 > /dev/null'
     unseal vault-1
-    kubectl exec -n $VAULT_K8S_NAMESPACE vault-2 -- /bin/sh -c 'vault operator raft join -address=https://vault-2.vault-internal:8200 -leader-ca-cert="$(cat /vault/userconfig/vault-tls/vault.ca)" -leader-client-cert="$(cat /vault/userconfig/vault-tls/vault.crt)" -leader-client-key="$(cat /vault/userconfig/vault-tls/vault.key)" https://vault-0.vault-internal:8200 > /dev/null'
+    kubectl exec -n $VAULT_K8S_NAMESPACE vault-2 -c vault -- /bin/sh -c 'vault operator raft join -address=https://vault-2.vault-internal:8200 -leader-ca-cert="$(cat /vault/userconfig/vault-tls/vault.ca)" -leader-client-cert="$(cat /vault/userconfig/vault-tls/vault.crt)" -leader-client-key="$(cat /vault/userconfig/vault-tls/vault.key)" https://vault-0.vault-internal:8200 > /dev/null'
     unseal vault-2
 fi
 sleep 3 # wait for the unsealing
