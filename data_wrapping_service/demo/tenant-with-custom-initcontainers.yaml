@@ -1,0 +1,81 @@
+apiVersion: minio.min.io/v2
+kind: Tenant
+metadata:
+  labels:
+    app: minio
+  name: myminio
+  namespace: minio-tenant
+spec:
+  configuration:
+    name: myminio-env-configuration
+  exposeServices:
+    console: true
+    minio: true
+  features:
+    bucketDNS: false
+    enableSFTP: false
+  image: quay.io/minio/minio:RELEASE.2024-03-15T01-07-19Z
+  imagePullPolicy: IfNotPresent
+  # Workaround for https://github.com/kubernetes/examples/issues/260
+  initContainers:
+  - name: chown
+    image: alpine
+    securityContext:
+      allowPrivilegeEscalation: false
+      runAsUser: 0 # root
+    command: [sh, -c]
+    args:
+    - chown -R 1000:1000 /export0 /export1 /export2 /export3
+    volumeMounts:
+    - name: data0
+      mountPath: /export0
+    - name: data1
+      mountPath: /export1
+    - name: data2
+      mountPath: /export2
+    - name: data3
+      mountPath: /export3
+  kes:
+    containerSecurityContext:
+      allowPrivilegeEscalation: false
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    image: quay.io/minio/kes:2024-03-13T17-52-13Z
+    kesSecret:
+      name: kes-configuration
+    keyName: myminio-key
+    replicas: 2
+    securityContext:
+      fsGroup: 1000
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+  mountPath: /export
+  podManagementPolicy: Parallel
+  pools:
+  - containerSecurityContext:
+      runAsGroup: 1000
+      runAsNonRoot: true
+      runAsUser: 1000
+    name: pool-0
+    securityContext:
+      fsGroup: 1000
+      fsGroupChangePolicy: OnRootMismatch
+      runAsGroup: 1000
+      runAsNonRoot: false # allow execution of chown with root privileges
+      runAsUser: 1000
+    servers: 4
+    volumeClaimTemplate:
+      metadata:
+        name: data
+      spec:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+    volumesPerServer: 4
+  prometheusOperator: false
+  requestAutoCert: true
+  subPath: /data

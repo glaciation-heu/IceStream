@@ -31,9 +31,9 @@ server:
     enabled: true
     type: NodePort
     active:
-      enabled: true
+      enabled: false
     standby:
-      enabled: true
+      enabled: false
   dataStorage:
     enabled: true
     size: 10Gi
@@ -67,3 +67,27 @@ server:
         }
 
         service_registration "kubernetes" {}
+  # Workaround for https://github.com/kubernetes/examples/issues/260
+  extraInitContainers:
+    - name: chown
+      image: alpine
+      securityContext:
+        allowPrivilegeEscalation: false
+        runAsUser: 0 # root
+      command: [sh, -c]
+      args:
+        - chown -R 100:1000 /vault/data # uid=vault, gid=vault
+      volumeMounts:
+        - name: data
+          mountPath: /vault/data/
+  # Allow executing the init container with root privileges
+  statefulSet:
+    securityContext:
+      pod:
+        fsGroup: 1000
+        runAsGroup: 1000
+        runAsNonRoot: false
+        runAsUser: 100
+      container:
+        allowPrivilegeEscalation: false
+        runAsNonRoot: true
