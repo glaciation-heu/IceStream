@@ -12,7 +12,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 0.1.0
 paths:
-  /job:
+  /api/v1alpha1/job:
     post:
       tags:
         - job
@@ -39,7 +39,7 @@ paths:
           description: Invalid job syntax
         '422':
           description: Invalid job declaration
-  /job/{jobId}/status:
+  /api/v1alpha1/job/{jobId}/status:
     get:
       tags:
         - job
@@ -63,7 +63,7 @@ paths:
           description: Invalid job ID
         '404':
           description: Job not found
-  /job/{jobId}:
+  /api/v1alpha1/job/{jobId}:
     delete:
       tags:
         - job
