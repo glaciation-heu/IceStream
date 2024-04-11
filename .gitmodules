@@ -22,3 +22,9 @@
 [submodule "data_wrapping_service/code/vault/vault"]
 	path = data_wrapping_service/code/vault/vault
 	url = https://github.com/hashicorp/vault.git
+[submodule "data_sanitization_service/code/spark-app"]
+	path = data_sanitization_service/code/spark-app
+	url = https://github.com/mosaicrown/mondrian.git
+[submodule "data_sanitization_service/code/spark-operator"]
+	path = data_sanitization_service/code/spark-operator
+	url = https://github.com/kubeflow/spark-operator.git
