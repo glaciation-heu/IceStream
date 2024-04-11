@@ -33,14 +33,14 @@ COPY --from=builder /tmp/jars/ /opt/spark/jars/
 USER root
 
 # Install application requirements
-COPY code/distributed/spark/requirements.txt /tmp/
+COPY spark-app/distributed/spark/requirements.txt /tmp/
 RUN ["pip", "install", "--upgrade", "pip"]
 RUN ["pip", "install", "--requirement", "/tmp/requirements.txt"]
 
 # Import application
 RUN mkdir "/mondrian"
-COPY code/distributed/anonymize.py /mondrian/
-COPY code/distributed/mondrian.zip /mondrian/
+COPY spark-app/distributed/anonymize.py /mondrian/
+COPY spark-app/distributed/mondrian.zip /mondrian/
 
 # Run with an unprivileged user
 USER 185
