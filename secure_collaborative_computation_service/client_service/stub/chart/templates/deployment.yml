@@ -19,6 +19,6 @@ spec:
           image: {{ .Values.deployment.image }}
           env:
             - name: SERVICE_PORT
-              value: "80"
+              value: {{ .Values.deployment.port | default "80" | quote }}
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.deployment.port | default 80 }}
