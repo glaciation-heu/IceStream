@@ -1,0 +1,102 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: data-sanitization
+  namespace: spark-app
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: data-sanitization-role
+  namespace: spark-app
+rules:
+- apiGroups: ["sparkoperator.k8s.io"]
+  resources: ["sparkapplications"]
+  verbs: ["create", "delete"]
+- apiGroups: ["sparkoperator.k8s.io"]
+  resources: ["sparkapplications/status"]
+  verbs: ["get"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: data-sanitization-role-binding
+  namespace: spark-app
+subjects:
+- kind: ServiceAccount
+  name: data-sanitization
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: data-sanitization-role
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: data-sanitization
+  namespace: spark-app
+  labels:
+    app: data-sanitization
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: data-sanitization
+  template:
+    metadata:
+      labels:
+        app: data-sanitization
+    spec:
+      containers:
+        - name: data-sanitization
+          image: mattlectic/data-sanitization:0.1.0
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: ENDPOINT
+              value: minio.minio-tenant.svc.cluster.local
+            - name: SSL_CERT_FILE
+              value: /minio/ca.crt
+          envFrom:
+            - secretRef:
+                name: minio-credentials
+          command:
+            - uvicorn
+            - openapi_server.main:app
+            - --host=0.0.0.0
+            - --port=8080
+          ports:
+            - name: http
+              containerPort: 8080
+          resources:
+            requests:
+              cpu: 250m
+              memory: 512Mi
+            limits:
+              cpu: 500m
+              memory: 1024Mi
+          volumeMounts:
+            - mountPath: /minio
+              name: minio-ca
+      serviceAccount: data-sanitization
+      volumes:
+        # The automatic generation of the MinIO certificates uses the
+        # kube-root-ca, so here we need to provide a way for the Mondrian application
+        # to trust it
+        - name: minio-ca
+          configMap:
+            name: kube-root-ca.crt
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: data-sanitization
+  namespace: spark-app
+  labels:
+    app: data-sanitization
+spec:
+  selector:
+    app: data-sanitization
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 8080
