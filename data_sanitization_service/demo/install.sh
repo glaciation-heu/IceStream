@@ -8,6 +8,9 @@ cd ../../data_wrapping_service/demo/
 source install-minio-with-sse.sh ha
 cd $PREV_PWD
 
+echo -e '\nWaiting for MinIO tenant services to go up...'
+sleep 30
+
 echo -e '\n[*] Install Spark operator'
 helm repo add spark-operator https://kubeflow.github.io/spark-operator/
 kubectl create namespace spark-app
@@ -43,3 +46,18 @@ echo -e '\n[-] Spark history server endpoint'
 NODE_IP=$(kubectl get nodes --namespace spark-app -o jsonpath="{.items[0].status.addresses[0].address}")
 NODE_PORT=$(kubectl get --namespace spark-app -o jsonpath="{.spec.ports[0].nodePort}" services spark-history-server)
 echo "Serving Spark history server at http://$NODE_IP:$NODE_PORT"
+
+echo -e '\n[*] Install data sanitization service'
+echo '[-] Configure object store for storing spark events'
+mc mb myminio/sanitization/config --insecure
+
+echo -e '\n[-] Install data sanitization service'
+kubectl create -f ../code/rest-api/k8s-deployment.yaml
+
+echo -e '\nWaiting for the rollout of the data sanitization service...'
+kubectl -n spark-app rollout status deploy/data-sanitization
+
+echo -e '\n[-] Data sanitization REST API'
+NODE_IP=$(kubectl get nodes --namespace spark-app -o jsonpath="{.items[0].status.addresses[0].address}")
+NODE_PORT=$(kubectl get --namespace spark-app -o jsonpath="{.spec.ports[0].nodePort}" services data-sanitization)
+echo "Serving data sanitization service at http://$NODE_IP:$NODE_PORT"
