@@ -22,3 +22,20 @@ spec:
               value: {{ .Values.deployment.port | default "80" | quote }}
           ports:
             - containerPort: {{ .Values.deployment.port | default 80 }}
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.deployment.port | default 80 }}
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /sys_status
+              port: {{ .Values.deployment.port | default 80 }}
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          startupProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.deployment.port | default 80 }}
+

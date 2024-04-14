@@ -10,6 +10,7 @@ use poem::Result;
 mod secrets;
 mod result;
 mod notify;
+mod sys_status;
 
 pub struct Api;
 
@@ -70,5 +71,17 @@ impl Api {
         /// identifier of collaboration
         collaboration_id: Path<u32>) -> Result<notify::NotifyResponse> {
         Ok(notify::NotifyResponse::NotWaiting)
+    }
+
+    /// Returns status code 200. Used to check if service is available.
+    #[oai(path = "/ping", method = "get")]
+    async fn ping(&self) -> Result<()> {
+        Ok(())
+    }
+
+    /// Get system informations.
+    #[oai(path = "/sys_status", method = "get")]
+    async fn sys_status(&self) -> Result<sys_status::SysStatusResponse> {
+        sys_status::sys_status()
     }
 }

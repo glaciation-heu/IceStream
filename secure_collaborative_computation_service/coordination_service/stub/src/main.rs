@@ -1,4 +1,4 @@
-use poem::{listener::TcpListener, Route, Server};
+use poem::{listener::TcpListener, Route, Server, EndpointExt, middleware::Cors};
 use poem_openapi::OpenApiService;
 use std::env;
 
@@ -28,7 +28,7 @@ async fn main() {
             .server(format!("http://{}:{}", addr, port));
 
     let ui = api_service.swagger_ui();
-    let app = Route::new().nest("/", api_service).nest("/docs", ui);
+    let app = Route::new().nest("/", api_service).nest("/docs", ui).with(Cors::new());
 
 
     let _ = Server::new(TcpListener::bind(format!("{}:{}", addr, port)))

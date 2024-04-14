@@ -5,7 +5,7 @@ metadata:
   labels:
     app: {{ include "service.fullname" . }}
 spec:
-  replicas: {{ .Values.coordination_service.replicas }}
+  replicas: {{ .Values.deployment.replicas }}
   selector:
     matchLabels:
       app: {{ include "service.fullname" . }}
@@ -16,9 +16,26 @@ spec:
     spec:
       containers:
         - name: coordination-service
-          image: {{ .Values.coordination_service.image }}
+          image: {{ .Values.deployment.image }}
           env:
             - name: SERVICE_PORT
-              value: "80"
+              value: {{ .Values.deployment.port | quote }}
           ports:
-            - containerPort: 80
+            - containerPort: {{ .Values.deployment.port }}
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.deployment.port }}
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /sys_status
+              port: {{ .Values.deployment.port }}
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          startupProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.deployment.port }}
+

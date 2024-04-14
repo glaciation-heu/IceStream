@@ -8,6 +8,7 @@ use poem::Result;
 
 mod participation;
 mod register_upload;
+mod sys_status;
 
 pub struct Api;
 
@@ -58,4 +59,17 @@ impl Api {
         secret_ids: Query<Vec<String>>) -> Result<register_upload::PostRegisterUploadResponse> {
         register_upload::post(collaboration_id.0, party_id.0, secret_ids.0)
     }
+
+    /// Returns status code 200. Used to check if service is available.
+    #[oai(path = "/ping", method = "get")]
+    async fn ping(&self) -> Result<()> {
+        Ok(())
+    }
+
+    /// Get system informations.
+    #[oai(path = "/sys_status", method = "get")]
+    async fn sys_status(&self) -> Result<sys_status::SysStatusResponse> {
+        sys_status::sys_status()
+    }
+
 }
