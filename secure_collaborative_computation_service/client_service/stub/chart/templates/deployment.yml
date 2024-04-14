@@ -38,4 +38,7 @@ spec:
             httpGet:
               path: /ping
               port: {{ .Values.deployment.port | default 80 }}
-
+{{- if .Values.deployment.resources }}
+          resources:
+            {{- toYaml $.Values.deployment.resources | nindent 12 }}
+{{- end }}
