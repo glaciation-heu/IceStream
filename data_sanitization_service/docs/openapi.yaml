@@ -12,7 +12,7 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 0.1.0
 paths:
-  /job:
+  /api/v1alpha1/job:
     post:
       tags:
         - job
@@ -29,17 +29,21 @@ paths:
         required: true
       responses:
         '200':
-          description: Successful operation
+          description: Successful creation of the data sanitization job
           content:
             application/json:
               schema:
-                type: string
-                format: uuid
+                type: object
+                properties:
+                  id:
+                    description: Identifier of the data sanitization job
+                    type: string
+                    format: uuid
         '400':
           description: Invalid job syntax
         '422':
           description: Invalid job declaration
-  /job/{jobId}/status:
+  /api/v1alpha1/job/{jobId}/status:
     get:
       tags:
         - job
@@ -54,7 +58,7 @@ paths:
             format: uuid
       responses:
         '200':
-          description: Successful operation
+          description: Successful retrieval of the data sanitization job status
           content:
             application/json:
               schema:
@@ -63,7 +67,7 @@ paths:
           description: Invalid job ID
         '404':
           description: Job not found
-  /job/{jobId}:
+  /api/v1alpha1/job/{jobId}:
     delete:
       tags:
         - job
@@ -77,6 +81,8 @@ paths:
             type: string
             format: uuid
       responses:
+        '200':
+          description: Successful deletion of the data sanitization job
         '400':
           description: Invalid job ID
 components:
@@ -123,6 +129,8 @@ components:
               type: array
               items:
                 type: string
+              minItems: 1
+              uniqueItems: true
               example:
                 - exampleOfSensitiveAttribute
     CommonJob:
@@ -180,6 +188,7 @@ components:
           items:
             type: string
           default: []
+          uniqueItems: true
           example:
             - exampleIdAttribute
         informationLossMeasures:
@@ -193,6 +202,7 @@ components:
               - globalCertaintyPenalty
               - normalizedCertaintyPenalty
           default: []
+          uniqueItems: true
           example:
             - discernabilityPenalty
             - globalCertaintyPenalty
@@ -221,6 +231,8 @@ components:
           type: array
           items:
             type: string
+          minItems: 1
+          uniqueItems: true
           example:
            - exampleQuasiIdAttribute0
            - exampleQuasiIdAttribute1
