@@ -39,6 +39,14 @@ types is not supported out of the box. For these use cases consider flattening
 the object in multiple distinct attributes when feasible, and introduce ad hoc
 changes to the sanitization service otherwise.
 
+## Demo
+
+<p align="center">
+  <a href="https://asciinema.org/a/WzzhCvDmcZbr7RBxnIDPehBuu">
+    <img alt=asciicast src="https://asciinema.org/a/WzzhCvDmcZbr7RBxnIDPehBuu.svg" width="80%">
+  </a>
+</p>
+
 ## Installation
 
 > NOTE: The installation procedure relies on the use of Helm charts, `kubectl`,

@@ -95,7 +95,7 @@ helm install -n $VAULT_K8S_NAMESPACE $VAULT_HELM_RELEASE_NAME hashicorp/vault -f
 
 echo -e "\nWaiting for the rollout of $NAME..."
 sleep 3 # wait for the StatefulSet to start the pods
-kubectl -n vault wait --for=jsonpath='{.status.phase}'=Running --timeout=60s ${PODS[@]} # wait for the pods to reach running state
+kubectl -n vault wait --for=jsonpath='{.status.phase}'=Running --timeout=120s ${PODS[@]} # wait for the pods to reach running state
 
 # Initialization
 THRESHOLD=3
