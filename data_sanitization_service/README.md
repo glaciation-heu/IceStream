@@ -39,55 +39,114 @@ types is not supported out of the box. For these use cases consider flattening
 the object in multiple distinct attributes when feasible, and introduce ad hoc
 changes to the sanitization service otherwise.
 
-## Dependencies
+## Installation
 
-The sanitization service is an Apache Spark application. To seamlessly
-integrate it within Kubernetes, the target orchestration system of the
-GLACIATION platform, we need the following dependencies:
+> NOTE: The installation procedure relies on the use of Helm charts, `kubectl`,
+> `vault` and `mc` commands. Therefore the installation of these CLI utilities
+> is mandatory for the successful installation of the data sanitization
+> service.
 
-- First/Third party object store: An object store for persisting the input and
-  the output datasets either within the Kubernetes cluster deployed with a
-  native Kubernetes operator (e.g., [MinIO](https://github.com/minio/operator),
-  [Rook](https://github.com/rook/rook)) or outside the cluster by referencing
-  an external object store
-- [spark-on-k8s-operator](https://github.com/GoogleCloudPlatform/spark-on-k8s-operator):
-  Kubernetes operator for managing the lifecycle of Apache Spark applications
-  on Kubernetes
+Run the following script to install the data sanitization service and all its
+requirements:
 
-## Architecture
+```shell
+./install.sh
+```
 
-Details about the functioning of the Spark operator can be found in the
-[official design documentation](https://github.com/GoogleCloudPlatform/spark-on-k8s-operator/blob/master/docs/design.md).
+## Uninstallation
 
-### Submitting new data sanitization requests
+Run the following to uninstall the data sanitization service and all its
+requirements:
 
-![Image displaying the architecture of the service](docs/architecture.png)
+```shell
+kubectl delete -f ../code/rest-api/k8s-deployment.yaml
+kubectl delete -f spark-history-server.yaml
+helm uninstall --namespace spark-operator spark-operator
+helm uninstall --namespace minio-tenant tenant
+helm uninstall --namespace vault vault
+helm uninstall --namespace minio-operator operator
+```
 
-### Monitoring the state of existing data sanitization requests
+## How to use the data sanitization service
 
-![Image displaying the architecture of the service](docs/architecture-status.png)
+A concise overview of the service interface follows. For a complete view
+including all the details see the [OpenAPI specification](docs/openapi.yaml).
 
-## Terminology
+### Data sanitization job creation
 
-| Term | Description |
-|---|---|
-| column scoring | Assign a score to each quasi-identifying attribute to choose the current best target of the Mondrian cut |
-| data sanitization | Irreversible transformation of data to provide privacy guarantees |
-| generalization | Transformation of the attribute values to achieve k-anonymity and/or l-diversity |
-| identifying attribute | Attribute that identifies the individual data subject |
-| information loss | Estimation of the utility loss of the sanitized data for statistical analyses by end users (lower is better) |
-| k-anonymity | Dataset property where every set of rows with identical quasi-identifiers has at least *k* rows |
-| l-diversity | Dataset property where, for every set of rows with identical quasi-identifiers, there are at least *l* distinct values for each sensitive attribute |
-| mondrian | Efficient and effective greedy algorithm for achieving k-anonymity and/or l-diversity |
-| partition | A split of the data to distribute the work across the cluster |
-| quantiles | Values splitting sorted data distributions into equal parts |
-| quasi-identifying attribute | Attribute that together with other attributes can identify the individual data subject |
-| repartitioning | Redistribution of the data across a specified number of partitions |
-| sampling | Selection of a portion of the dataset to limit CPU and memory consumption while progressing with the sanitization job |
-| sensitive attribute | Attribute that should not be linkable to an individual subject |
-| shuffling | Exchange of data between nodes to be able to perform a task |
+Create a job by submitting the desired data sanitization configuration.
 
-## [OpenAPI specification](docs/openapi.yaml)
+Here is an example of a minimal configuration:
+
+```json
+{
+    "driver": { "memory": "1g" },
+    "executor": { "instances": 4, "memory": "1g" },
+    "input": "s3a://sanitization/dataset/adults.csv",
+    "k": 3,
+    "output": "s3a://sanitization/anonymized/adults.csv",
+    "quasiIdAttributes": [ "age", "education-num", "race", "native-country" ]
+}
+```
+
+Assuming we are storing the configuration of the job in the `adults.json` file,
+here is how we could interact with the data sanitization service:
+
+```shell
+    curl \
+        --silent \
+        --request POST \
+        --header 'Content-Type: application/json' \
+        --data @adults.json \
+        http://$IP:$PORT/api/v1alpha1/job
+```
+
+This returns a JSON object including information about the identifier of the
+created job. On successful invocation of the service interface the service
+returns something like this:
+
+```json
+{"id": "27bb4c01-efb5-4617-8df5-17ea426e601b"}
+```
+
+### Data sanitization job status information
+
+Use the identifier returned by the job creation to gather information about the
+status of the job.
+
+```shell
+curl \
+    --silent \
+    --request GET \
+    --header 'Content-Type: application/json' \
+    http://$IP:$PORT/api/v1alpha1/job/$JOB_ID/status
+```
+
+This returns a JSON object including information about the state and a possible
+error message. On successful completion of the job the service returns:
+
+```json
+{
+  "errorMessage": "",
+  "state": "COMPLETED"
+}
+```
+
+### Data sanitization job deletion
+
+Use the identifier returned by the job creation to delete the job and free
+resources associated with its execution.
+
+```shell
+curl \
+    --silent \
+    --request DELETE \
+    --header 'Content-Type: application/json' \
+    --output /dev/null \
+    http://$IP:$PORT/api/v1alpha1/job/$JOB_ID
+```
+
+This returns does not return any data.
 
 ## Publications
 

@@ -1,6 +1,3 @@
-[submodule "data_sanitization_service/code"]
-	path = data_sanitization_service/code
-	url = https://github.com/mosaicrown/mondrian.git
 [submodule "admission_control_service/code/service"]
 	path = admission_control_service/code/service
 	url = https://github.com/open-policy-agent/gatekeeper.git
@@ -22,3 +19,9 @@
 [submodule "data_wrapping_service/code/vault/vault"]
 	path = data_wrapping_service/code/vault/vault
 	url = https://github.com/hashicorp/vault.git
+[submodule "data_sanitization_service/code/spark-app"]
+	path = data_sanitization_service/code/spark-app
+	url = https://github.com/mosaicrown/mondrian.git
+[submodule "data_sanitization_service/code/spark-operator"]
+	path = data_sanitization_service/code/spark-operator
+	url = https://github.com/kubeflow/spark-operator.git

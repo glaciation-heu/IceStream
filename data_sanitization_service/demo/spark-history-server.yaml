@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: spark-history-server
+  namespace: spark-app
+  labels:
+    app: spark-history-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: spark-history-server
+  template:
+    metadata:
+      labels:
+        app: spark-history-server
+    spec:
+      initContainers:
+        - name: init-cacerts
+          image: openjdk:23-jdk-slim-bullseye
+          command:
+            - bash
+            - -c
+            - |
+              cp -R /usr/local/openjdk-23/lib/security/* /jvm-security-config/
+              keytool -import -noprompt -trustcacerts -alias local -file /minio/ca.crt -keystore /jvm-security-config/cacerts -storepass changeit
+          volumeMounts:
+            - mountPath: /jvm-security-config
+              name: jvm-security-config
+            - mountPath: /minio
+              name: minio-ca
+      containers:
+      - name: spark-history-server
+        image: mattlectic/spark-history-server:1.0.0
+        imagePullPolicy: IfNotPresent
+        command:
+          - /opt/spark/sbin/start-history-server.sh
+        env:
+          - name: SPARK_NO_DAEMONIZE
+            value: "false"
+        envFrom:
+          - secretRef:
+              name: minio-credentials
+        volumeMounts:
+          - name: config
+            mountPath: /opt/spark/conf/spark-defaults.conf
+            subPath: spark-defaults.conf
+          - name: jvm-security-config
+            mountPath: /opt/java/openjdk/lib/security
+        ports:
+          - name: http
+            containerPort: 18080
+        resources:
+          requests:
+            cpu: 250m
+            memory: 512Mi
+          limits:
+            cpu: 500m
+            memory: 1024Mi
+      volumes:
+        - name: jvm-security-config
+          emptyDir: {}
+        # The automatic generation of the MinIO certificates uses the
+        # kube-root-ca, so here we need to provide a way for the Mondrian application
+        # to trust it
+        - name: minio-ca
+          configMap:
+            name: kube-root-ca.crt
+        - name: config
+          configMap:
+            name: spark-history-server-config
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: spark-history-server-config
+  namespace: spark-app
+data:
+  spark-defaults.conf: |-
+    spark.hadoop.fs.s3a.endpoint=https://minio.minio-tenant.svc.cluster.local
+    spark.hadoop.fs.s3a.path.style.access=true
+    spark.hadoop.fs.s3a.attempts.maximum=1
+    spark.hadoop.fs.s3a.connection.establish.timeout=5000
+    spark.hadoop.fs.s3a.connection.timeout=10000
+    spark.history.fs.logDirectory=s3a://sanitization/spark-events/
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: spark-history-server
+  namespace: spark-app
+  labels:
+    app: spark-history-server
+spec:
+  selector:
+    app: spark-history-server
+  type: NodePort
+  ports:
+    - port: 80
+      targetPort: 18080

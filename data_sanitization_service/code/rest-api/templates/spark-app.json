@@ -1,0 +1,149 @@
+{
+  "apiVersion": "sparkoperator.k8s.io/v1beta2",
+  "kind": "SparkApplication",
+  "metadata": {
+    "name": "data-sanitization-job-{{ req_id }}",
+    "namespace": "spark-app"
+  },
+  "spec": {
+    "type": "Python",
+    "pythonVersion": "3",
+    "mode": "cluster",
+    "image": "mattlectic/mondrian:1.0.1",
+    "imagePullPolicy": "IfNotPresent",
+    "mainApplicationFile": "local:///mondrian/anonymize.py",
+    "deps": {
+      "pyFiles": [
+        "local:///mondrian/mondrian.zip"
+      ]
+    },
+    "arguments": [
+      "s3a://sanitization/config/{{ req_id }}.json",
+      "{{ executor.instances }}",
+      "0",
+      "0"
+    ],
+    "sparkVersion": "3.4.0",
+    "driver": {
+      "cores": 1,
+      "memory": "{{ driver.memory }}",
+      "serviceAccount": "spark-operator-spark",
+      "env": [
+        {
+          "name": "SSL_CERT_FILE",
+          "value": "/minio/ca.crt"
+        }
+      ],
+      "envFrom": [
+        {
+          "secretRef": {
+            "name": "minio-credentials"
+          }
+        }
+      ],
+      "initContainers": [
+        {
+          "name": "init-cacerts",
+          "image": "openjdk:23-jdk-slim-bullseye",
+          "command": [
+            "bash",
+            "-c",
+            "cp -R /usr/local/openjdk-23/lib/security/* /jvm-security-config/\nkeytool -importcert -noprompt -trustcacerts -alias local -file /minio/ca.crt -keystore /jvm-security-config/cacerts -storepass changeit\n"
+          ],
+          "volumeMounts": [
+            {
+              "mountPath": "/jvm-security-config",
+              "name": "jvm-security-config"
+            },
+            {
+              "mountPath": "/minio",
+              "name": "minio-ca"
+            }
+          ]
+        }
+      ],
+      "volumeMounts": [
+        {
+          "name": "jvm-security-config",
+          "mountPath": "/opt/java/openjdk/lib/security"
+        },
+        {
+          "mountPath": "/minio",
+          "name": "minio-ca"
+        }
+      ]
+    },
+    "executor": {
+      "cores": 1,
+      "instances": {{ executor.instances }},
+      "memory": "{{ executor.memory }}",
+      "env": [
+        {
+          "name": "SSL_CERT_FILE",
+          "value": "/minio/ca.crt"
+        }
+      ],
+      "envFrom": [
+        {
+          "secretRef": {
+            "name": "minio-credentials"
+          }
+        }
+      ],
+      "initContainers": [
+        {
+          "name": "init-cacerts",
+          "image": "openjdk:23-jdk-slim-bullseye",
+          "command": [
+            "bash",
+            "-c",
+            "cp -R /usr/local/openjdk-23/lib/security/* /jvm-security-config/\nkeytool -import -noprompt -trustcacerts -alias local -file /minio/ca.crt -keystore /jvm-security-config/cacerts -storepass changeit\n"
+          ],
+          "volumeMounts": [
+            {
+              "mountPath": "/jvm-security-config",
+              "name": "jvm-security-config"
+            },
+            {
+              "mountPath": "/minio",
+              "name": "minio-ca"
+            }
+          ]
+        }
+      ],
+      "volumeMounts": [
+        {
+          "name": "jvm-security-config",
+          "mountPath": "/opt/java/openjdk/lib/security"
+        },
+        {
+          "mountPath": "/minio",
+          "name": "minio-ca"
+        }
+      ]
+    },
+    "volumes": [
+      {
+        "name": "jvm-security-config",
+        "emptyDir": {}
+      },
+      {
+        "name": "minio-ca",
+        "configMap": {
+          "name": "kube-root-ca.crt"
+        }
+      }
+    ],
+    "sparkConf": {
+      "spark.eventLog.enabled": "true",
+      "spark.eventLog.dir": "s3a://sanitization/spark-events/",
+      "spark.hadoop.fs.s3a.endpoint": "https://{{ endpoint }}",
+      "spark.hadoop.fs.s3a.path.style.access": "true",
+      "spark.hadoop.fs.s3a.attempts.maximum": "1",
+      "spark.hadoop.fs.s3a.connection.establish.timeout": "5000",
+      "spark.hadoop.fs.s3a.connection.timeout": "10000",
+      "spark.hadoop.fs.s3a.bucket.all.committer.magic.enabled": "true",
+      "spark.hadoop.fs.s3a.directory.marker.retention": "keep"
+    }
+  }
+}
