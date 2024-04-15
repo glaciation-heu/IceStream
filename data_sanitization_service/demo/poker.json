@@ -1,0 +1,24 @@
+{
+    "columnScoringFunction": "entropy",
+    "driver": {
+        "memory": "2g"
+    },
+    "executor": {
+        "instances": 4,
+        "memory": "1g"
+    },
+    "informationLossMeasures": [
+        "discernabilityPenalty",
+        "globalCertaintyPenalty",
+        "normalizedCertaintyPenalty"
+    ],
+    "input": "s3a://sanitization/dataset/poker.csv",
+    "isFullyDistributed": false,
+    "k": 160,
+    "l": 3,
+    "output": "s3a://sanitization/anonymized/poker.csv",
+    "quasiIdAttributes": [
+        "s1", "r1", "s2", "r2", "s3", "r3", "s4", "r4", "s5", "r5"
+    ],
+    "sensitiveAttributes": [ "hand" ]
+}

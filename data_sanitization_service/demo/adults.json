@@ -1,0 +1,34 @@
+{
+    "columnScoringFunction": "entropy",
+    "driver": {
+        "memory": "1g"
+    },
+    "executor": {
+        "instances": 4,
+        "memory": "1g"
+    },
+    "idAttributes": [
+        "capital-loss",
+        "capital-gain"
+    ],
+    "informationLossMeasures": [
+        "discernabilityPenalty",
+        "globalCertaintyPenalty"
+    ],
+    "input": "s3a://sanitization/dataset/adults.csv",
+    "isFullyDistributed": false,
+    "k": 3,
+    "l": 2,
+    "output": "s3a://sanitization/anonymized/adults.csv",
+    "partitionFunction": "quantile",
+    "quasiIdAttributes": [
+        "age",
+        "education-num",
+        "race",
+        "native-country"
+    ],
+    "redact": true,
+    "sensitiveAttributes": [
+        "income" 
+    ]
+}
