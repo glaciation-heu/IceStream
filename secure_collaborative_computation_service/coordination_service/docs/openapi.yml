@@ -1,0 +1,183 @@
+openapi: '3.0.0'
+info:
+  version: 0.1.0
+  title: Coordination Service
+  description: Coordination Service to coordinate MPC computations
+paths:
+  /participation/{collaboration_id}:
+    post:
+      summary: input_party registers participation. Return input-specification and output-party config on success.
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: uint32
+        in: path
+        required: true
+        deprecated: false
+      - name: party_id
+        schema:
+          type: integer
+          format: int32
+        description: ID for registering party
+        required: true 
+        deprecated: false
+        in: query
+      responses:
+        '200':
+          description: Successfully added to participating parties.
+          content:
+            application/json: 
+              schema:
+                "$ref": "#/components/schemas/participationResp"
+        '208':
+          description: Already added as participating party.
+          content:
+            application/json: 
+              schema:
+                "$ref": "#/components/schemas/participationResp"
+        '404':
+          description: Did not find a project with this ID.
+          content:
+            text/plain:
+              schema:
+                type: string
+    delete:
+      summary: input_party unregisteres from participation.
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: uint32
+        in: path
+        required: true
+        deprecated: false
+      - name: party_id
+        schema:
+          type: integer
+          format: uint32
+        in: query
+        required: true
+        deprecated: false
+      responses:
+        200:
+          description: Successfully removed from participating parties.
+        404:
+          description: Did not find projection with this ID.
+        default:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+  /register-upload/{collaboration_id}:
+    post:
+      summary: input_party confirms upload done.
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: uint32
+        in: path
+        required: true
+        deprecated: false
+      - name: party_id
+        schema:
+          type: integer
+          format: uint32
+        in: query
+        required: true
+        deprecated: false
+      - name: secret_ids
+        description: the id of the secrets returned from the computation party.
+        schema:
+          type: array
+          items:
+            type: string
+        in: query
+        required: true 
+        deprecated: false
+      responses:
+        200:
+          description: OK
+        '404':
+          description: Error, Project not found
+        208:
+          description: Already registered.
+        default:
+          description: error
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/error"
+components:
+  schemas:
+    error:
+      type: object
+      required:
+        - message
+      properties:
+        code:
+          type: integer
+          format: int64
+        message:
+          type: string
+    participationResp:
+      type: object
+      properties:
+        cs_config:
+          type: object
+          properties:
+            schema:
+              $ref: "#/components/schemas/CsConfig"
+        csv_specification:
+          type: string
+    CsConfig:
+      type: object
+      required:
+      - prim
+      - r
+      - rinv
+      - noSslValidation
+      - trustedCertificates
+      - providers
+      properties:
+        prim:
+          type: string
+          description: the Prime as used by the MPC backend
+        r:
+          type: string
+          description: the auxiliary modulus R as used by the MPC backend
+        rinv:
+          type: string
+          description: the multiplicative inverse for the auxiliary modulus R as used by the MPC backend
+        noSslValidation:
+          type: boolean
+        trustedCertificates:
+          type: array
+          items:
+            type: string
+        providers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/CsProviderConfig"
+    CsProviderConfig:
+      type: object
+      required:
+      - amphoraServiceUrl
+      - castorServiceUrl
+      - ephemeralServiceUrl
+      - id
+      - baseUrl
+      properties:
+        amphoraServiceUrl:
+          type: string
+        castorServiceUrl:
+          type: string
+        ephemeralServiceUrl:
+          type: string
+        id:
+          type: integer
+          format: int32
+        baseUrl:
+          type: string

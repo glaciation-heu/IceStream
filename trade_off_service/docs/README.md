@@ -1,5 +1,13 @@
 # Trade-Off Service
 
+### Domain/Terminology
+
+| **Term**  | **Description**                                                                                                                           |
+|-----------|-------------------------------------------------------------------------------------------------------------------------------------------|
+| Node      | A physical or virtual computer system in a cloud computing environment that is running one or more application servers.                   |
+| Workload  | The amount of tasks and computing resources that are required to run an application or service in a cloud computing environment.          |
+| Resources | Infrastructure elements that enable problem-solving and solution creation, measured in terms of CPU, RAM, network, disk usage and energy. |
+
 ## Component Overview
 
 The **Trade-Off Service** is the bridge that connects the _AI Decision Engine_
@@ -23,6 +31,23 @@ For this purpose, it exposes a REST API interface to allow the following operati
 
 The later interaction with the Metadata Service is based on specifically prepared
 custom SPARQL queries.
+
+## Model
+
+The service revolves around the management of a **Resource** parent class, that
+other classes like Node or Workload inherit. A Resource is provided with the
+following properties:
+
+| **Field**          | **Type** | **Description**                                           |
+|--------------------|----------|-----------------------------------------------------------|
+| cpuPercentage      | double   | Number describing the percentage of the CPU usage         |
+| gpuPercentage      | double   | Number describing the percentage of the GPU usage         |
+| memoryMB           | long     | The amount of RAM memory currently in use (MB)            |
+| networkReceiveBps  | long     | The bandwidth of the incoming transmission (Bps)          |
+| networkTransmitBps | long     | The bandwidth of the outgoing transmission (Bps)          |
+| diskReadMB         | long     | The rate the system can write to the hard disk with (MB)  |
+| diskWriteMB        | long     | The rate the system can read from the hard disk with (MB) |
+| energyMW           | double   | Number describing the current energy consumption (MW)     |
 
 ## Component Dependencies
 

@@ -204,7 +204,7 @@ paths:
           content:
             applicatin/json:
               schema:
-                $ref: '#/components/schemas/Metric'
+                $ref: '#/components/schemas/TimeSeries'
           description: successful operation
         "400":
           description: Invalid Id or forecasting time supplied

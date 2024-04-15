@@ -40,19 +40,42 @@ def query(metricID):
     sparql.setQuery(query)
     
     try:
-        ret = sparql.queryAndConvert()
-        metric = Metric(id=metricID, time=[], value=[])
-        for r in ret["results"]["bindings"]:
-            metric.value.append(float(r['measure']['value']))
-            metric.time.append(r['date']['value'])
+        # Using SPARQL results
+        #ret = sparql.queryAndConvert()
+        #metric = Metric(id=metricID, time=[], value=[])
+        #for r in ret["results"]["bindings"]:
+        #    metric.value.append(float(r['measure']['value']))
+        #    metric.time.append(r['date']['value'])
+        #print(metric) 
+        #ts_dict = {
+        #    'id': metricID,
+        #    'time': metric.time,
+        #    'value': metric.value
+        #}
 
-        print(metric)
-
+        # Dummpy data for testing
         ts_dict = {
-            'id': metricID,
-            'time': metric.time,
-            'value': metric.value
-        }
+            "aggregation_interval": 90,
+            "forecasting_lower_bounds": [
+              4
+            ],
+            "forecasting_model": "ARIMA",
+            "forecasting_period": 1,
+            "forecasting_upper_bounds": [
+              6
+            ],
+            "forecasting_values": [
+              5
+            ],
+            "metricId": metricID,
+            "time": [
+              "2024-03-20"
+            ],
+            "timeseries": [
+              1,2,3,4
+            ]
+        }        
+
         ts_json = json.dumps(ts_dict)
         
         return ts_json

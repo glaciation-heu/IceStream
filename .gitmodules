@@ -1,3 +1,15 @@
 [submodule "data_sanitization_service/code"]
 	path = data_sanitization_service/code
 	url = https://github.com/mosaicrown/mondrian.git
+[submodule "admission_control_service/code/service"]
+	path = admission_control_service/code/service
+	url = https://github.com/open-policy-agent/gatekeeper.git
+[submodule "admission_control_service/policy-library"]
+	path = admission_control_service/policy-library
+	url = https://github.com/open-policy-agent/gatekeeper-library.git
+[submodule "admission_control_service/code/web-ui"]
+	path = admission_control_service/code/web-ui
+	url = https://github.com/sighupio/gatekeeper-policy-manager.git
+[submodule "data_processing_monitoring_service/monitoring-stack"]
+	path = data_processing_monitoring_service/monitoring-stack
+	url = https://github.com/HIRO-MicroDataCenters-BV/monitoring-stack.git
