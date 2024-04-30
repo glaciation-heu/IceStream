@@ -57,6 +57,7 @@ spec:
         runAsGroup: 1000
         runAsNonRoot: true
         runAsUser: 1000
+      serviceAccountName: minio-kes
       terminationGracePeriodSeconds: 30
       volumes:
       - name: myminio-kes

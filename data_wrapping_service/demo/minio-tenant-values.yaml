@@ -24,6 +24,7 @@ tenant:
       runAsGroup: 1000
       runAsNonRoot: true
       allowPrivilegeEscalation: false
+    serviceAccountName: minio-kes
     configuration: |-
       address: :7373
       tls:
@@ -40,14 +41,13 @@ tenant:
         audit: off
       keystore:
         vault:
-          endpoint: "https://<VAULT SERVICE NAME>.<VAULT K8S NAMESPACE>.svc.<K8S CLUSTER NAME>:8200" # The Vault endpoint
+          endpoint: "https://vault-internal.vault.svc.cluster.local:8200" # The Vault endpoint
           version: v2
           namespace: "" # An optional Vault namespace. See: https://www.vaultproject.io/docs/enterprise/namespaces/index.html
           prefix: "myminio" # An optional K/V prefix. The server will store keys under this prefix.
-          approle: # AppRole credentials. See: https://www.vaultproject.io/docs/auth/approle.html
-            id: "<APPROLE ROLE ID>" # Your AppRole Role ID
-            secret: "<APPROLE SECRET ID>" # Your AppRole Secret ID
-            retry: 15s  # Duration until the server tries to re-authenticate after connection loss.
+          kubernetes: # Kubernetes credentials. See: https://www.vaultproject.io/docs/auth/kubernetes
+            role: "minio-kes" # The Kubernetes JWT role
+            jwt: "/var/run/secrets/kubernetes.io/serviceaccount/token" # Either the JWT provided by K8S or a path to a K8S secret containing the JWT.
           tls: # The Vault client TLS configuration for certificate verification
             ca: "/tmp/vault/vault.ca" # Path to one or multiple PEM root CA certificates
           status: # Vault status configuration. The server will periodically reach out to Vault to check its status.

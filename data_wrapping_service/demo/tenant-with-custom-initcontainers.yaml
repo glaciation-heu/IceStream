@@ -51,6 +51,7 @@ spec:
       runAsGroup: 1000
       runAsNonRoot: true
       runAsUser: 1000
+    serviceAccountName: minio-kes
   mountPath: /export
   podManagementPolicy: Parallel
   pools:
