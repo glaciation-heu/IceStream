@@ -55,11 +55,11 @@ echo -e '\n[-] Bind the KES server role to the KES policy'
 vault write auth/approle/role/kes-server policies=kes-policy
 echo -e '\n[-] Generate an identifier for the KES server'
 # vault read auth/approle/role/kes-server/role-id
-ROLE_ID=$(curl --cacert $WORKDIR/vault.ca -H "X-Vault-Request: true" -H "X-Vault-Token: $VAULT_ROOT_TOKEN" https://$NODE_IP:$NODE_PORT/v1/auth/approle/role/kes-server/role-id | jq -r .data.role_id)
+ROLE_ID=$(curl --cacert $VAULT_CACERT -H "X-Vault-Request: true" -H "X-Vault-Token: $VAULT_ROOT_TOKEN" $VAULT_ADDR/v1/auth/approle/role/kes-server/role-id | jq -r .data.role_id)
 echo "role_id: $ROLE_ID"
 echo -e '\n[-] Generate a secret for the KES server'
 # vault write -f auth/approle/role/kes-server/secret-id
-SECRET_ID=$(curl --cacert $WORKDIR/vault.ca -X PUT -H "X-Vault-Request: true" -H "X-Vault-Token: $VAULT_ROOT_TOKEN" -d 'null' https://$NODE_IP:$NODE_PORT/v1/auth/approle/role/kes-server/secret-id | jq -r .data.secret_id)
+SECRET_ID=$(curl --cacert $VAULT_CACERT -X PUT -H "X-Vault-Request: true" -H "X-Vault-Token: $VAULT_ROOT_TOKEN" -d 'null' $VAULT_ADDR/v1/auth/approle/role/kes-server/secret-id | jq -r .data.secret_id)
 echo "secret_id: $SECRET_ID"
 
 # # Wait for interaction with the Vault HTTP API
@@ -86,7 +86,7 @@ echo -e '\nWaiting for the initialization of the MinIO tenant...'
 kubectl wait -n minio-tenant --for=jsonpath='{.status.currentState}'=Initialized --timeout=120s tenant/myminio
 
 echo -e '\n[-] Store Vault root certificate autority in the MinIO tenant'
-kubectl create secret generic vault-tls -n minio-tenant --from-file=vault.ca=$WORKDIR/vault.ca
+kubectl create secret generic vault-tls -n minio-tenant --from-file=vault.ca=$VAULT_CACERT
 
 echo -e '\n[-] Patch KES pods to trust the Vault certificate'
 MINIO_KES_IDENTITY=$(kubectl get sts -n minio-tenant myminio-kes -o jsonpath={.spec.template.spec.containers[0].env[0].value})
