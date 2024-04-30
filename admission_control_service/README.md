@@ -125,7 +125,8 @@ spec:
 ### Other example policies
 
 Gatekeeper has a community-owned library of policies. So, you can find
-other examples of validating and mutating policies in the `policy-library`.
+other examples of validating and mutating policies in the
+[policy-library](policy-library).
 
 ## Web UI (optional)
 
