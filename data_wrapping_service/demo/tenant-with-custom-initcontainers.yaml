@@ -1,3 +1,49 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: myminio-env-configuration
+  namespace: minio-tenant
+type: Opaque
+stringData:
+  config.env: |-
+    export MINIO_ROOT_USER="minio"
+    export MINIO_ROOT_PASSWORD="minio123"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: kes-configuration
+  namespace: minio-tenant
+type: Opaque
+stringData:
+  server-config.yaml: |-
+    address: :7373
+    tls:
+      key: /tmp/kes/server.key # Path to the TLS private key
+      cert: /tmp/kes/server.crt # Path to the TLS certificate
+    admin:
+      identity: ${MINIO_KES_IDENTITY}
+    cache:
+      expiry:
+        any: 5m0s
+        unused: 20s
+    log:
+      error: on
+      audit: off
+    keystore:
+      vault:
+        endpoint: "https://vault-internal.vault.svc.cluster.local:8200" # The Vault endpoint
+        version: v2
+        namespace: "" # An optional Vault namespace. See: https://www.vaultproject.io/docs/enterprise/namespaces/index.html
+        prefix: "myminio" # An optional K/V prefix. The server will store keys under this prefix.
+        kubernetes: # Kubernetes credentials. See: https://www.vaultproject.io/docs/auth/kubernetes
+          role: "minio-kes" # The Kubernetes JWT role
+          jwt: "/var/run/secrets/kubernetes.io/serviceaccount/token" # Either the JWT provided by K8S or a path to a K8S secret containing the JWT.
+        tls: # The Vault client TLS configuration for certificate verification
+          ca: "/tmp/vault/vault.ca" # Path to one or multiple PEM root CA certificates
+        status: # Vault status configuration. The server will periodically reach out to Vault to check its status.
+          ping: 10s # Duration until the server checks Vault's status again.
+---
 apiVersion: minio.min.io/v2
 kind: Tenant
 metadata:

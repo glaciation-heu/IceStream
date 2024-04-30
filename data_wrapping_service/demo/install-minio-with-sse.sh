@@ -52,7 +52,7 @@ kubectl create -f minio-kes-service-account.yaml
 echo -e '\n[-] Enable automated workflow authentication'
 vault auth enable kubernetes
 echo -e '\n[-] Configure Vault communication with Kubernetes'
-SA_JWT_TOKEN=$(kubectl get secret minio-kes-secret --output 'jsonpath={.data.token}' | base64 --decode)
+SA_JWT_TOKEN=$(kubectl -n minio-tenant get secret minio-kes-secret --output 'jsonpath={.data.token}' | base64 --decode)
 SA_CA_CRT=$(kubectl config view --raw --minify --flatten --output 'jsonpath={.clusters[].cluster.certificate-authority-data}' | base64 --decode)
 K8S_HOST=$(kubectl config view --raw --minify --flatten --output 'jsonpath={.clusters[].cluster.server}')
 vault write auth/kubernetes/config \
@@ -68,12 +68,6 @@ vault write auth/kubernetes/role/minio-kes \
     ttl=1h
 
 echo -e '\n[*] Create MinIO tenant'
-helm install \
-  --namespace minio-tenant \
-  --values minio-tenant-values.yaml \
-  tenant minio-operator/tenant
-
-echo -e '\n[-] Patch Tenant to enforce the right volume permissions'
 kubectl apply -f tenant-with-custom-initcontainers.yaml
 
 echo -e '\nWaiting for the initialization of the MinIO tenant...'
