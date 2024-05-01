@@ -103,3 +103,9 @@ sequenceDiagram
 
 ## 4-REST API
 The Client Service provides the required interface for the Computation Service (whose internal details we mention here for documentation purposes only as all interactions happened via the Client Service).
+
+A detailed documentation of the REST-API can be found at [carbynestack.io](https://carbynestack.io/documentation/reference/api-specification/)
+
+
+## Deployment
+Instruction to deploy the Computation Service (e.g. CarbyneStack) can be found [here](./ComputationServiceSetup.md)

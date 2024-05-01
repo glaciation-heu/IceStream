@@ -16,10 +16,11 @@ helm repo add spark-operator https://kubeflow.github.io/spark-operator/
 kubectl create namespace spark-app
 # TODO: Avoid allowing * verbs (see https://kubernetes.io/docs/concepts/security/rbac-good-practices/#escalate-verb)
 helm install \
+    --create-namespace \
     --namespace spark-operator \
     --set webhook.enable=true \
-    --set sparkJobNamespace=spark-app \
-    --create-namespace \
+    --set sparkJobNamespaces[0]=spark-app \
+    --version 1.2.7 \
     spark-operator spark-operator/spark-operator
 
 echo -e '\nWaiting for the rollout of the Spark operator...'

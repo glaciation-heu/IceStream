@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "service.fullname" . }}
+  labels:
+    app: {{ include "service.fullname" . }}
+spec:
+  replicas: {{ .Values.deployment.replicas }}
+  selector:
+    matchLabels:
+      app: {{ include "service.fullname" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "service.fullname" . }}
+    spec:
+      containers:
+        - name: {{ include "service.fullname" . }}
+          image: {{ .Values.deployment.image }}
+          env:
+            - name: SERVICE_PORT
+              value: {{ .Values.deployment.port | default "80" | quote }}
+          ports:
+            - containerPort: {{ .Values.deployment.port | default 80 }}
+          livenessProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.deployment.port | default 80 }}
+            initialDelaySeconds: 3
+            periodSeconds: 3
+          readinessProbe:
+            httpGet:
+              path: /sys_status
+              port: {{ .Values.deployment.port | default 80 }}
+            initialDelaySeconds: 15
+            periodSeconds: 20
+          startupProbe:
+            httpGet:
+              path: /ping
+              port: {{ .Values.deployment.port | default 80 }}
+{{- if .Values.deployment.resources }}
+          resources:
+            {{- toYaml $.Values.deployment.resources | nindent 12 }}
+{{- end }}
