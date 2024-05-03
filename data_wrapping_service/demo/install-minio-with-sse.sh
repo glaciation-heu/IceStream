@@ -40,9 +40,6 @@ kubectl -n minio-operator rollout status deploy/minio-operator
 echo -e "\n[*] Install replicator"
 source install-replicator.sh
 
-echo -e "\n[*] Install cert-manager"
-source install-cert-manager.sh
-
 echo -e "\n[*] Install HashiCorp $NAME with TLS"
 source install-vault.sh $MODE
 

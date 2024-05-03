@@ -27,6 +27,9 @@ case $MODE in
         ;;
 esac
 
+echo -e "\n[-] Install cert-manager"
+source install-cert-manager.sh
+
 echo '[-] Get certificate from our private certificate authority'
 kubectl create -f vault-certificate.yaml
 
