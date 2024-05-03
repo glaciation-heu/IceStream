@@ -84,7 +84,7 @@ spec:
   kes:
     # Workaround for mounting a custom root certificate
     clientCertSecret:
-      name: vault-tls
+      name: ca-bundle
       type: kubernetes.io/tls
     containerSecurityContext:
       allowPrivilegeEscalation: false

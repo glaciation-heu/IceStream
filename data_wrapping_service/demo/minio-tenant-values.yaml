@@ -14,7 +14,7 @@ tenant:
     replicas: 2
     # Workaround for mounting a custom root certificate
     clientCertSecret:
-      name: vault-tls
+      name: ca-bundle
       type: kubernetes.io/tls
     # Key name to be created on the KMS, default is "my-minio-key"
     keyName: "myminio-key"

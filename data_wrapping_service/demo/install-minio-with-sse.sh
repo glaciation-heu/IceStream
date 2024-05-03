@@ -37,9 +37,6 @@ kubectl -n minio-operator rollout status deploy/minio-operator
 # echo "Serving MinIO console at http://$NODE_IP:$NODE_PORT"
 # echo "JWT Access Token: $(kubectl -n minio-operator get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)"
 
-echo -e "\n[*] Install replicator"
-source install-replicator.sh
-
 echo -e "\n[*] Install HashiCorp $NAME with TLS"
 source install-vault.sh $MODE
 

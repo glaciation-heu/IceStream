@@ -17,3 +17,4 @@ kubectl -n cert-manager rollout status deploy/cert-manager deploy/cert-manager-c
 
 echo -e '\nSetup self-signed certificate authority of the cluster'
 kubectl create -f selfsigned-ca.yaml
+echo ''

@@ -71,11 +71,11 @@ read -n 1 -srep '<<Press any key to continue>>'
 echo -e "\n[*] Uninstall HashiCorp Vault"
 helm uninstall --namespace vault vault
 
+echo -e "\n[*] Uninstall trust-manager"
+helm uninstall --namespace cert-manager trust-manager
+
 echo -e "\n[*] Uninstall cert-manager"
 helm uninstall --namespace cert-manager cert-manager
-
-echo -e "\n[*] Uninstall replicator"
-helm uninstall --namespace replicator kubernetes-replicator
 
 echo -e '\n[*] Uninstall MinIO operator'
 helm uninstall --namespace minio-operator operator
