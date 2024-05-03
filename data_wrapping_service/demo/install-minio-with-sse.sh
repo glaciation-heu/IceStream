@@ -70,19 +70,14 @@ vault write auth/kubernetes/role/minio-kes \
     policies=kes-policy \
     ttl=1h
 
+echo -e '\n[-] Store Vault root certificate autority in the MinIO tenant'
+kubectl create secret generic vault-tls -n minio-tenant --from-file=vault-ca.crt=$VAULT_CACERT
+
 echo -e '\n[*] Create MinIO tenant'
 kubectl apply -f tenant-with-custom-initcontainers.yaml
 
 echo -e '\nWaiting for the initialization of the MinIO tenant...'
 kubectl wait -n minio-tenant --for=jsonpath='{.status.currentState}'=Initialized --timeout=120s tenant/myminio
-
-echo -e '\n[-] Store Vault root certificate autority in the MinIO tenant'
-kubectl create secret generic vault-tls -n minio-tenant --from-file=ca.crt=$VAULT_CACERT
-
-echo -e '\n[-] Patch KES pods to trust the Vault certificate'
-MINIO_KES_IDENTITY=$(kubectl get sts -n minio-tenant myminio-kes -o jsonpath={.spec.template.spec.containers[0].env[0].value})
-sed "s/<MINIO KES IDENTITY>/$MINIO_KES_IDENTITY/g" kes-with-vault-certificate-template.yaml > kes-with-vault-certificate.yaml
-kubectl apply -f kes-with-vault-certificate.yaml
 
 echo -e '\nWaiting for the rollout of the MinIO tenant...'
 kubectl -n minio-tenant rollout status sts/myminio-kes
