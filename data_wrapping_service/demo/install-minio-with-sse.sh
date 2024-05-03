@@ -37,6 +37,9 @@ kubectl -n minio-operator rollout status deploy/minio-operator
 # echo "Serving MinIO console at http://$NODE_IP:$NODE_PORT"
 # echo "JWT Access Token: $(kubectl -n minio-operator get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)"
 
+echo -e "\n[*] Install replicator"
+source install-replicator.sh
+
 echo -e "\n[*] Install cert-manager"
 source install-cert-manager.sh
 
@@ -51,7 +54,7 @@ vault secrets enable -version=2 kv
 echo -e '\n[-] Define the API paths the KES server can access'
 vault policy write kes-policy kes-policy.hcl
 echo -e '\n[-] Allow MinIO KES to delegate authorization request to Vault'
-kubectl create -f minio-kes-service-account.yaml
+kubectl create -f minio-kes-sa-and-secrets.yaml
 echo -e '\n[-] Enable automated workflow authentication'
 vault auth enable kubernetes
 echo -e '\n[-] Configure Vault communication with Kubernetes'
@@ -70,11 +73,8 @@ vault write auth/kubernetes/role/minio-kes \
     policies=kes-policy \
     ttl=1h
 
-echo -e '\n[-] Store Vault root certificate autority in the MinIO tenant'
-kubectl create secret generic vault-tls -n minio-tenant --from-file=vault-ca.crt=$VAULT_CACERT
-
 echo -e '\n[*] Create MinIO tenant'
-kubectl apply -f tenant-with-custom-initcontainers.yaml
+kubectl create -f tenant-with-custom-initcontainers.yaml
 
 echo -e '\nWaiting for the initialization of the MinIO tenant...'
 kubectl wait -n minio-tenant --for=jsonpath='{.status.currentState}'=Initialized --timeout=120s tenant/myminio

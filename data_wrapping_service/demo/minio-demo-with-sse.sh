@@ -74,6 +74,9 @@ helm uninstall --namespace vault vault
 echo -e "\n[*] Uninstall cert-manager"
 helm uninstall --namespace cert-manager cert-manager
 
+echo -e "\n[*] Uninstall replicator"
+helm uninstall --namespace replicator kubernetes-replicator
+
 echo -e '\n[*] Uninstall MinIO operator'
 helm uninstall --namespace minio-operator operator
 

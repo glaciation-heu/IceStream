@@ -2,7 +2,7 @@
 
 set -e
 
-echo '[*] Install cert-manager'
+echo '[-] Install cert-manager'
 helm repo add jetstack https://charts.jetstack.io --force-update
 helm repo update jetstack
 helm install \
