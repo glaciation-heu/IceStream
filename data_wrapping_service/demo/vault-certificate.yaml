@@ -1,0 +1,42 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vault
+---
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: vault-certificate
+  namespace: vault
+spec:
+  secretName: vault-tls
+  issuerRef:
+    name: my-ca-issuer
+    kind: ClusterIssuer
+    group: cert-manager.io
+  duration: 2160h # 90d
+  renewBefore: 360h # 15d
+  privateKey:
+    algorithm: RSA
+    size: 2048
+  subject:
+    organizations:
+      - system:nodes
+  commonName: system:node:*.vault.svc.cluster.local
+  isCA: false
+  # TODO: Try restricting usages to digital signature, key encipherment, and
+  # server auth
+  usages:
+  - digital signature
+  - key encipherment
+  - data encipherment
+  - server auth
+  - client auth
+  dnsNames:
+  - "*.vault-internal"
+  - "*.vault-internal.vault.svc.cluster.local"
+  - "*.vault"
+  - "vault-internal.vault.svc.cluster.local"
+  ipAddresses:
+  - 127.0.0.1
+  - 192.168.49.2

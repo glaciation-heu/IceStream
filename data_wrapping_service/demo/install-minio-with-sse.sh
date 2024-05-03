@@ -37,6 +37,9 @@ kubectl -n minio-operator rollout status deploy/minio-operator
 # echo "Serving MinIO console at http://$NODE_IP:$NODE_PORT"
 # echo "JWT Access Token: $(kubectl -n minio-operator get secret console-sa-secret -o jsonpath="{.data.token}" | base64 --decode)"
 
+echo -e "\n[*] Install cert-manager"
+source install-cert-manager.sh
+
 echo -e "\n[*] Install HashiCorp $NAME with TLS"
 source install-vault.sh $MODE
 
@@ -74,7 +77,7 @@ echo -e '\nWaiting for the initialization of the MinIO tenant...'
 kubectl wait -n minio-tenant --for=jsonpath='{.status.currentState}'=Initialized --timeout=120s tenant/myminio
 
 echo -e '\n[-] Store Vault root certificate autority in the MinIO tenant'
-kubectl create secret generic vault-tls -n minio-tenant --from-file=vault.ca=$VAULT_CACERT
+kubectl create secret generic vault-tls -n minio-tenant --from-file=ca.crt=$VAULT_CACERT
 
 echo -e '\n[-] Patch KES pods to trust the Vault certificate'
 MINIO_KES_IDENTITY=$(kubectl get sts -n minio-tenant myminio-kes -o jsonpath={.spec.template.spec.containers[0].env[0].value})

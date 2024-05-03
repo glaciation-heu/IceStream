@@ -80,7 +80,7 @@ spec:
         secret:
           secretName: vault-tls
           items:
-          - key: vault.ca
-            path: vault.ca
+          - key: ca.crt
+            path: ca.crt
   updateStrategy:
     type: RollingUpdate

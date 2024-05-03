@@ -49,6 +49,6 @@ tenant:
             role: "minio-kes" # The Kubernetes JWT role
             jwt: "/var/run/secrets/kubernetes.io/serviceaccount/token" # Either the JWT provided by K8S or a path to a K8S secret containing the JWT.
           tls: # The Vault client TLS configuration for certificate verification
-            ca: "/tmp/vault/vault.ca" # Path to one or multiple PEM root CA certificates
+            ca: "/tmp/vault/ca.crt" # Path to one or multiple PEM root CA certificates
           status: # Vault status configuration. The server will periodically reach out to Vault to check its status.
             ping: 10s # Duration until the server checks Vault's status again.
