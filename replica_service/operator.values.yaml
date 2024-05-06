@@ -1,0 +1,9 @@
+console:
+  ingress:
+    enabled: false
+  # The ingress is not working well in our *no balancer setup* with fixed ingress controller IP
+  #   ingressClassName: "nginx"
+  #   host: minio-console.integration
+  #   path: /
+  #   pathType: Prefix
+tenants: []
