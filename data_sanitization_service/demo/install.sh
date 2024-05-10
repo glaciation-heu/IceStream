@@ -20,7 +20,7 @@ helm install \
     --namespace spark-operator \
     --set webhook.enable=true \
     --set sparkJobNamespaces[0]=spark-app \
-    --version 1.2.7 \
+    --version 1.2.14 \
     spark-operator spark-operator/spark-operator
 
 echo -e '\nWaiting for the rollout of the Spark operator...'
