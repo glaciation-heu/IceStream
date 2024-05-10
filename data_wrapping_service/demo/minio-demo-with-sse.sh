@@ -68,11 +68,14 @@ esac
 echo ''
 read -n 1 -srep '<<Press any key to continue>>'
 
-echo -e '\n[*] Uninstall MinIO tenant'
-helm uninstall --namespace minio-tenant tenant
-
 echo -e "\n[*] Uninstall HashiCorp Vault"
-helm uninstall --namespace $VAULT_K8S_NAMESPACE $VAULT_HELM_RELEASE_NAME
+helm uninstall --namespace vault vault
+
+echo -e "\n[*] Uninstall trust-manager"
+helm uninstall --namespace cert-manager trust-manager
+
+echo -e "\n[*] Uninstall cert-manager"
+helm uninstall --namespace cert-manager cert-manager
 
 echo -e '\n[*] Uninstall MinIO operator'
 helm uninstall --namespace minio-operator operator

@@ -47,51 +47,31 @@ echo -e '\n[-] Enable K/V backend'
 vault secrets enable -version=2 kv
 echo -e '\n[-] Define the API paths the KES server can access'
 vault policy write kes-policy kes-policy.hcl
+echo -e '\n[-] Allow MinIO KES to delegate authorization request to Vault'
+kubectl create -f minio-kes-sa-and-secrets.yaml
 echo -e '\n[-] Enable automated workflow authentication'
-vault auth enable approle
-echo -e '\n[-] Create the role of the KES server'
-vault write auth/approle/role/kes-server token_num_uses=0  secret_id_num_uses=0  period=5m
-echo -e '\n[-] Bind the KES server role to the KES policy'
-vault write auth/approle/role/kes-server policies=kes-policy
-echo -e '\n[-] Generate an identifier for the KES server'
-# vault read auth/approle/role/kes-server/role-id
-ROLE_ID=$(curl --cacert $WORKDIR/vault.ca -H "X-Vault-Request: true" -H "X-Vault-Token: $VAULT_ROOT_TOKEN" https://$NODE_IP:$NODE_PORT/v1/auth/approle/role/kes-server/role-id | jq -r .data.role_id)
-echo "role_id: $ROLE_ID"
-echo -e '\n[-] Generate a secret for the KES server'
-# vault write -f auth/approle/role/kes-server/secret-id
-SECRET_ID=$(curl --cacert $WORKDIR/vault.ca -X PUT -H "X-Vault-Request: true" -H "X-Vault-Token: $VAULT_ROOT_TOKEN" -d 'null' https://$NODE_IP:$NODE_PORT/v1/auth/approle/role/kes-server/secret-id | jq -r .data.secret_id)
-echo "secret_id: $SECRET_ID"
-
-# # Wait for interaction with the Vault HTTP API
-# echo ''
-# read -n 1 -srep '<<Press any key to continue>>'
-
-sed "s/<VAULT SERVICE NAME>/$VAULT_SERVICE_NAME/g" minio-tenant-values-template.yaml > minio-tenant-values.yaml
-sed -i "s/<VAULT K8S NAMESPACE>/$VAULT_K8S_NAMESPACE/g" minio-tenant-values.yaml
-sed -i "s/<K8S CLUSTER NAME>/$K8S_CLUSTER_NAME/g" minio-tenant-values.yaml
-sed -i "s/<APPROLE ROLE ID>/$ROLE_ID/g" minio-tenant-values.yaml
-sed -i "s/<APPROLE SECRET ID>/$SECRET_ID/g" minio-tenant-values.yaml
+vault auth enable kubernetes
+echo -e '\n[-] Configure Vault communication with Kubernetes'
+SA_JWT_TOKEN=$(kubectl -n minio-tenant get secret minio-kes-secret --output 'jsonpath={.data.token}' | base64 --decode)
+SA_CA_CRT=$(kubectl config view --raw --minify --flatten --output 'jsonpath={.clusters[].cluster.certificate-authority-data}' | base64 --decode)
+K8S_HOST=$(kubectl config view --raw --minify --flatten --output 'jsonpath={.clusters[].cluster.server}')
+vault write auth/kubernetes/config \
+    token_reviewer_jwt="$SA_JWT_TOKEN" \
+    kubernetes_host="$K8S_HOST" \
+    kubernetes_ca_cert="$SA_CA_CRT" \
+    issuer="https://kubernetes.default.svc.cluster.local"
+echo -e '\n[-] Create the KES server role and bind the KES policy to it'
+vault write auth/kubernetes/role/minio-kes \
+    bound_service_account_names=minio-kes \
+    bound_service_account_namespaces=minio-tenant \
+    policies=kes-policy \
+    ttl=1h
 
 echo -e '\n[*] Create MinIO tenant'
-helm install \
-  --namespace minio-tenant \
-  --values minio-tenant-values.yaml \
-  --create-namespace \
-  tenant minio-operator/tenant
-
-echo -e '\n[-] Patch Tenant to enforce the right volume permissions'
-kubectl apply -f tenant-with-custom-initcontainers.yaml
+kubectl create -f tenant-with-custom-initcontainers.yaml
 
 echo -e '\nWaiting for the initialization of the MinIO tenant...'
 kubectl wait -n minio-tenant --for=jsonpath='{.status.currentState}'=Initialized --timeout=120s tenant/myminio
-
-echo -e '\n[-] Store Vault root certificate autority in the MinIO tenant'
-kubectl create secret generic vault-tls -n minio-tenant --from-file=vault.ca=$WORKDIR/vault.ca
-
-echo -e '\n[-] Patch KES pods to trust the Vault certificate'
-MINIO_KES_IDENTITY=$(kubectl get sts -n minio-tenant myminio-kes -o jsonpath={.spec.template.spec.containers[0].env[0].value})
-sed "s/<MINIO KES IDENTITY>/$MINIO_KES_IDENTITY/g" kes-with-vault-certificate-template.yaml > kes-with-vault-certificate.yaml
-kubectl apply -f kes-with-vault-certificate.yaml
 
 echo -e '\nWaiting for the rollout of the MinIO tenant...'
 kubectl -n minio-tenant rollout status sts/myminio-kes

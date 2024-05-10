@@ -1,0 +1,33 @@
+apiVersion: trust.cert-manager.io/v1alpha1
+kind: Bundle
+metadata:
+  name: ca-bundle
+spec:
+  sources:
+  # Include a bundle of publicly trusted certificates which can be
+  # used to validate most TLS certificates on the internet, such as
+  # those issued by Let's Encrypt, Google, Amazon and others.
+  - useDefaultCAs: true
+
+  # A ConfigMap in the "trust" namespace
+  - configMap:
+      name: "kube-root-ca.crt"
+      key: "ca.crt"
+
+  # A Secret in the "trust" namespace
+  - secret:
+      name: "root-secret"
+      key: "ca.crt"
+
+  target:
+    # Sync the bundle to a ConfigMap and Secret called `ca-bundle` in every
+    # namespace that has the label `create-ca-bundle=true` (and if the Secret
+    # belongs to the list of authorized secrets).
+    # All ConfigMaps will include a PEM-formatted bundle, here named `ca.crt`.
+    configMap:
+      key: "ca.crt"
+    secret:
+      key: "ca.crt"
+    namespaceSelector:
+      matchLabels:
+        create-ca-bundle: "true"
