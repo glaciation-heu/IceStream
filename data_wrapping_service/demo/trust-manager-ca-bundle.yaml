@@ -23,7 +23,11 @@ spec:
     # Sync the bundle to a ConfigMap and Secret called `ca-bundle` in every
     # namespace that has the label `create-ca-bundle=true` (and if the Secret
     # belongs to the list of authorized secrets).
-    # All ConfigMaps will include a PEM-formatted bundle, here named `ca.crt`.
+    # Beside the PEM-formatted bundle named `ca.crt`, we also require a bundle
+    # in JKS format.
+    additionalFormats:
+      jks:
+        key: "ca.jks"
     configMap:
       key: "ca.crt"
     secret:

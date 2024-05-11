@@ -49,13 +49,13 @@ spec:
     spec:
       containers:
         - name: data-sanitization
-          image: mattlectic/data-sanitization:0.1.0
+          image: mattlectic/data-sanitization:0.2.0
           imagePullPolicy: IfNotPresent
           env:
             - name: ENDPOINT
               value: minio.minio-tenant.svc.cluster.local
             - name: SSL_CERT_FILE
-              value: /minio/ca.crt
+              value: /etc/ssl/certs/ca.crt
           envFrom:
             - secretRef:
                 name: minio-credentials
@@ -75,16 +75,14 @@ spec:
               cpu: 500m
               memory: 1024Mi
           volumeMounts:
-            - mountPath: /minio
-              name: minio-ca
+            - mountPath: /etc/ssl/certs/ca.crt
+              name: ca
+              subPath: ca.crt
       serviceAccount: data-sanitization
       volumes:
-        # The automatic generation of the MinIO certificates uses the
-        # kube-root-ca, so here we need to provide a way for the Mondrian application
-        # to trust it
-        - name: minio-ca
+        - name: ca
           configMap:
-            name: kube-root-ca.crt
+            name: ca-bundle
 ---
 apiVersion: v1
 kind: Service

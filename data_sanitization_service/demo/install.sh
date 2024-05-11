@@ -14,6 +14,7 @@ sleep 30
 echo -e '\n[*] Install Spark operator'
 helm repo add spark-operator https://kubeflow.github.io/spark-operator/
 kubectl create namespace spark-app
+kubectl label namespace spark-app create-ca-bundle=true
 # TODO: Avoid allowing * verbs (see https://kubernetes.io/docs/concepts/security/rbac-good-practices/#escalate-verb)
 helm install \
     --create-namespace \

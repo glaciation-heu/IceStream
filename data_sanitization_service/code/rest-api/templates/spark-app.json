@@ -31,7 +31,7 @@
       "env": [
         {
           "name": "SSL_CERT_FILE",
-          "value": "/minio/ca.crt"
+          "value": "/etc/ssl/certs/ca.crt"
         }
       ],
       "envFrom": [
@@ -41,35 +41,16 @@
           }
         }
       ],
-      "initContainers": [
-        {
-          "name": "init-cacerts",
-          "image": "openjdk:23-jdk-slim-bullseye",
-          "command": [
-            "bash",
-            "-c",
-            "cp -R /usr/local/openjdk-23/lib/security/* /jvm-security-config/\nkeytool -importcert -noprompt -trustcacerts -alias local -file /minio/ca.crt -keystore /jvm-security-config/cacerts -storepass changeit\n"
-          ],
-          "volumeMounts": [
-            {
-              "mountPath": "/jvm-security-config",
-              "name": "jvm-security-config"
-            },
-            {
-              "mountPath": "/minio",
-              "name": "minio-ca"
-            }
-          ]
-        }
-      ],
       "volumeMounts": [
         {
-          "name": "jvm-security-config",
-          "mountPath": "/opt/java/openjdk/lib/security"
+          "mountPath": "/etc/ssl/certs/ca.crt",
+          "name": "ca",
+          "subPath": "ca.crt"
         },
         {
-          "mountPath": "/minio",
-          "name": "minio-ca"
+          "mountPath": "/opt/java/openjdk/lib/security/cacerts",
+          "name": "ca",
+          "subPath": "ca.jks"
         }
       ]
     },
@@ -80,7 +61,7 @@
       "env": [
         {
           "name": "SSL_CERT_FILE",
-          "value": "/minio/ca.crt"
+          "value": "/etc/ssl/certs/ca.crt"
         }
       ],
       "envFrom": [
@@ -90,48 +71,25 @@
           }
         }
       ],
-      "initContainers": [
-        {
-          "name": "init-cacerts",
-          "image": "openjdk:23-jdk-slim-bullseye",
-          "command": [
-            "bash",
-            "-c",
-            "cp -R /usr/local/openjdk-23/lib/security/* /jvm-security-config/\nkeytool -import -noprompt -trustcacerts -alias local -file /minio/ca.crt -keystore /jvm-security-config/cacerts -storepass changeit\n"
-          ],
-          "volumeMounts": [
-            {
-              "mountPath": "/jvm-security-config",
-              "name": "jvm-security-config"
-            },
-            {
-              "mountPath": "/minio",
-              "name": "minio-ca"
-            }
-          ]
-        }
-      ],
       "volumeMounts": [
         {
-          "name": "jvm-security-config",
-          "mountPath": "/opt/java/openjdk/lib/security"
+          "mountPath": "/etc/ssl/certs/ca.crt",
+          "name": "ca",
+          "subPath": "ca.crt"
         },
         {
-          "mountPath": "/minio",
-          "name": "minio-ca"
+          "mountPath": "/opt/java/openjdk/lib/security/cacerts",
+          "name": "ca",
+          "subPath": "ca.jks"
         }
       ]
     },
     "volumes": [
       {
-        "name": "jvm-security-config",
-        "emptyDir": {}
-      },
-      {
-        "name": "minio-ca",
         "configMap": {
-          "name": "kube-root-ca.crt"
-        }
+          "name": "ca-bundle"
+        },
+        "name": "ca"
       }
     ],
     "sparkConf": {
