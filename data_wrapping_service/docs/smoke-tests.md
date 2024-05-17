@@ -13,7 +13,7 @@ it around unless something wrong has happened with the deployment of the
 data wrapping service.
 
 To see the declaration of the smoke tests head to the
-[gitops-deployments](https://github.com/glaciation-heu/gitops-deployments/tree/main/integration/apps/minio-sse-smoke-tests.yaml)
+[gitops-deployments](https://github.com/glaciation-heu/gitops-deployments/tree/main/integration/apps/kernel/manual/minio-sse-smoke-tests.yaml)
 repository.
 
 ## Tests
