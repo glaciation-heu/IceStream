@@ -14,7 +14,7 @@ unless something wrong has happened with the deployment of the admission
 control service.
 
 To see the declaration of the smoke tests head to the
-[gitops-deployments](https://github.com/glaciation-heu/gitops-deployments/tree/main/integration/apps/gatekeeper-smoke-tests.yaml)
+[gitops-deployments](https://github.com/glaciation-heu/gitops-deployments/tree/main/integration/apps/security/manual/gatekeeper-smoke-tests.yaml)
 repository.
 
 ## Tests
