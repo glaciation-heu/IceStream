@@ -1,0 +1,13 @@
+# cf-neo4j-service
+apiVersion: v1
+kind: Service
+metadata:
+  name: cf-neo4j  # Unique service name for image1
+spec:
+  selector:  # Add this section
+    app.kubernetes.io/name: image2  # Match deployment label
+  ports:
+  - protocol: TCP
+    port: 80  # Service port (external)
+    targetPort: 7687  # Maps to container port in deployment
+  type: ClusterIP  # Internal communication within the cluster

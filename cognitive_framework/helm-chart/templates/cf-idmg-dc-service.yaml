@@ -1,0 +1,13 @@
+# cf-idmg-dc-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: cf-idmg-dc  # Unique service name for image1
+spec:
+  selector:  # Add this section
+    app.kubernetes.io/name: image1  # Match deployment label
+  ports:
+  - protocol: TCP
+    port: 80  # Service port (external)
+    targetPort: 80  # Maps to container port in deployment
+  type: ClusterIP  # Internal communication within the cluster

@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cf-idmg-db
+  labels:
+    app.kubernetes.io/name: image3
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: image3
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: image3
+    spec:
+      containers:
+        - name: cf-idmg-db
+          image: "{{ .Values.images.image3.repository }}:{{ .Values.images.image3.tag }}"
+          lifecycle:  # Add the lifecycle hook here
+            postStart:
+              exec:
+                command: ["sleep", "600"]  # Wait for 5 minutes before starting the container
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}

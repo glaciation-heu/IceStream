@@ -1,23 +1,24 @@
-# mychart/values.yaml
+# values.yaml
+replicaCount: 1
 
-# Values for the first container
-container1:
-  image: <image1>
-  tag: <tag1>
+images:
+  image1:
+    repository: armanatl3s/idmg-dc
+    tag: latest
+  image2:
+    repository: neo4j
+    tag: latest
+  image3:
+    repository: armanatl3s/idmg-db
+    tag: latest
+  image4:
+    repository: armanatl3s/idmg-ml
+    tag: latest
 
-# Values for the second container
-container2:
-  image: <image2>
-  tag: <tag2>
-  username: <username>
-  password: <password>
-
-# Values for the third container
-container3:
-  image: <image3>
-  tag: <tag3>
-
-# Values for the fourth container
-container4:
-  image: <image4>
-  tag: <tag4>
+resources:
+  requests:
+    cpu: 1000m
+    memory: 2048Mi
+  limits:
+    cpu: 1000m
+    memory: 2048Mi
