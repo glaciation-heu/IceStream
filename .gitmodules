@@ -25,3 +25,6 @@
 [submodule "data_sanitization_service/code/spark-operator"]
 	path = data_sanitization_service/code/spark-operator
 	url = https://github.com/kubeflow/spark-operator.git
+[submodule "data_sanitization_service/code/rest-api"]
+	path = data_sanitization_service/code/rest-api
+	url = https://github.com/glaciation-heu/data-sanitization-service
