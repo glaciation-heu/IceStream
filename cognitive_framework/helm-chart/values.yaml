@@ -1,0 +1,21 @@
+# values.yaml
+namespace: cognitive-framework
+replicaCount: 1
+images:
+  image1:
+    repository: armanatl3s/idmg-dc
+    tag: latest
+  image3:
+    repository: armanatl3s/idmg-db
+    tag: latest
+  image4:
+    repository: armanatl3s/idmg-ml
+    tag: latest
+
+resources:
+  requests:
+    cpu: 1000m
+    memory: 1024Mi
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
