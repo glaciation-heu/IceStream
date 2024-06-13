@@ -13,8 +13,8 @@ Install the Helm chart
 ```bash
 helm install <my-release-name> cf-x.x.tgz
 ```
----
-### Use Docker images locally
+
+## Use Docker images locally
 ### 1. Clone the repository
 Clone the repository by executing the following commands:
 ```
