@@ -2,12 +2,12 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cf-idmg-db  # Unique service name for image1
+  name: idmg-db  # Unique service name for image1
 spec:
   selector:  # Add this section
     app.kubernetes.io/name: image3  # Match deployment label
   ports:
   - protocol: TCP
     port: 80  # Service port (external)
-    targetPort: 80  # Maps to container port in deployment
+    targetPort: 8080  # Maps to container port in deployment
   type: ClusterIP  # Internal communication within the cluster

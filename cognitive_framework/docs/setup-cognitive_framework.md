@@ -2,11 +2,24 @@
 Follow these instructions to run the project:
 
 ## Deployment
+
+### 0. Using Helm
+Change directory to helm chart
+```bash
+cd ../helm-chart
+```
+
+Install the Helm chart
+```bash
+helm install <my-release-name> cf-x.x.tgz
+```
+---
+### Use Docker images locally
 ### 1. Clone the repository
 Clone the repository by executing the following commands:
 ```
 git clone git@gitlab.com:idmg/glc/glc-repo.git
-cd glc-repo/T32/src/modules/model/customized_gnn
+cd ../src/modules/model/customized_gnn
 ```
 ### 2. Activate branch
 Activate main branch using this cmmand:
@@ -14,7 +27,7 @@ Activate main branch using this cmmand:
 git switch dev
 ```
 ### 3. Configuration:
-Change the directory to the `T32\src\modules\db\db_docker\db` directory, and rename the `.env-example` to `.env` and add database configurations to the `.env`.
+Change the directory to the `..\src\modules\db\db_docker\db` directory, and rename the `.env-example` to `.env` and add database configurations to the `.env`.
 
 |Config|Description|Notes|
 |:--|:------|:------|
@@ -30,11 +43,11 @@ docker network create --subnet=172.16.1.0/16 data-network
 ```
 ### 5. Build and Run the Docker containers
 Open four command terminals and execute each command in one terminal:  
-First change directory to: `T32/src/modules`
+First change directory to: `../src/modules`
 - DC Docker:
 ```
 docker build -t dc-1 dc/timeseries_generator/ 
-docker run --name=dc --net=data-network --ip 172.16.1.1 -p 5005:8080 dc-1 
+docker run --name=dc --net=data-network --ip 172.16.1.1 -p 5005:80 dc-1 
 ```
 - Neo4j Docker:
 ```

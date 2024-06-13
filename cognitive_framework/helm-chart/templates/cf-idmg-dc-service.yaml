@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: cf-idmg-dc  # Unique service name for image1
+  name: idmg-dc  # Unique service name for image1
 spec:
   selector:  # Add this section
     app.kubernetes.io/name: image1  # Match deployment label

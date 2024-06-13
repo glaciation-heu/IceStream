@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cf-idmg-dc
+  name: idmg-dc
   labels:
     app.kubernetes.io/name: image1
 spec:
@@ -15,7 +15,7 @@ spec:
         app.kubernetes.io/name: image1
     spec:
       containers:
-        - name: cf-idmg-dc
+        - name: idmg-dc
           image: "{{ .Values.images.image1.repository }}:{{ .Values.images.image1.tag }}"
           resources:
             requests:
