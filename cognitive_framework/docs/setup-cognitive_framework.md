@@ -4,15 +4,34 @@ Follow these instructions to run the project:
 ## Deployment
 
 ### 0. Using Helm
+#### Install Neo4j Helm chart: 
+
+```bash
+helm repo add neo4j-helm-charts https://neo4j.github.io/helm-charts/
+```
+```bash
+helm install my-neo4j neo4j-helm-charts/neo4j --version 5.20.0
+```
+if you were asked to set the storage class you can do it by adding:  
+ `--set volumes.data.mode=defaultStorageClass`
+
+#### Install the Helm chart
+
 Change directory to helm chart
 ```bash
-cd ../helm-chart
+cd T32/src/modules/dp/helm
 ```
 
-Install the Helm chart
+Create the package: 
+```
+helm package .
+```
+
+Upload and install the chart
 ```bash
 helm install <my-release-name> cf-x.x.tgz
 ```
+Use the API of each component as described in: [Usage](#3-usage) 
 
 ## Use Docker images locally
 ### 1. Clone the repository
