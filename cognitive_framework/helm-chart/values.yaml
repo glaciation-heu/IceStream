@@ -3,13 +3,13 @@ namespace: idmg-at-scheduler
 replicaCount: 1
 images:
   image1:
-    repository: armanatl3s/idmg-dc
+    repository: idmg/cf:dc
     tag: latest
   image3:
-    repository: armanatl3s/idmg-db
+    repository: idmg/cf:db
     tag: latest
   image4:
-    repository: armanatl3s/idmg-ml
+    repository: idmg/cf:ml
     tag: latest
 
 resources:
