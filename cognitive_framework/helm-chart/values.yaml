@@ -1,5 +1,5 @@
 # values.yaml
-namespace: cognitive-framework
+namespace: idmg-at-scheduler
 replicaCount: 1
 images:
   image1:

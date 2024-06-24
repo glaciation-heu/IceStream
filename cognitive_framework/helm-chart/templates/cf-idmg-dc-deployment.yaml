@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: idmg-dc
+  namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io/name: image1
 spec:

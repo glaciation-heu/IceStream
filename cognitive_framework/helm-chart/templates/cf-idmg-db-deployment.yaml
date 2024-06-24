@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: idmg-db
+  namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io/name: image3
 spec:
@@ -14,6 +15,10 @@ spec:
       labels:
         app.kubernetes.io/name: image3
     spec:
+      initContainers:
+        - name: init-wait
+          image: busybox
+          command: ['sh', '-c', 'sleep 60']
       containers:
         - name: idmg-db
           image: "{{ .Values.images.image3.repository }}:{{ .Values.images.image3.tag }}"

@@ -10,16 +10,15 @@ Follow these instructions to run the project:
 helm repo add neo4j-helm-charts https://neo4j.github.io/helm-charts/
 ```
 ```bash
-helm install my-neo4j neo4j-helm-charts/neo4j --version 5.20.0
+helm install <my-neo4j> neo4j-helm-charts/neo4j --version 5.20.0 --set neo4j.name=<neo4j-name> --set volumes.data.mode=defaultStorageClass
 ```
-if you were asked to set the storage class you can do it by adding:  
- `--set volumes.data.mode=defaultStorageClass`
+Note: change volume data mode as needed
 
 #### Install the Helm chart
 
 Change directory to helm chart
 ```bash
-cd T32/src/modules/dp/helm
+cd cognitive_framework/helm-chart
 ```
 
 Create the package: 

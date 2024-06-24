@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: idmg-ml
+  namespace: {{ .Values.namespace }}
   labels:
     app.kubernetes.io/name: image4
 spec:
