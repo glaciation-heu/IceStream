@@ -1,0 +1,13 @@
+# Chart.yaml
+apiVersion: v2
+name: cf
+description: A Helm chart for Kubernetes for the cognitive framework
+type: application
+version: 0.1.8
+appVersion: "1.16.0"
+maintainers:
+  - name: IDMG
+    email: # Email address
+    changelog: |
+      - Added init wait
+      - Added service type for model component

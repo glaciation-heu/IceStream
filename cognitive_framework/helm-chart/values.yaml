@@ -1,0 +1,21 @@
+# values.yaml
+namespace: idmg-at-scheduler
+replicaCount: 1
+images:
+  image1:
+    repository: idmg/cf:dc
+    tag: latest
+  image3:
+    repository: idmg/cf:db
+    tag: latest
+  image4:
+    repository: idmg/cf:ml
+    tag: latest
+
+resources:
+  requests:
+    cpu: 1000m
+    memory: 1024Mi
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
