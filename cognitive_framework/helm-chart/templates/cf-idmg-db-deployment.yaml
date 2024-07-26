@@ -15,13 +15,15 @@ spec:
       labels:
         app.kubernetes.io/name: image3
     spec:
-      initContainers:
-        - name: init-wait
-          image: busybox
-          command: ['sh', '-c', 'sleep 60']
       containers:
         - name: idmg-db
           image: "{{ .Values.images.image3.repository }}:{{ .Values.images.image3.tag }}"
+          env:
+            {{- range .Values.images.image3.env }}
+            - name: {{ .name }}
+              value: {{ .value }}
+            {{- end }}
+          imagePullPolicy: "{{ .Values.images.image3.imagePullPolicy }}"
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}
@@ -29,3 +31,4 @@ spec:
             limits:
               cpu: {{ .Values.resources.limits.cpu }}
               memory: {{ .Values.resources.limits.memory }}
+

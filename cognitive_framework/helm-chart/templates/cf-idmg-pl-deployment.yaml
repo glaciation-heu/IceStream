@@ -1,29 +1,23 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: idmg-ml
+  name: idmg-plugin
   namespace: {{ .Values.namespace }}
   labels:
-    app.kubernetes.io/name: image4
+    app.kubernetes.io/name: image2
 spec:
   replicas: {{ .Values.replicaCount }}
   selector:
     matchLabels:
-      app.kubernetes.io/name: image4
+      app.kubernetes.io/name: image2
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: image4
+        app.kubernetes.io/name: image2
     spec:
       containers:
-        - name: idmg-ml
-          image: "{{ .Values.images.image4.repository }}:{{ .Values.images.image4.tag }}"
-          env:
-            {{- range .Values.images.image4.env }}
-            - name: {{ .name }}
-              value: {{ .value }}
-            {{- end }}
-          imagePullPolicy: "{{ .Values.images.image4.imagePullPolicy }}"
+        - name: idmg-plugin
+          image: "{{ .Values.images.image2.repository }}:{{ .Values.images.image2.tag }}"
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}

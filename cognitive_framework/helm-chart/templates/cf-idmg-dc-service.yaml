@@ -9,5 +9,5 @@ spec:
   ports:
   - protocol: TCP
     port: 80  # Service port (external)
-    targetPort: 80  # Maps to container port in deployment
-  type: ClusterIP  # Internal communication within the cluster
+    targetPort: 8080  # Maps to container port in deployment
+  type: NodePort  # Internal communication within the cluster
