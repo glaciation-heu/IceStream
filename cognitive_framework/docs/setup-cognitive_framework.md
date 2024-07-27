@@ -3,34 +3,40 @@ Follow these instructions to run the project:
 
 ## Deployment
 
-### 0. Using Helm
-#### Install Neo4j Helm chart: 
+## 4. Helm Charts
+### IDMG Helm Chart
 
-```bash
-helm repo add neo4j-helm-charts https://neo4j.github.io/helm-charts/
-```
-```bash
-helm install <my-neo4j> neo4j-helm-charts/neo4j --version 5.20.0 --set neo4j.name=<neo4j-name> --set volumes.data.mode=defaultStorageClass
-```
-Note: change volume data mode as needed
+This repository contains the Helm charts for IDMG scheduler. To install follow the commands:
 
-#### Install the Helm chart
+add IDMG helm repo
 
-Change directory to helm chart
-```bash
-cd cognitive_framework/helm-chart
-```
+```helm repo add idmg https://idmg-pub.gitlab.io/helm-charts/```
 
-Create the package: 
-```
-helm package .
-```
+update the helm repo
 
-Upload and install the chart
-```bash
-helm install <my-release-name> cf-x.x.tgz
-```
-Use the API of each component as described in: [Usage](#3-usage) 
+```helm repo update```
+
+install IDMG helm chart. Please note you need to install the IDMG in the same namespace as the neo4j
+
+```helm install <desired-name> idmg/cf --namespace <desired namespace> --create-namespace --set namespace=<desired namespace>```
+
+please note that you can set the neo4j password and username (default password:neo4j) for `idmgdb` image by passing the desired values as follows:
+
+```helm install ... --set images.idmgdb.env[0].value=new_neo4j_user --set images.idmgdb.env[1].value=new_neo4j_password```
+
+### Neo4j Helm Chart
+add neo4j helm repo
+
+```helm repo add neo4j-helm-charts https://neo4j.github.io/helm-charts/```
+
+update the helm repo
+
+```helm repo update```
+
+install neo4j helm chart. Please note you need to install the neo4j in the same namespace as the IDMG scheduler
+
+```helm install neo4j neo4j-helm-charts/neo4j --version <5.20.0> --set neo4j.name=<neo4j> --set volumes.data.mode=defaultStorageClass --namespace <desired_namespace> --set neo4j.password=<password> --set neo4j.user=<neo4j>```
+
 
 ## Use Docker images locally
 ### 1. Clone the repository

@@ -1,34 +1,22 @@
 replicaCount: 1
 images:
-  image1:
+  idmgdc:
     repository: idmg/cf
     tag: dc1
     imagePullPolicy: Always
 
-  image2:
+  idmgpl:
     repository: idmg/cf
     tag: custom-prescore-plugin
 
-  image3:
+  idmgdb:
     repository: idmg/cf
     tag: db5
-    env:
-      - name: NEO4J_USER
-        value: neo4j
-      - name: NEO4J_PSWD
-        value: password
-      - name: NEO4J_URL
-        value: bolt://neo4j.idmg-scheduler-test.svc.cluster.local:7687
-      - name: GENERATOR_URL
-        value: http://idmg-dc.idmg-scheduler-test.svc.cluster.local/
     imagePullPolicy: Always
 
-  image4:
+  idmgml:
     repository: idmg/cf
     tag: ml2
-    env:
-      - name: DB_API_URL
-        value: http://idmg-db.idmg-scheduler-test.svc.cluster.local
     imagePullPolicy: Always
 
 resources:

@@ -1,1 +1,1 @@
-Your Cognitive Framework is now deployed successfully.
+The  decision engine is now deployed successfully.

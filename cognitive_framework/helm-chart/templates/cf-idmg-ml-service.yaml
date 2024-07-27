@@ -1,11 +1,11 @@
-# cf-idmg-ml-service.yaml
+# cf-idmgml-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: idmg-ml  # Unique service name for image1
+  name: idmgml  # Unique service name for deployment
 spec:
   selector:  # Add this section
-    app.kubernetes.io/name: image4  # Match deployment label
+    app.kubernetes.io/name: idmgml  # Match deployment label
   ports:
   - protocol: TCP
     port: 80  # Service port (external)

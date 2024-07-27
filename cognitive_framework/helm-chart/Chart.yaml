@@ -3,11 +3,12 @@ apiVersion: v2
 name: cf
 description: A Helm chart for the cognitive framework
 type: application
-version: 0.1.9
+version: 0.2.3
 appVersion: "1.16.0"
 maintainers:
   - name: IDMG
-    email: # Email address
+    email: arman.torkzaban@l3s.de
     changelog: |
-      - Added prescoring plug-in
-      - Added init wait
+      - Added index.yaml
+sources:
+  - https://idmg-pub.gitlab.io/helm-charts/

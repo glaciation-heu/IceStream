@@ -1,11 +1,11 @@
-# cf-idmg-db-service.yaml
+# cf-idmgdb-service.yaml
 apiVersion: v1
 kind: Service
 metadata:
-  name: idmg-db  # Unique service name for image1
+  name: idmgdb  # Unique service name within the deployment
 spec:
   selector:  # Add this section
-    app.kubernetes.io/name: image3  # Match deployment label
+    app.kubernetes.io/name: idmgdb  # Match deployment label
   ports:
   - protocol: TCP
     port: 80  # Service port (external)
