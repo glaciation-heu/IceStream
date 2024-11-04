@@ -1,0 +1,49 @@
+/*
+This is the response of an API call like this: /api/clusters/cluster1/workloads/2
+In this call, cluster1 is the ID of the cluster that its workload are queries, 2 is the time window for aggregation and the default aggregation is simple avergaing.
+*/
+{
+    "cluster_id": "cluster1",
+    "workloads": [
+        {
+            "workload_id": "nginx-pod",
+            "runs_on": {
+                "start_time": "2024-02-08 18:40:00",
+                "end_time": "2024-02-08 18:45:00",
+                "worker_node_id": "node1"
+            },
+            "resources": {
+                "cpu": {
+                    "unit": "cores",
+                    "demanded": 0,
+                    "allocated": 0,
+                    "used": 0
+                },
+                "gpu": {
+                    "unit": "units",
+                    "demanded": 0,
+                    "allocated": 0,
+                    "used": 0
+                },
+                "memory": {
+                    "unit": "GB",
+                    "demanded": 0,
+                    "allocated": 0,
+                    "used": 0
+                },
+                "storage": {
+                    "unit": "GB",
+                    "demanded": 0,
+                    "allocated": 0,
+                    "used": 0
+                },
+                "energy_index": {
+                    "unit": "milliwatt",
+                    "demanded": 0,
+                    "allocated": 0,
+                    "used": 0
+                }
+            }
+        }
+    ]
+}

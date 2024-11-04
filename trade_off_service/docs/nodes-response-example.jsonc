@@ -1,0 +1,114 @@
+/*
+This is the response of an API call like this: /api/clusters/cluster1/5
+In this call, cluster1 is the ID of the cluster that its worker-nodes are queries, 5 is the time window for aggregation and the default aggregation is simple avergaing.
+*/
+{
+    "cluster_id": "cluster1",
+    "worker_nodes": [
+        {
+            "node_id": "node1",
+            "resources": {
+                "cpu": {
+                    "max": 8,
+                    "available": 4,
+                    "unit": "cores"
+                },
+                "gpu": {
+                    "max": 2,
+                    "available": 1,
+                    "unit": "units"
+                },
+                "memory": {
+                    "max": 16,
+                    "available": 8,
+                    "unit": "GB"
+                },
+                "storage": {
+                    "max": 512,
+                    "available": 128,
+                    "unit": "GB"
+                },
+                "network": {
+                    "max": 256,
+                    "available": 128,
+                    "unit": "Mbps"
+                },
+                "energy_index": {
+                    "max": 85000,
+                    "available": 30000,
+                    "unit": "milliwatt"
+                }
+            }
+        },
+        {
+            "node_id": "node2",
+            "resources": {
+                "cpu": {
+                    "max": 12,
+                    "available": 8,
+                    "unit": "cores"
+                },
+                "gpu": {
+                    "max": 4,
+                    "available": 1,
+                    "unit": "units"
+                },
+                "memory": {
+                    "max": 32,
+                    "available": 8,
+                    "unit": "GB"
+                },
+                "storage": {
+                    "max": 256,
+                    "available": 128,
+                    "unit": "GB"
+                },
+                "network": {
+                    "max": 128,
+                    "available": 64,
+                    "unit": "Mbps"
+                },
+                "energy_index": {
+                    "max": 55000,
+                    "available": 30000,
+                    "unit": "milliwatt"
+                }
+            }
+        },
+        {
+            "node_id": "node3",
+            "resources": {
+                "cpu": {
+                    "max": 12,
+                    "available": 8,
+                    "unit": "cores"
+                },
+                "gpu": {
+                    "max": 8,
+                    "available": 4,
+                    "unit": "units"
+                },
+                "memory": {
+                    "max": 64,
+                    "available": 8,
+                    "unit": "GB"
+                },
+                "storage": {
+                    "max": 256,
+                    "available": 128,
+                    "unit": "GB"
+                },
+                "network": {
+                    "max": 128,
+                    "available": 64,
+                    "unit": "Mbps"
+                },
+                "energy_index": {
+                    "max": 155000,
+                    "available": 130000,
+                    "unit": "milliwatt"
+                }
+            }
+        }
+    ]
+}
