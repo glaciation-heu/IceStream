@@ -76,7 +76,7 @@ The current allowlist includes: `cert-manager`, `gatekeeper-system`,
 
 Sharing clusters saves costs and simplifies administration.
 However, sharing clusters also presents challenges such as security, fairness,
-and managing *noisy neighbors*.
+and managing *noisy neighbours*.
 
 *Multi-tenancy*, this is the term frequently used to describe sharing a cluster
 among multiple end users or tenants, is a very recurring theme across multiple
@@ -94,7 +94,7 @@ run on particular node(s), or to *prefer* to run on particular nodes. There are
 several ways to do this and the recommended approaches all use label selectors
 to facilitate the selection.
 
-`nodeSelector` is one of the recommended form of node selection constraint.
+`nodeSelector` is one of the recommended forms of node selection constraint.
 With the addition of the `nodeSelector` field to Pods, it is possible to
 specify the desired node labels the target node should have.
 Then, Kubernetes only schedules the Pod onto nodes that have a match with all
