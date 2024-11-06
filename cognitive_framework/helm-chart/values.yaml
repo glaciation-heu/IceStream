@@ -1,0 +1,28 @@
+replicaCount: 1
+images:
+  idmgdc:
+    repository: idmg/cf
+    tag: dc1
+    imagePullPolicy: Always
+
+  idmgpl:
+    repository: idmg/cf
+    tag: custom-prescore-plugin
+
+  idmgdb:
+    repository: idmg/cf
+    tag: db5
+    imagePullPolicy: Always
+
+  idmgml:
+    repository: idmg/cf
+    tag: ml2
+    imagePullPolicy: Always
+
+resources:
+  requests:
+    cpu: 1000m
+    memory: 1024Mi
+  limits:
+    cpu: 1000m
+    memory: 1024Mi

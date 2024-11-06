@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idmgdb
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: idmgdb
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: idmgdb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: idmgdb
+    spec:
+      containers:
+        - name: idmgdb
+          image: "{{ .Values.images.idmgdb.repository }}:{{ .Values.images.idmgdb.tag }}"
+          env:
+            - name: NEO4J_USER
+              value: neo4j
+            - name: NEO4J_PSWD
+              value: password
+            - name: NEO4J_URL
+              value: bolt://neo4j.{{ .Release.Namespace }}.svc.cluster.local:7687
+            - name: GENERATOR_URL
+              value: http://idmgdc.{{ .Release.Namespace }}.svc.cluster.local/
+          imagePullPolicy: "{{ .Values.images.idmgdb.imagePullPolicy }}"
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
+

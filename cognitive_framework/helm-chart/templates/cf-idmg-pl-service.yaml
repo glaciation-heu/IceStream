@@ -1,0 +1,13 @@
+# cf-idmgml-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: idmgpl  # Unique service name for dc
+spec:
+  selector:  # Add this section
+    app.kubernetes.io/name: idmgpl  # Match deployment label
+  ports:
+  - protocol: TCP
+    port: 80  # Service port (external)
+    targetPort: 8080  # Maps to container port in deployment
+  type: NodePort  # Expose service outside of the cluster

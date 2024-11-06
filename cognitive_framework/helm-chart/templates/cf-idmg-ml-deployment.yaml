@@ -1,0 +1,31 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idmgml
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: idmgml
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: idmgml
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: idmgml
+    spec:
+      containers:
+        - name: idmgml
+          image: "{{ .Values.images.idmgml.repository }}:{{ .Values.images.idmgml.tag }}"
+          env:
+            - name: DB_API_URL
+              value: http://idmgdb.{{ .Release.Namespace }}.svc.cluster.local
+          imagePullPolicy: "{{ .Values.images.idmgml.imagePullPolicy }}"
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}

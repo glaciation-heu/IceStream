@@ -1,0 +1,27 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: idmgdc
+  namespace: {{ .Release.Namespace }}
+  labels:
+    app.kubernetes.io/name: idmgdc
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: idmgdc
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: idmgdc
+    spec:
+      containers:
+        - name: idmgdc
+          image: "{{ .Values.images.idmgdc.repository }}:{{ .Values.images.idmgdc.tag }}"
+          resources:
+            requests:
+              cpu: {{ .Values.resources.requests.cpu }}
+              memory: {{ .Values.resources.requests.memory }}
+            limits:
+              cpu: {{ .Values.resources.limits.cpu }}
+              memory: {{ .Values.resources.limits.memory }}
