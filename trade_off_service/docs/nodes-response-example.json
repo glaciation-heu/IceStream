@@ -1,0 +1,154 @@
+{
+  "worker_nodes": [
+      {
+          "resources": {
+              "memory": {
+                  "unit": "glc:Bytes",
+                  "max": "33543770112",
+                  "available": "4398755840"
+              },
+              "cpu": {
+                  "unit": "glc:Core",
+                  "max": "16",
+                  "available": "15.081385057470921"
+              },
+              "storage": {
+                  "unit": "glc:Bytes",
+                  "max": "474052220144",
+                  "available": "219175854080"
+              },
+              "energy": {
+                  "unit": "glc:Milliwatt",
+                  "max": "10",
+                  "available": "82.68689999977748"
+              }
+          },
+          "node_id": "glaciation-testm1w5-worker06withgpu"
+      },
+      {
+          "resources": {
+              "memory": {
+                  "unit": "glc:Bytes",
+                  "max": "33544400896",
+                  "available": "593686528"
+              },
+              "cpu": {
+                  "unit": "glc:Core",
+                  "max": "16",
+                  "available": "15.592764367816711"
+              },
+              "storage": {
+                  "unit": "glc:Bytes",
+                  "max": "475292605268",
+                  "available": "166723653632"
+              },
+              "energy": {
+                  "unit": "glc:Milliwatt",
+                  "max": "10",
+                  "available": "80.26325000027815"
+              }
+          },
+          "node_id": "glaciation-testm1w5-worker05"
+      },
+      {
+          "resources": {
+              "memory": {
+                  "unit": "glc:Bytes",
+                  "max": "33544396800",
+                  "available": "1587130368"
+              },
+              "cpu": {
+                  "unit": "glc:Core",
+                  "max": "16",
+                  "available": "15.608597701149405"
+              },
+              "storage": {
+                  "unit": "glc:Bytes",
+                  "max": "475292605268",
+                  "available": "220585144320"
+              },
+              "energy": {
+                  "unit": "glc:Milliwatt",
+                  "max": "10",
+                  "available": "80.69260000040134"
+              }
+          },
+          "node_id": "glaciation-testm1w5-worker02"
+      },
+      {
+          "resources": {
+              "memory": {
+                  "unit": "glc:Bytes",
+                  "max": "33544404992",
+                  "available": "7828008960"
+              },
+              "cpu": {
+                  "unit": "glc:Core",
+                  "max": "16",
+                  "available": "15.764488505747638"
+              },
+              "storage": {
+                  "unit": "glc:Bytes",
+                  "max": "475292605268",
+                  "available": "243589398528"
+              },
+              "energy": {
+                  "unit": "glc:Milliwatt",
+                  "max": "10",
+                  "available": "79.87010000000397"
+              }
+          },
+          "node_id": "glaciation-testm1w5-worker01"
+      },
+      {
+          "resources": {
+              "memory": {
+                  "unit": "glc:Bytes",
+                  "max": "33544404992",
+                  "available": "4081123328"
+              },
+              "cpu": {
+                  "unit": "glc:Core",
+                  "max": "16",
+                  "available": "15.615747126436995"
+              },
+              "storage": {
+                  "unit": "glc:Bytes",
+                  "max": "475292605268",
+                  "available": "137860710400"
+              },
+              "energy": {
+                  "unit": "glc:Milliwatt",
+                  "max": "10",
+                  "available": "80.80799999982119"
+              }
+          },
+          "node_id": "glaciation-testm1w5-worker04"
+      },
+      {
+          "resources": {
+              "memory": {
+                  "unit": "glc:Bytes",
+                  "max": "33544396800",
+                  "available": "7501959168"
+              },
+              "cpu": {
+                  "unit": "glc:Core",
+                  "max": "16",
+                  "available": "15.774574712644085"
+              },
+              "storage": {
+                  "unit": "glc:Bytes",
+                  "max": "475292605268",
+                  "available": "220320927744"
+              },
+              "energy": {
+                  "unit": "glc:Milliwatt",
+                  "max": "10",
+                  "available": "80.31705000003178"
+              }
+          },
+          "node_id": "glaciation-testm1w5-worker03"
+      }
+  ]
+}

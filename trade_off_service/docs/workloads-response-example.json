@@ -1,0 +1,412 @@
+{
+  "workloads": [
+    {
+      "runs_on": {
+        "start_time": "2024-03-08T13:41:09Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-master01"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "280112.9577803011",
+          "demanded": "5.24288E7"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.03759880267442412",
+          "demanded": "0.1e0"
+        },
+        "storage": {
+          "used": "44404736"
+        },
+        "network": {
+          "used": "197807.321710714"
+        },
+        "energy": {
+          "used": "0.6362999999973302"
+        }
+      },
+      "workload_id": "kube-flannel.kube-flannel-ds-gn84d"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-03-08T13:41:24Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-master01"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "329211.99983487825",
+          "demanded": "7.340032E7",
+          "allocated": "1.7825792E8"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.005018493804668164",
+          "demanded": "0.1e0"
+        },
+        "storage": {
+          "used": "69632"
+        },
+        "network": {
+          "used": "992.6952723890392"
+        },
+        "energy": {
+          "used": "0.2657999999995809"
+        }
+      },
+      "workload_id": "kube-system.coredns-787d4945fb-bfv2k"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-11-11T04:01:57Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker04"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "177907.17920345167",
+          "demanded": "2.097152E8",
+          "allocated": "1.048576E9"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.0019561844499080324",
+          "demanded": "0.1e0",
+          "allocated": "0.2e0"
+        },
+        "storage": {
+          "used": "1007616"
+        },
+        "network": {
+          "used": "1705.3824950337107"
+        },
+        "energy": {
+          "used": "0.09435000000000097"
+        }
+      },
+      "workload_id": "monitoring.monitoring-stack-manager-7874494b7c-8g8sr"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-10-23T11:23:47Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker05"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "2413207.7870323313",
+          "demanded": "2.68435456E8",
+          "allocated": "5.36870912E8"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.014861096777020279",
+          "demanded": "1.0e0",
+          "allocated": "1.0e0"
+        },
+        "storage": {
+          "used": "26189824"
+        },
+        "network": {
+          "used": "18081.310154108378"
+        },
+        "energy": {
+          "used": "1.0848500000002483"
+        }
+      },
+      "workload_id": "monitoring.monitoring-stack-grafana-59c7459b78-t5l8g"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-10-17T07:15:59Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker06withgpu"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "288625.40653620247",
+          "demanded": "1.048576E8",
+          "allocated": "1.048576E8"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.01237205473355342",
+          "demanded": "0.1e0"
+        },
+        "storage": {
+          "used": "1687552"
+        },
+        "network": {
+          "used": "442.0486339235176"
+        },
+        "energy": {
+          "used": "0.6096499999985099"
+        }
+      },
+      "workload_id": "monitoring.monitoring-stack-fluent-bit-loki-jbhpd"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-09-10T14:29:43Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker06withgpu"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "479287.6721566563",
+          "demanded": "2.097152E8"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.014470412192603022",
+          "demanded": "0.1e0"
+        },
+        "storage": {
+          "used": "1183744"
+        },
+        "network": {
+          "used": "3428.019790308791"
+        },
+        "energy": {
+          "used": "0.8778000000010555"
+        }
+      },
+      "workload_id": "kube-system.metrics-server-6d798599c8-kmp7m"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-10-17T07:16:04Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker06withgpu"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "222860.42145324108",
+          "demanded": "1.34217728E8",
+          "allocated": "1.34217728E8"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.004135552390594889",
+          "demanded": "0.3e0",
+          "allocated": "0.3e0"
+        },
+        "storage": {
+          "used": "57344"
+        },
+        "network": {
+          "used": "574.1545897895573"
+        },
+        "energy": {
+          "used": "0.24144999999941016"
+        }
+      },
+      "workload_id": "monitoring.monitoring-stack-alertmanager-0"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-10-26T23:07:07Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker06withgpu"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "12278190.732812217",
+          "demanded": "4.294967296E9",
+          "allocated": "4.294967296E9"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.060559337158089865",
+          "demanded": "1.0e0",
+          "allocated": "1.0e0"
+        },
+        "storage": {
+          "used": "11636736"
+        },
+        "network": {
+          "used": "55773.23481059473"
+        },
+        "energy": {
+          "used": "3.794499999998758"
+        }
+      },
+      "workload_id": "monitoring.monitoring-stack-prometheus-server-6bb747566-ccvpm"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-11-07T14:17:23Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker03"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "0",
+          "demanded": "2.147483648E9",
+          "allocated": "2.147483648E9"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.0011989396366211024",
+          "demanded": "1.0e0",
+          "allocated": "1.0e0"
+        },
+        "storage": {
+          "unit": "glc:Bytes",
+          "used": "102400",
+          "demanded": "1048576.0e0",
+          "allocated": "2.097152E7"
+        },
+        "network": {
+          "used": "0.2775485192470208"
+        },
+        "energy": {
+          "used": "0.051550000000012614"
+        }
+      },
+      "workload_id": "mef-sog-uc1-wl.scheduled-client-deployment-5cc9bd64d6-klmkq"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-11-06T13:22:14Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker01",
+        "end_time": "2024-11-06T13:22:16Z"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "demanded": "2.147483648E9"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "demanded": "2.0e0"
+        },
+        "storage": {
+          "unit": "glc:Bytes",
+          "demanded": "5.0E8"
+        },
+        "network": {},
+        "energy": {
+          "used": "0"
+        }
+      },
+      "workload_id": "uc2.object-distribution-job-ws8bb"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-11-17T14:15:00Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker06withgpu",
+        "end_time": "2024-11-17T14:21:42Z"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "demanded": "2.147483648E9"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "demanded": "2.0e0"
+        },
+        "storage": {
+          "unit": "glc:Bytes",
+          "demanded": "5.0E8"
+        },
+        "network": {},
+        "energy": {
+          "used": "0"
+        }
+      },
+      "workload_id": "uc2.uc2-workload-service-28864215-cnmxs"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-11-14T12:01:42Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker02"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "16174389.00943134",
+          "demanded": "5.36870912E8",
+          "allocated": "8.589934592E9"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.008668810120440597",
+          "demanded": "0.1e0",
+          "allocated": "4.0e0"
+        },
+        "storage": {
+          "used": "317263872"
+        },
+        "network": {
+          "used": "38285.05364187778"
+        },
+        "energy": {
+          "used": "0.3253500000001395"
+        }
+      },
+      "workload_id": "jenkins.jenkins-0"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-11-11T12:01:57Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker04"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "used": "5738010.715441817",
+          "demanded": "2.147483648E9",
+          "allocated": "2.147483648E9"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "used": "0.01932443503795363",
+          "demanded": "1.0e0",
+          "allocated": "1.0e0"
+        },
+        "storage": {
+          "unit": "glc:Bytes",
+          "used": "77824",
+          "demanded": "1048576.0e0",
+          "allocated": "5242880.0e0"
+        },
+        "network": {
+          "used": "280.6622371245003"
+        },
+        "energy": {
+          "used": "0.6541000000002289"
+        }
+      },
+      "workload_id": "kafka.kafka-zookeeper-0"
+    },
+    {
+      "runs_on": {
+        "start_time": "2024-11-06T13:22:14Z",
+        "worker_node_id": "https://kubernetes.local/#glaciation-testm1w5-worker01",
+        "end_time": "2024-11-06T13:22:15Z"
+      },
+      "resources": {
+        "memory": {
+          "unit": "glc:Bytes",
+          "demanded": "2.147483648E9"
+        },
+        "cpu": {
+          "unit": "glc:Core",
+          "demanded": "2.0e0"
+        },
+        "storage": {
+          "unit": "glc:Bytes",
+          "demanded": "5.0E8"
+        },
+        "network": {},
+        "energy": {
+          "used": "0"
+        }
+      },
+      "workload_id": "uc2.anomaly-detection-job-ptls7"
+    }
+  ]
+}
