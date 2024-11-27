@@ -3,26 +3,33 @@ Follow these instructions to run the project:
 
 ## Deployment
 
-## 4. Helm Charts
-### IDMG Helm Chart
+### Helm Charts
 
-This repository contains the Helm charts for IDMG scheduler. To install follow the commands:
+The repository linked below contains the Helm charts for IDMG scheduler. To install follow the commands:
 
-add IDMG helm repo
+#### add IDMG helm repo
 
-```helm repo add idmg https://idmg-pub.gitlab.io/helm-charts/```
+```
+helm repo add idmg https://idmg-pub.gitlab.io/helm-charts/
+```
+#### update the helm repo
 
-update the helm repo
+```
+helm repo update
+```
 
-```helm repo update```
+#### install IDMG helm chart.
+Please note you need to install the IDMG in the same namespace as the neo4j
 
-install IDMG helm chart. Please note you need to install the IDMG in the same namespace as the neo4j
-
-```helm install <desired-name> idmg/cf --namespace <desired namespace> --create-namespace --set namespace=<desired namespace>```
+```
+helm install <desired-name> idmg/cf --namespace <desired namespace> --create-namespace --set namespace=<desired namespace> --set service.type=<NodePort/ClusterIP>
+```
 
 please note that you can set the neo4j password and username (default password:neo4j) for `idmgdb` image by passing the desired values as follows:
 
-```helm install ... --set images.idmgdb.env[0].value=new_neo4j_user --set images.idmgdb.env[1].value=new_neo4j_password```
+```
+helm install ... --set images.idmgdb.env[0].value=new_neo4j_user --set images.idmgdb.env[1].value=new_neo4j_password
+````
 
 ### Neo4j Helm Chart
 add neo4j helm repo

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: idmgexternal # Unique service name for image1
+spec:
+  selector: # Add this section
+    app.kubernetes.io/name: idmgexternal # Match deployment label
+  ports:
+    - protocol: TCP
+      port: 8082 # Service port (external)
+      targetPort: 8082 # Maps to container port in deployment
+  type: { { .Values.service.type } } # Internal communication within the cluster

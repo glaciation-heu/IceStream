@@ -1,0 +1,59 @@
+replicaCount: 1
+images:
+  idmgdc:
+    repository: idmg/idmgdcv2
+    tag: latest
+    imagePullPolicy: Always
+
+  idmgdb:
+    repository: idmg/idmgdbv2
+    tag: latest
+    imagePullPolicy: Always
+
+  idmgml:
+    repository: idmg/idmgmlv2
+    tag: lateset
+    imagePullPolicy: Always
+
+  idmgexternal:
+    repository: idmg/idmgexternal
+    tag: latest
+    imagePullPolicy: Always
+
+  prescoreplugin:
+    repository: idmg/prescoreplugin
+    tag: latest
+    imagePullPolicy: Always
+
+  scoreplugin:
+    repository: idmg/scoreplugin
+    tag: latest
+    imagePullPolicy: Always
+
+  cacheservice:
+    repository: idmg/cacheservice
+    tag: latest
+    imagePullPolicy: Always
+
+resources:
+  requests:
+    cpu: 1000m
+    memory: 1024Mi
+  limits:
+    cpu: 1000m
+    memory: 1024Mi
+
+ingress:
+  enabled: true
+  className: nginx
+  hosts:
+    datagenerator: data-generator.integration
+    databasecontroller: database-controller.integration
+    model: model.integration
+    # external: external
+    prescoreplugin: prescoreplugin.integration
+    scoreplugin: scoreplugin.integration
+    cacheservice: cacheservice.integration
+
+service:
+  type: ClusterIP # Default service type

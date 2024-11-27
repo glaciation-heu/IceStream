@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="generator" content="GitLab Pages">
+    <title>IDMG Helm charts</title>
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <!-- <div class="navbar">
+      <a href="https://pages.gitlab.io/plain-html/">Plain HTML Example</a>
+      <a href="https://gitlab.com/pages/plain-html/">Repository</a>
+      <a href="https://gitlab.com/pages/">Other Examples</a>
+    </div> -->
+
+    <h2>IDMG Helm Chart</h2>
+
+    <p>
+      This repository contains the Helm charts for IDMG scheduler. To install follow the commands: 
+    </p>
+    <p>
+    add IDMG helm repo
+    </p>
+  
+    <p>
+      <code>
+        helm repo add idmg https://idmg-pub.gitlab.io/helm-charts/
+      </code>
+    </p>
+    <p>
+      update the helm repo
+    </p>
+    <p>
+      <code>
+        helm repo update
+      </code>
+    </p>
+    <p>
+      install IDMG helm chart. Please note you need to install the IDMG in the same namespace as the neo4j
+    </p>
+    <p>
+      <code>
+        helm install &lt;desired-name&gt; idmg/cf --namespace &lt;desired namespace&gt; --create-namespace --set namespace=&lt;desired namespace&gt; --set service.type=&lt;NodePort/ClusterIP&gt;
+      </code>
+    </p>
+    <p>
+      please note that you can set the neo4j password and username (default password:neo4j) for `idmgdb` image by passing the desired values as follows:
+    </p>
+      <p>
+      <code>
+        helm install ... --set images.idmgdb.env[0].value=new_neo4j_user --set images.idmgdb.env[1].value=new_neo4j_password
+      </code>
+      </p>
+    <hr>
+    <h2>Neo4j</h2>
+    <p>
+      add neo4j helm repo
+    </p>
+    <p>
+      <code>
+      helm repo add neo4j-helm-charts https://neo4j.github.io/helm-charts/      
+      </code>
+    </p>
+    <p>
+      update the helm repo
+    </p>
+    <p>
+      <code>
+      helm repo update
+      </code>
+    </p>
+    <p>
+      install neo4j helm chart. Please note you need to install the neo4j in the same namespace as the IDMG scheduler
+    <p>
+      <code>
+      helm install neo4j neo4j-helm-charts/neo4j --version &lt;5.20.0&gt; --set neo4j.name=&lt;neo4j&gt; --set volumes.data.mode=defaultStorageClass --namespace &lt;desired_namespace&gt; --set neo4j.password=&lt;password&gt; --set neo4j.user=&lt;neo4j&gt;
+      </code>
+    </p>
+  </body>
+</html>
+

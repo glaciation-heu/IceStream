@@ -1,0 +1,19 @@
+apiVersion: v1
+entries:
+  cf:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2024-11-28T00:42:51.16826+01:00"
+    description: A Helm chart for the IDMG K8s scheduler
+    digest: 3cb021277eb92204e4502592563aa01766fe6f2549000fe4790711492dc88729
+    maintainers:
+    - email: arman.torkzaban@l3s.de
+      name: IDMG
+    name: cf
+    sources:
+    - https://idmg-pub.gitlab.io/helm-charts/
+    type: application
+    urls:
+    - cf-0.4.8.tgz
+    version: 0.4.8
+generated: "2024-11-28T00:42:51.167592+01:00"

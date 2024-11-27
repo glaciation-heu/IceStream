@@ -1,0 +1,210 @@
+kind: ClusterRole
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: prescoreplugin-{{ .Release.Namespace }}-clusterrole
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - namespaces
+    verbs:
+      - create
+      - get
+      - list
+  - apiGroups:
+      - ""
+    resources:
+      - endpoints
+      - events
+    verbs:
+      - create
+      - get
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - delete
+      - get
+      - list
+      - watch
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - bindings
+      - pods/binding
+    verbs:
+      - create
+  - apiGroups:
+      - ""
+    resources:
+      - pods/status
+    verbs:
+      - patch
+      - update
+  - apiGroups:
+      - ""
+    resources:
+      - replicationcontrollers
+      - services
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - apps
+      - extensions
+    resources:
+      - replicasets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - statefulsets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - policy
+    resources:
+      - poddisruptionbudgets
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - persistentvolumeclaims
+      - persistentvolumes
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "storage.k8s.io"
+    resources:
+      - storageclasses
+      - csinodes
+      - csistoragecapacities
+      - csidrivers
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - "coordination.k8s.io"
+    resources:
+      - leases
+    verbs:
+      - create
+      - get
+      - list
+      - update
+  - apiGroups:
+      - "events.k8s.io"
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+      - update
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: prescoreplugin-{{ .Release.Namespace }}-sa
+  namespace: { { .Release.Namespace } }
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: prescoreplugin-{{ .Release.Namespace }}-clusterrolebinding
+  namespace: { { .Release.Namespace } }
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: prescoreplugin-{{ .Release.Namespace }}-clusterrole
+subjects:
+  - kind: ServiceAccount
+    name: prescoreplugin-{{ .Release.Namespace }}-sa
+    namespace: { { .Release.Namespace } }
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: scheduler-config
+  namespace: { { .Release.Namespace } }
+data:
+  prescore-scheduler-config.yaml: |
+    apiVersion: kubescheduler.config.k8s.io/v1
+    kind: KubeSchedulerConfiguration
+    leaderElection:
+      leaderElect: false
+      leaseDuration: 15s
+      renewDeadline: 10s
+      resourceName: prescoreplugin
+      resourceNamespace: {{ .Release.Namespace }}
+      retryPeriod: 2s
+    profiles:
+      - schedulerName: default-scheduler
+        plugins:
+          preScore:
+            enabled:
+              - name: prescoreplugin
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: prescoreplugin
+  namespace: { { .Release.Namespace } }
+  labels:
+    app.kubernetes.io/name: prescoreplugin
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: prescoreplugin
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: prescoreplugin
+    spec:
+      serviceAccountName: prescoreplugin-{{ .Release.Namespace }}-sa
+      priorityClassName: system-cluster-critical
+      volumes:
+        - name: scheduler-config
+          configMap:
+            name: scheduler-config
+      containers:
+        - name: prescoreplugin
+          image: idmg/prescoreplugin
+          imagePullPolicy: Always
+          command:
+            - prescoreplugin
+            - --config=/etc/kubernetes/prescore-scheduler-config.yaml
+            - --v=3
+          volumeMounts:
+            - name: scheduler-config
+              mountPath: /etc/kubernetes

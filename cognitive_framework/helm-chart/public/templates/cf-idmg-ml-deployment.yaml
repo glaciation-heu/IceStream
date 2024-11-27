@@ -17,11 +17,13 @@ spec:
     spec:
       containers:
         - name: idmgml
-          image: "{{ .Values.images.idmgml.repository }}:{{ .Values.images.idmgml.tag }}"
+          image: {{ .Values.images.idmgml.repository }}:{{ .Values.images.idmgml.tag }}
           env:
             - name: DB_API_URL
               value: http://idmgdb.{{ .Release.Namespace }}.svc.cluster.local
-          imagePullPolicy: "{{ .Values.images.idmgml.imagePullPolicy }}"
+            - name: GENERATOR_URL
+              value: http://idmgdc.{{ .Release.Namespace }}.svc.cluster.local/
+          imagePullPolicy: {{ .Values.images.idmgml.imagePullPolicy }}
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}

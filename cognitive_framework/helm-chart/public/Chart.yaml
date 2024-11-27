@@ -1,14 +1,12 @@
 # Chart.yaml
 apiVersion: v2
 name: cf
-description: A Helm chart for the cognitive framework
+description: A Helm chart for the IDMG K8s scheduler
 type: application
-version: 0.2.3
+version: 0.4.8
 appVersion: "1.16.0"
 maintainers:
   - name: IDMG
     email: arman.torkzaban@l3s.de
-    changelog: |
-      - Added index.yaml
 sources:
   - https://idmg-pub.gitlab.io/helm-charts/

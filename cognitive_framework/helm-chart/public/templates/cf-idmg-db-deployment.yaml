@@ -17,7 +17,7 @@ spec:
     spec:
       containers:
         - name: idmgdb
-          image: "{{ .Values.images.idmgdb.repository }}:{{ .Values.images.idmgdb.tag }}"
+          image: {{ .Values.images.idmgdb.repository }}:{{ .Values.images.idmgdb.tag }}
           env:
             - name: NEO4J_USER
               value: neo4j
@@ -27,7 +27,11 @@ spec:
               value: bolt://neo4j.{{ .Release.Namespace }}.svc.cluster.local:7687
             - name: GENERATOR_URL
               value: http://idmgdc.{{ .Release.Namespace }}.svc.cluster.local/
-          imagePullPolicy: "{{ .Values.images.idmgdb.imagePullPolicy }}"
+            - name: CURRENT_IMPLEMENTATION
+              value: External
+            - name: EXTERNAL_API_URL_GLC
+              value: http://idmgexternal.{{ .Release.Namespace }}.svc.cluster.local:8082/api/v1
+          imagePullPolicy: {{ .Values.images.idmgdb.imagePullPolicy }}
           resources:
             requests:
               cpu: {{ .Values.resources.requests.cpu }}

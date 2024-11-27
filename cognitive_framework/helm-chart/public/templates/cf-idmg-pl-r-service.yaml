@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: prescoreplugin # Unique service name for plugin
+spec:
+  selector: # Add this section
+    app.kubernetes.io/name: prescoreplugin
+  ports:
+    - protocol: TCP
+      port: 8080 # Service port (external)
+      targetPort: 8080 # Maps to container port in deployment
+  type: { { .Values.service.type } } # Expose service outside of the cluster
