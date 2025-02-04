@@ -20,5 +20,6 @@ curl -X POST "http://grafana.integration/api/ds/query?ds_type=loki&requestId=Q10
             ],
 	    "from":"1738638979765",
 	    "to":"1738660579765"
-        }'
+        }' \
+    -o "logs/$(date +%Y%m%d_%H%M%S).json"
 
