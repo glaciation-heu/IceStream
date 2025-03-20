@@ -12,7 +12,7 @@ function print_and_create_resource {
     if [ $# -eq 2 ]; then
         echo -e "\n$1"
     fi
-    pe "curl -s ${@: -1} | sed -e 's/^/> /'"
+    pe "cat ${@: -1}"
     pe "kubectl create -f ${@: -1}"
 }
 
@@ -56,28 +56,30 @@ fi
 pe 'echo "Serving Gatekeeper Policy Manager at $URL"'
 
 print_section_title '\n[*] Add constraint template'
-print_and_create_resource 'https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/template.yaml'
+print_and_create_resource '../policy-library/library/general/allowedrepos/template.yaml'
 wait # show constraint template in the web UI
 
 print_section_title '\n[*] Add constraint'
-print_and_create_resource 'https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/constraint.yaml'
+print_and_create_resource '../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/constraint.yaml'
 wait # show constraint in the web UI
 
 print_section_title '\n[*] Test'
-print_and_create_resource 'Deploy pod with Open Policy Agent container' 'https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_allowed.yaml'
+print_and_create_resource 'Deploy pod with Open Policy Agent container' '../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_allowed.yaml'
 wait # explain test
-print_and_create_resource 'Deploy pod with NGINX container' 'https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_container.yaml'
+print_and_create_resource 'Deploy pod with NGINX container' '../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_container.yaml'
 wait # explain test
-print_and_create_resource 'Deploy pod with NGINX init container and Open Policy Agent container' 'https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_initcontainer.yaml'
+print_and_create_resource 'Deploy pod with NGINX init container and Open Policy Agent container' '../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_initcontainer.yaml'
 wait # explain test
-print_and_create_resource 'Deploy pod with NGINX init container and NGINX container' 'https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_both.yaml'
+print_and_create_resource 'Deploy pod with NGINX init container and NGINX container' '../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_both.yaml'
 wait # explain test
 
 print_section_title '\n[*] Test clean-up'
-pe 'kubectl delete -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_allowed.yaml'
-pe 'kubectl delete -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_container.yaml'
-pe 'kubectl delete -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_initcontainer.yaml'
-pe 'kubectl delete -f https://raw.githubusercontent.com/open-policy-agent/gatekeeper-library/master/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_both.yaml'
+pe 'kubectl delete -f ../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_allowed.yaml'
+pe 'kubectl delete -f ../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_container.yaml'
+pe 'kubectl delete -f ../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_initcontainer.yaml'
+pe 'kubectl delete -f ../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/example_disallowed_both.yaml'
+pe 'kubectl delete -f ../policy-library/library/general/allowedrepos/samples/repo-must-be-openpolicyagent/constraint.yaml'
+pe 'kubectl delete -f ../policy-library/library/general/allowedrepos/template.yaml'
 
 if [[ $INSTALL ]]; then
     print_section_title '\n[*] Uninstall admission control web UI'
