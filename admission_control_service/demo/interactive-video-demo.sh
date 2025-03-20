@@ -19,6 +19,9 @@ function print_and_create_resource {
 # By setting the KUBECONFIG environment variable it is possible to run the demo
 # against different kubernetes environments
 
+clear
+wait # avoid seeing command prompt
+
 if [[ $INSTALL ]]; then
     print_section_title '[*] Install admission control service'
     pe 'helm repo add gatekeeper https://open-policy-agent.github.io/gatekeeper/charts'
@@ -84,3 +87,5 @@ if [[ $INSTALL ]]; then
     pe 'helm delete gatekeeper --namespace gatekeeper-system'
     pe 'kubectl delete crd -l gatekeeper.sh/system=yes'
 fi
+
+wait # avoid seeing command prompt
