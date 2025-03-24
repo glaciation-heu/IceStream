@@ -75,6 +75,7 @@ pe 'POD_NAME=$(kubectl get pod --namespace data-wrapping --selector app=auto-uns
 pe 'VAULT_ROOT_TOKEN=$(kubectl exec -it --namespace data-wrapping $POD_NAME --container vault -- cat /vault/unseal/response.json | jq -r ".root_token")'
 pe 'echo "Token: $VAULT_ROOT_TOKEN"'
 
+wait
 
 print_section_title '\n[*] Interact with the MinIO tenant S3 API'
 case $S3_CLIENT in
