@@ -104,7 +104,7 @@ wait # see changes in the minio interface
 
 print_section_title '\n[*] Run sanitization job'
 pe "cat $DATASET.json"
-p "curl --silent --request POST --header 'Content-Type: application/json' --data @$DATASET.json http://$NODE_IP:$NODE_PORT/api/v1alpha1/job"
+p "curl --silent --request POST --header 'Content-Type: application/json' --data @$DATASET.json $URL/api/v1alpha1/job"
 OUTPUT=$(
     curl \
         --insecure \
@@ -125,7 +125,8 @@ while [ "$STATUS" != "COMPLETED" ]; do
         exit 1 # exit with an error code if the sanitization job fails
     fi
 
-    # sleep 5
+    sleep 10
+
     p "curl --silent --request GET --header 'Content-Type: application/json' $URL/api/v1alpha1/job/$REQ_ID/status"
     OUTPUT=$(
         curl \
