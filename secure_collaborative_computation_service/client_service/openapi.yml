@@ -1,0 +1,380 @@
+openapi: 3.0.0
+info:
+  title: 'Client Service '
+  description: Client Service to access the computation service.
+  version: '1.0'
+servers:
+- url: http://localhost:8080
+tags: []
+paths:
+  /secrets/{collab_id}/{party_id}:
+    post:
+      summary: Create secrets.
+      parameters:
+      - name: collab_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of collaboration
+        required: true
+        deprecated: false
+        explode: true
+      - name: party_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of party
+        required: true
+        deprecated: false
+        explode: true
+      requestBody:
+        description: csv of secrets
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - data_csv
+              properties:
+                data_csv:
+                  type: string
+                  format: binary
+                  description: secret data as csv
+                uuid:
+                  type: string
+        required: true
+      responses:
+        '200':
+          description: Secret created successfully.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+  /raw-secrets/{collab_id}/{secret_id}:
+    get:
+      summary: get secret by secret ids.
+      parameters:
+      - name: collab_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        required: true
+        deprecated: false
+        explode: true
+      - name: secret_id
+        schema:
+          type: string
+        in: path
+        description: identifiers of secrets to get
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Computation ID response
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/ClearTextSecret'
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+  /raw-secrets/{collab_id}:
+    get:
+      summary: list secrets
+      parameters:
+      - name: collab_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Computation ID response
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+    delete:
+      summary: delete secrets with id.
+      parameters:
+      - name: collab_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        required: true
+        deprecated: false
+        explode: true
+      requestBody:
+        description: identifiers of secrets to remove
+        content:
+          application/json; charset=utf-8:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: Removing secrets was successful
+          content:
+            text/plain; charset=utf-8:
+              schema:
+                type: string
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+  /result/{collab_id}/{party_id}:
+    get:
+      summary: Get computation results (checks if computation is ready).
+      parameters:
+      - name: collab_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        required: true
+        deprecated: false
+        explode: true
+      - name: party_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Computation ID response
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClearTextSecret'
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+  /notify:
+    put:
+      summary: notify client that results are finished.
+      requestBody:
+        description: identifier of collaboration
+        content:
+          application/json; charset=utf-8:
+            schema:
+              $ref: '#/components/schemas/NotifyBody'
+        required: true
+      responses:
+        '202':
+          description: Notification accepted
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+  /secret_shares/{coord_id}/{secret_id}:
+    get:
+      summary: Get secret shares.
+      parameters:
+      - name: coord_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        required: true
+        deprecated: false
+        explode: true
+      - name: secret_id
+        schema:
+          type: string
+        in: path
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Computation ID response
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/GetSecretSharesResult'
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+  /ping:
+    get:
+      summary: Returns status code 200. Used to check if service is available.
+      responses:
+        '200':
+          description: ''
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+  /sys_status:
+    get:
+      summary: Get system informations.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SysStatus'
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+components:
+  schemas:
+    ClearTextSecret:
+      type: object
+      required:
+      - result
+      properties:
+        result:
+          type: string
+    GetSecretSharesResult:
+      type: object
+      required:
+      - result
+      properties:
+        result:
+          type: array
+          items:
+            $ref: '#/components/schemas/SecretShare'
+    NotifyBody:
+      type: object
+      required:
+      - message
+      - code
+      - collaborationId
+      - secretId
+      properties:
+        message:
+          type: string
+        code:
+          type: integer
+          format: int32
+        collaborationId:
+          type: integer
+          format: int32
+        secretId:
+          type: string
+    SecretShare:
+      type: object
+      required:
+      - secretId
+      - tags
+      - data
+      - secretShares
+      - rShares
+      - vShares
+      - wShares
+      - uShares
+      properties:
+        secretId:
+          type: string
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/SecretTag'
+        data:
+          type: string
+        secretShares:
+          type: string
+        rShares:
+          type: string
+        vShares:
+          type: string
+        wShares:
+          type: string
+        uShares:
+          type: string
+    SecretTag:
+      type: object
+      required:
+      - key
+      - value
+      - valueType
+      properties:
+        key:
+          type: string
+        value:
+          type: string
+        valueType:
+          type: string
+    SysStatus:
+      type: object
+      required:
+      - mem_consumption
+      properties:
+        mem_consumption:
+          type: number
+          format: float
+        kernel_version:
+          type: string
+        os_version:
+          type: string
+        host_name:
+          type: string
