@@ -1,0 +1,597 @@
+openapi: 3.0.0
+info:
+  title: Coordination Service
+  description: Coordination Service to coordinate MPC computations
+  version: '1.0'
+servers:
+- url: http://localhost:8081
+tags: []
+paths:
+  /collaboration:
+    post:
+      summary: Create a new Collaboration
+      requestBody:
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              required:
+              - name
+              - mpc_program
+              - cs_config
+              - csv_header_line
+              - number_of_parties
+              properties:
+                name:
+                  type: string
+                  description: Name of this collaboration
+                mpc_program:
+                  type: string
+                  format: binary
+                  description: The MPC program that will be executed
+                cs_config:
+                  type: string
+                  format: binary
+                  description: CarbyneStack configuration as described in https://carbynestack.io/documentation/getting-started/cli/
+                csv_header_line:
+                  type: string
+                  description: The header-line of the csv
+                number_of_parties:
+                  type: integer
+                  format: int32
+                  description: Number of parties. For now the execution is started if all parties register their secrets
+        required: true
+      responses:
+        '200':
+          description: Successfully added to participating parties.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Collaboration'
+        '208':
+          description: Already added as participating party.
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/RegisterCollaborationResponseBody'
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+    get:
+      summary: List Collaborations
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Collaboration'
+        '500':
+          description: ''
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+  /collaboration/{collaboration_id}/register-input-party/{party_id}:
+    post:
+      summary: input_party registers participation. Return input-specification and compute-party config on success.
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of collaboration to register
+        required: true
+        deprecated: false
+        explode: true
+      - name: party_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: Identifier of party that is registering
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Successfully create participation
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Participation'
+        '208':
+          description: Already added as participating party
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/RegisterParticipationResponseBody'
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+    delete:
+      summary: input_party unregisteres from participation.
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of collaboration to unregister
+        required: true
+        deprecated: false
+        explode: true
+      - name: party_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: Identifier of party that is unregistering
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Successfully removed from participating parties.
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+  /collaboration/{collaboration_id}/register-output-party/{party_id}:
+    post:
+      summary: output_party registers participation.
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of collaboration to register
+        required: true
+        deprecated: false
+        explode: true
+      - name: party_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: Identifier of party that is registering
+        required: true
+        deprecated: false
+        explode: true
+      - name: party_client_endpoint
+        schema:
+          type: string
+        in: query
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Party was registered successfully
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+  /collaboration/{collaboration_id}/input-parties:
+    get:
+      summary: list participations of collaboration
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of the collaboration
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Participation'
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+  /collaboration/{collaboration_id}/confirm-upload/{party_id}:
+    post:
+      summary: input_party confirms upload done.
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of the collaboration
+        required: true
+        deprecated: false
+        explode: true
+      - name: party_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: Identifier of party
+        required: true
+        deprecated: false
+        explode: true
+      requestBody:
+        description: ids of created secrets
+        content:
+          application/json; charset=utf-8:
+            schema:
+              type: array
+              items:
+                type: string
+        required: true
+      responses:
+        '200':
+          description: upload registered successful
+        '208':
+          description: The party already registered its output.
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+  /collaboration/{collaboration_id}:
+    delete:
+      summary: Delete Collaboration
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of the collaboration
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Successfully removed from participating parties.
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+    get:
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of the collaboration
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/Collaboration'
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+  /collaboration/{collaboration_id}/result_ids:
+    get:
+      summary: Get result of collaboration
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of the collaboration
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Success, returns array of result ids
+          content:
+            application/json; charset=utf-8:
+              schema:
+                type: array
+                items:
+                  type: string
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+  /collaboration/{collaboration_id}/compute_config:
+    get:
+      summary: Get Computation Party Config
+      parameters:
+      - name: collaboration_id
+        schema:
+          type: integer
+          format: int32
+        in: path
+        description: identifier of the collaboration
+        required: true
+        deprecated: false
+        explode: true
+      responses:
+        '200':
+          description: Returns the carbynestack config
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/CarbynestackConfig'
+        '500':
+          description: Internal Server error
+        '404':
+          description: Not found
+        '409':
+          description: Not finished
+        '422':
+          description: Unprocessable
+        '403':
+          description: Forbidden
+  /ping:
+    get:
+      summary: Returns status code 200. Used to check if service is available.
+      responses:
+        '200':
+          description: ''
+  /sys_status:
+    get:
+      summary: Get system informations.
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json; charset=utf-8:
+              schema:
+                $ref: '#/components/schemas/SysStatus'
+components:
+  schemas:
+    CarbynestackConfig:
+      type: object
+      description: Config for carbynestack as defined at https://carbynestack.io/documentation/getting-started/cli/
+      required:
+      - prime
+      - r
+      - rinv
+      - noSslValidation
+      - providers
+      properties:
+        prime:
+          type: string
+        r:
+          type: string
+        rinv:
+          type: string
+        noSslValidation:
+          type: boolean
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CarbynestackProvider'
+    CarbynestackProvider:
+      type: object
+      required:
+      - id
+      - amphoraServiceUrl
+      - castorServiceUrl
+      - ephemeralServiceUrl
+      - baseUrl
+      properties:
+        id:
+          type: integer
+          format: int32
+        amphoraServiceUrl:
+          type: string
+        castorServiceUrl:
+          type: string
+        ephemeralServiceUrl:
+          type: string
+        baseUrl:
+          type: string
+    Collaboration:
+      type: object
+      required:
+      - id
+      - name
+      - mpc_program
+      - csv_specification
+      - participation_number
+      - config_id
+      properties:
+        id:
+          type: integer
+          format: int32
+        name:
+          type: string
+          description: Name of the collaboration
+        mpc_program:
+          type: string
+          description: SPDZ Programm (base64 encoded)
+        csv_specification:
+          type: string
+          description: input parameter cs specification (base64 encoded)
+        participation_number:
+          type: integer
+          format: int32
+        config_id:
+          type: integer
+          format: int32
+        output_parties:
+          type: array
+          items:
+            type: string
+    CsConfig:
+      type: object
+      required:
+      - prim
+      - r
+      - rinv
+      - noSslValidation
+      - trustedCertificates
+      - providers
+      properties:
+        prim:
+          type: string
+        r:
+          type: string
+        rinv:
+          type: string
+        noSslValidation:
+          type: boolean
+        trustedCertificates:
+          type: array
+          items:
+            type: string
+        providers:
+          type: array
+          items:
+            $ref: '#/components/schemas/CsProviderConfig'
+    CsProviderConfig:
+      type: object
+      required:
+      - amphoraServiceUrl
+      - castorServiceUrl
+      - ephemeralServiceUrl
+      - id
+      - baseUrl
+      properties:
+        amphoraServiceUrl:
+          type: string
+        castorServiceUrl:
+          type: string
+        ephemeralServiceUrl:
+          type: string
+        id:
+          type: integer
+          format: int32
+        baseUrl:
+          type: string
+    Participation:
+      type: object
+      required:
+      - collaboration_id
+      - party_id
+      properties:
+        collaboration_id:
+          type: integer
+          format: int32
+        party_id:
+          type: integer
+          format: int32
+        secret_ids:
+          type: array
+          items:
+            type: string
+    RegisterCollaborationResponseBody:
+      type: object
+      description: Response body after a collaboration was successfully registered.
+      required:
+      - cs_config
+      - csv_specification
+      properties:
+        cs_config:
+          description: The carbynestack configuration of the registered collaboration
+          allOf:
+          - $ref: '#/components/schemas/CsConfig'
+          - description: The carbynestack configuration of the registered collaboration
+        csv_specification:
+          type: string
+          description: The csv header line used to specify the csv data
+    RegisterParticipationResponseBody:
+      type: object
+      required:
+      - cs_config
+      - csv_specification
+      properties:
+        cs_config:
+          $ref: '#/components/schemas/CsConfig'
+        csv_specification:
+          type: string
+    SysStatus:
+      type: object
+      required:
+      - mem_consumption
+      properties:
+        mem_consumption:
+          type: number
+          format: float
+        kernel_version:
+          type: string
+        os_version:
+          type: string
+        host_name:
+          type: string

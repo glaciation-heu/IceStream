@@ -1,7 +1,0 @@
-apiVersion: v2
-name: client-service
-version: 0.1.0
-description: client-service helm chart
-maintainers:
-- name: Nicolai Huening
-  email: nicolai-huening@sap.com

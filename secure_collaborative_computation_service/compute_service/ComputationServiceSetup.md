@@ -40,3 +40,5 @@ To manually create the instance, follow the [manual installation guide](https://
 host $(kubectl get services --namespace istio-system istio-ingressgateway --output jsonpath='{.status.loadBalancer.ingress[0].hostname}') | head -n 1 | awk "{print \$NF}"
 ```
 to get the public IP. Make sure this IP is already assigned by checking the `istio-ingressgateway` service (`kubectl get service --namespace istio-systen istio-ingressgateway`).
+
+This setup should also work on kubernetes environments created with `AWS Eks`.
